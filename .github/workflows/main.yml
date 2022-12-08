@@ -38,4 +38,8 @@ jobs:
     - name: Generate Coverage Report
       run: |
         export PYTHONPATH=`pwd`/src;`pwd`/src/common;`pwd`/src/maths
-        python -m pytest --cov=src --cov-branch --cov-report xml
+        coverage run --branch --source src -m unittest discover
+        coverage xml
+
+
+
