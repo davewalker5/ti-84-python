@@ -1,40 +1,36 @@
-.. image:: https://github.com/davewalker5/OdeSolver/workflows/Python%20CI%20Build/badge.svg
-    :target: https://github.com/davewalker5/OdeSolver/actions
+.. image:: https://github.com/davewalker5/ti-84-python/workflows/Python%20CI%20Build/badge.svg
+    :target: https://github.com/davewalker5/ti-84-python/actions
     :alt: Build Status
 
-.. image:: https://codecov.io/gh/davewalker5/OdeSolver/branch/main/graph/badge.svg?token=U86UFDVD5S
-    :target: https://codecov.io/gh/davewalker5/OdeSolver
+.. image:: https://codecov.io/gh/davewalker5/ti-84-python/branch/main/graph/badge.svg?token=U86UFDVD5S
+    :target: https://codecov.io/gh/davewalker5/ti-84-python
     :alt: Coverage
 
-.. image:: https://sonarcloud.io/api/project_badges/measure?project=davewalker5_OdeSolver&metric=alert_status
-    :target: https://sonarcloud.io/summary/new_code?id=davewalker5_OdeSolver
-    :alt: Quality Gate
-
-.. image:: https://img.shields.io/github/issues/davewalker5/OdeSolver
-    :target: https://github.com/davewalker5/OdeSolver/issues
+.. image:: https://img.shields.io/github/issues/davewalker5/ti-84-python
+    :target: https://github.com/davewalker5/Odti-84-pythoneSolver/issues
     :alt: GitHub issues
 
-.. image:: https://img.shields.io/github/v/release/davewalker5/OdeSolver.svg?include_prereleases
-    :target: https://github.com/davewalker5/OdeSolver/releases
+.. image:: https://img.shields.io/github/v/release/davewalker5/ti-84-python.svg?include_prereleases
+    :target: https://github.com/davewalker5/ti-84-python/releases
     :alt: Releases
 
 .. image:: https://img.shields.io/badge/License-mit-blue.svg
-    :target: https://github.com/davewalker5/OdeSolver/blob/main/LICENSE
+    :target: https://github.com/davewalker5/ti-84-python/blob/main/LICENSE
     :alt: License
 
 .. image:: https://img.shields.io/badge/language-python-blue.svg
     :target: https://www.python.org
     :alt: Language
 
-.. image:: https://img.shields.io/github/languages/code-size/davewalker5/OdeSolver
-    :target: https://github.com/davewalker5/OdeSolver/
+.. image:: https://img.shields.io/github/languages/code-size/davewalker5/ti-84-python
+    :target: https://github.com/davewalker5/ti-84-python/
     :alt: GitHub code size in bytes
 
 
-OdeSolver
-=========
+IT-84 Python Coding Exercise
+============================
 
-Ordinary Differential Equation Solver
+Python applications and coding exercises for the TI-84 CE-T Python Edition Graphing Calculator.
 
 
 Structure
@@ -43,190 +39,145 @@ Structure
 +-------------------------------+----------------------------------------------------------------------+
 | **Package**                   | **Contents**                                                         |
 +-------------------------------+----------------------------------------------------------------------+
-| ode_solver.gui                | Implementation of a PySimpleGUI desktop user interface               |
+| src                           | Python files in the root source folder contain common code           |
 +-------------------------------+----------------------------------------------------------------------+
-| ode_solver.solvers            | Implementation of the integration methods and solution runner        |
+| src/examples                  | Examples based on the code in the other packages                     |
 +-------------------------------+----------------------------------------------------------------------+
-| ode_solver.utils              | Supporting utilities for the integration methods and data I/O        |
+| src/maths                     | Maths applications                                                   |
 +-------------------------------+----------------------------------------------------------------------+
 
+Common Code
+-----------
 
-Running the Application
-=======================
+Python modules in the root of the "src" folder are common code, used across the other applications, as follows:
+
++---------------+-------------------------------------------------------+
+| File Name     | Contents                                              |
++---------------+-------------------------------------------------------+
+| iptutils.py   | Utility methods to prompt for an validate user input  |
++---------------+-------------------------------------------------------+
+| oututils.py   | Utility methods for text-based output                 |
++---------------+-------------------------------------------------------+
+| strutils.py   | Utility methods for string manipulation               |
++---------------+-------------------------------------------------------+
+| ti_plotlib.py | Minimal implementation of TI PlotLib using Matplotlib |
++---------------+-------------------------------------------------------+
+
+ti_plotlib
+----------
+
+The ti_plotlib module is a minimal implementation of TI PlotLib using Matplotlib and allows the applications to
+be run on a desktop machine, for development and testing purposes. Note that it is not a full implementation of
+ti_plotlib as found on the calculator and contains just sufficient implementation to support the applications in
+this repository.
+
+
+Applications
+============
+
+The following table summarises the available applications:
+
++-------------+--------------+----------------------------------------------------------------------+--------------------------+
+| File        | Location     | Comments                                                             | Dependencies             |
++-------------+--------------+----------------------------------------------------------------------+--------------------------+
+| odeex1.py   | src/examples | Example for the ODE Solver : Chart dy/dx = Ay                        | odesolvr.py              |
++-------------+--------------+----------------------------------------------------------------------+--------------------------+
+| odeex2.py   | src/examples | Example for the ODE Solver : Chart dy/dx = y - t^2 + 1               | odesolvr.py              |
++-------------+--------------+----------------------------------------------------------------------+--------------------------+
+| odeex3.py   | src/examples | Example for the ODE Solver : Chart dy/dx = yt^2 - y                  | odesolvr.py              |
++-------------+--------------+----------------------------------------------------------------------+--------------------------+
+| odeex4.py   | src/examples | Example for the ODE Solver : Solve dy/dx = yt^2 - y with text output | odesolvr.py              |
++-------------+--------------+----------------------------------------------------------------------+--------------------------+
+| odeex5.py   | src/examples | Example for the ODE Solver : Solve dy/dx = yt^2 - y with text output | odesolvr.py              |
++-------------+--------------+----------------------------------------------------------------------+--------------------------+
+| fibonaci.py | src/maths    | Calculate and display the Fibonacci series                           | iptutils.py, oututils.py |
++-------------+--------------+----------------------------------------------------------------------+--------------------------+
+
+Running the Applications on the Calculator
+------------------------------------------
+
+Transfer the application and its dependencies to the Calculator using the TI Connect CE application then run the
+application as normal.
+
+
+Running the Examples on a Desktop Machine
+=========================================
 
 Pre-requisites
 --------------
 
-To run the application, a virtual environment should be created, the requirements should be installed using pip and the
-environment should be activated.
+To run the applications on a desktop machine, a virtual environment should be created, the requirements should
+be installed using pip and the environment should be activated. Both the "src" and "src/maths" folders should be
+added to PYTHONPATH.
 
-Running the Desktop Application
--------------------------------
+Running the Applications
+------------------------
 
-The application can then be run from the command line, at the root of the project folder, as follows:
+With the pre-requisites in place, the ODE Solver examples can then be run from the command line, at the root of the project folder, as follows:
 
 ::
 
-    export PYTHONPATH=`pwd`/src/
-    python -m ode_solver
+    python <location>/<file>
+
+Where "location" and "file" are taken from the table of available applications, above. For example, the following will run the first ODE Solver
+example:
+
+::
+
+    python src/examples/odeex1.py
 
 The first command adds the source folder, containing the application source , to the PYTHONPATH environment variable
 so the packages will be found at run time. The command will need to be modified based on the current operating system.
 
-When the application starts, a window similar to the following will be displayed, though it will not contain a chart
-until solution options have been set and the solution has been run:
-
-.. image:: https://github.com/davewalker5/OdeSolver/blob/main/docs/images/chart_tab.png?raw=true
-    :width: 400
-    :alt: ODE Solver Main Window
-
-Setting and Saving Options
---------------------------
-
-From the "Simulation" menu, select "Options" to show a tabbed options dialog as follows:
-
-.. image:: https://github.com/davewalker5/OdeSolver/blob/main/docs/images/options_function_tab.png?raw=true
-    :width: 400
-    :alt: Options Dialog
-
-The following table summarises the available options:
-
-+-----------------------+---------------------+------------------------------------------------------------+
-| Tab                   | Option              | Comments                                                   |
-+-----------------------+---------------------+------------------------------------------------------------+
-| Chart Properties      | Title               | Chart title (optional)                                     |
-+-----------------------+---------------------+------------------------------------------------------------+
-|                       | Y(min)              | Optional if automatic scaling is enabled                   |
-+-----------------------+---------------------+------------------------------------------------------------+
-|                       | Y(max)              | Optional if automatic scaling is enabled                   |
-+-----------------------+---------------------+------------------------------------------------------------+
-|                       | X(max)              | Optional if automatic scaling is enabled                   |
-+-----------------------+---------------------+------------------------------------------------------------+
-|                       | Automatic scaling   | If ticked, chart axes are automatically scaled to the data |
-+-----------------------+---------------------+------------------------------------------------------------+
-| Function              | Function definition | Definition of the ODE to solve, in Python (see below)      |
-+-----------------------+---------------------+------------------------------------------------------------+
-| Simulation Parameters | Method              | Integration method to use                                  |
-+-----------------------+---------------------+------------------------------------------------------------+
-|                       | Limit of x          | End the simulation when x reaches this limit or;           |
-+-----------------------+---------------------+------------------------------------------------------------+
-|                       | No. steps           | End the simulation after this number of steps              |
-+-----------------------+---------------------+------------------------------------------------------------+
-|                       | Initial step size   | Initial step size                                          |
-+-----------------------+---------------------+------------------------------------------------------------+
-|                       | Initial y           | Initial value of y                                         |
-+-----------------------+---------------------+------------------------------------------------------------+
-| Step Adjustment       | Tolerance           | Tolerance to be used when automatic step size is enabled   |
-+-----------------------+---------------------+------------------------------------------------------------+
-|                       | Adjust step size    | If ticked, automatically adjust step size                  |
-+-----------------------+---------------------+------------------------------------------------------------+
-
-Once set, options can be saved to a JSON format file using the "Save" option on the "File" menu. Saved settings
-can be loaded from the "Load" option, also on the "File" menu.
-
-The Function Definition
------------------------
-
-The ordinary differential equation to be solved is set on the "Function" tab of the options dialog, as
-illustrated above. It must conform to the following conventions:
-
-- It must be written in Python
-- It must be called "f" and must take two arguments; the current values of the independent variable and dependent variable, in that order
-- It must return a single Decimal value that is the value of the function calculated from the input parameters
-
-Additional supporting methods and constants may be defined in the function definition, if needed.
-
-The following is an example:
-
-::
-
-    from decimal import Decimal
-
-    A = Decimal("0.5")
-
-
-    def f(_, y):
-        """
-        dy/dx = Ay
-
-        :param _: Independent variable (not used in this example)
-        :param y: Dependent variable
-        :return: Next value of the dependent variable
-        """
-        return A * y
-
-
-Running the Solution
---------------------
-
-To solve the current ODE using the current options, select the "Run" option from the "Simulation" menu.
-If the options are all valid, and all mandatory options have been specified, the solution is run and
-both the chart (see above) and the data table will be updated as each point is added to the solution.
-
-An example of the data table is hown below:
-
-.. image:: https://github.com/davewalker5/OdeSolver/blob/main/docs/images/data_table_tab.png?raw=true
-    :width: 400
-    :alt: Data Table
-
-If the options are invalid or incomplete when the solution is run, a warning message will be displayed,
-indicating which options have not been specified, and the solution will not run.
-
-Exporting Results
------------------
-
-Once the solution has been run, the data can be exported from the "Export" option on the "File" menu. Supported
-formats are CSV, JSON and XML. If an export option is selected without having run the solution, a warning dialog
-is displayed.
 
 Unit Tests and Coverage
 =======================
 
 To run the unit tests, a virtual environment should be created, the requirements should be installed using pip and the
-environment should be activated.
+environment should be activated. Both the "src" and "src/maths" folders should be added to PYTHONPATH.
 
 The tests can then be run from the command line, at the root of the project folder, as follows:
 
 ::
 
-    export PYTHONPATH=`pwd`/src/
-    python -m pytest
-
-The first command adds the source folder, containing the packages under test, to the PYTHONPATH environment
-variable so the packages will be found when the tests attempt to import them. The command will need to be modified
-based on the current operating system.
+    python -m unittest
 
 Similarly, a coverage report can be generated by running the following commands from the root of the project folder:
 
 ::
 
-    export PYTHONPATH=`pwd`/src/
-    python -m pytest --cov=src --cov-branch --cov-report html
+    coverage run --branch --source src -m unittest discover
+    coverage html -d cov_html
 
-This will create a folder "htmlcov" containing the coverage report in HTML format.
+This will create a folder "cov_html" containing the coverage report in HTML format.
 
 
 Generating Documentation
 ========================
 
 To generate the documentation, a virtual environment should be created, the requirements should be installed
-using pip and the environment should be activated.
+using pip and the environment should be activated. Both the "src" and "src/maths" folders should be added
+to PYTHONPATH.
 
 HTML documentation can then be created by running the following commands from the "docs" sub-folder:
 
 ::
 
-    export PYTHONPATH=`pwd`/../src/
     make html
 
-The resulting documentation is written to the docs/build/html folder and can be viewed by opening "index.html" in a
-web browser.
+The resulting documentation is written to the docs/build/html folder and can be viewed by opening "index.html"
+in a web browser.
+
+Note that, currently, the example applications will run while the documentation is being generated and the prompts
+for input and any plot windows produced will need to be dismissed, as the implementation of Python for the TI-84
+doesn't support "__main__", which could be used to suppress this behaviour.
 
 
 Dependencies
 ============
 
-The ODE Solver application has dependencies listed in requirements.txt.
+Running the applications on a desktop machine requires the dependencies listed in requirements.txt. There are no
+additional dependencies required to run the applications on the calculator.
 
 
 License
