@@ -29,9 +29,10 @@ class TestEuler(unittest.TestCase):
             "output_type": OUTPUT_SILENT
         }
 
-        solution = solve(f, options)
+        x_points, y_points = solve(f, options)
 
-        assert len(EXPECTED_SOLUTION) == len(solution)
+        assert len(EXPECTED_SOLUTION) == len(x_points)
+        assert len(EXPECTED_SOLUTION) == len(y_points)
         for i, point in enumerate(EXPECTED_SOLUTION):
-            assert point["t"] == solution[i]["t"]
-            assert point["y"] == solution[i]["y"]
+            assert point["t"] == x_points[i]
+            assert point["y"] == y_points[i]

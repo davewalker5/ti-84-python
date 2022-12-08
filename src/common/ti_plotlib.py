@@ -9,9 +9,6 @@ _x_max = None
 _y_min = None
 _y_max = None
 
-_x_coordinates = []
-_y_coordinates = []
-
 _current_colour = (0.0, 0.0, 1.0)
 _line_width = 1
 
@@ -93,38 +90,33 @@ def axes(_):
     pass
 
 
-def line(x1, y1, x2, y2, _):
+def line(_x1, _y1, _x2, _y2, _style):
     """
     Draw a line between two points
 
-    :param x1: X-coordinate for 1st point
-    :param y1: Y-coordinate for 1st point
-    :param x2: X-coordinate for 2nd point
-    :param y2: Y-coordinate for 2nd point
-    :param _: Ignored
+    :param _x1: X-coordinate for 1st point
+    :param _y1: Y-coordinate for 1st point
+    :param _x2: X-coordinate for 2nd point
+    :param _y2: Y-coordinate for 2nd point
+    :param _style: Line style
     """
-    global _x_coordinates, _y_coordinates
+    pass
 
-    # Ignore this line if it's the X-axis
-    if x1 == _x_min and x2 == _x_max and y1 == y2 == 0:
-        return
 
-    # Ignore this line if it's the Y-axis
-    if y1 == _y_min and y2 == _y_max and x1 == x2 == 0:
-        return
+def plot(x_points, y_points, _mark):
+    """
+    Plot the X-Y chart represented by the two lists of points
 
-    # Capture the points for subsequent drawing
-    _x_coordinates = _x_coordinates + [x1, x2]
-    _y_coordinates = _y_coordinates + [y1, y2]
+    :param x_points: List of X-values
+    :param y_points: List of corresponding Y-values
+    """
+    plt.plot(x_points, y_points, color=_current_colour, linewidth=_line_width)
 
 
 def show_plot():
     """
     Show the current plot
     """
-    # When the plot is shown, plot the captured co-ordinates then show it
-    global _x_coordinates, _y_coordinates, _current_colour, _line_width
-    plt.plot(_x_coordinates, _y_coordinates, color=_current_colour, linewidth=_line_width)
     plt.show()
 
 

@@ -11,7 +11,7 @@ PAGE_SIZE = 10
 GRID_INTERVAL = 10
 
 
-def draw_chart(x_min, x_max, y_min, y_max, title, solution):
+def draw_chart(x_min, x_max, y_min, y_max, title, x_points, y_points):
     """
     Draw a chart of a solution
 
@@ -33,18 +33,10 @@ def draw_chart(x_min, x_max, y_min, y_max, title, solution):
     plt.line(x_min, 0, x_max, 0, "")
     plt.line(0, y_min, 0, y_max, "")
 
-    # Set the line attributes used to draw the solution
+    # Draw the graph
     plt.color(255, 0, 0)
     plt.pen("medium", "solid")
-
-    # Iterate over the points in the solution, drawing the chart
-    previous_x = previous_y = None
-    for i, value in enumerate(solution):
-        if i > 0:
-            plt.line(previous_x, previous_y, value["t"], value["y"], "")
-
-        previous_x = value["t"]
-        previous_y = value["y"]
+    plt.plot(x_points, y_points, "")
 
     plt.show_plot()
 
@@ -206,14 +198,12 @@ def solve(f, options):
     y = options["initial_value"]
     current_step = 0
     is_function = type(f) is not str
-    solution = [{
-        "t": round(t, options["precision"]),
-        "y": round(y, options["precision"])
-    }]
+    t_points = [round(t, options["precision"])]
+    y_points = [round(y, options["precision"])]
 
     # Output the starting point
     if options["output_type"] == OUTPUT_TEXT:
-        print(0, round(t, options["precision"]), round(y, options["precision"]))
+        print(0, t_points[0], y_points[0])
 
     # Iterate over the specified range of the independent variable
     while t < options["limit"]:
@@ -230,24 +220,24 @@ def solve(f, options):
 
         # Capture and output the new values at this step
         t, y = tf, yf
-
-        solution.append({
-            "t": round(t, options["precision"]),
-            "y": round(y, options["precision"])
-        })
+        t_points.append(round(t, options["precision"]))
+        y_points.append(round(y, options["precision"]))
 
         if options["output_type"] == OUTPUT_TEXT:
-            print(current_step, round(t, options["precision"]), round(y, options["precision"]))
+            print(current_step, t_points[-1], y_points[-1])
             if ((current_step + 1) % PAGE_SIZE) == 0:
                 _ = input("Press ENTER for next page")
 
     # If the requested output type is a chart, draw it
-    if options["output_type"] == OUTPUT_CHART:
+    if options["output_type"] == OUTPUT_TEXT:
+        _ = input("Press ENTER to finish")
+    elif options["output_type"] == OUTPUT_CHART:
         draw_chart(options["x_min"],
                    options["x_max"],
                    options["y_min"],
                    options["y_max"],
                    options["title"],
-                   solution)
+                   t_points,
+                   y_points)
 
-    return solution
+    return t_points, y_points
