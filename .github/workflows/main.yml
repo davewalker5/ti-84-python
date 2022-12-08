@@ -40,6 +40,9 @@ jobs:
         export PYTHONPATH=`pwd`/src:`pwd`/src/common:`pwd`/src/maths
         coverage run --branch --source src -m unittest discover
         coverage xml
-
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
 
 
