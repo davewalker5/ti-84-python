@@ -1,0 +1,15 @@
+[run]
+omit =
+    tests/*
+    src/odesolve/examples/*
+    src/odesolve/odegraph.py
+    src/ti_plotlib.py
+    **/ode.py
+
+[report]
+exclude_lines =
+    def wrapper
+    def prompt_for_kangaroo_properties
+    def print_list
+    def console_callback
+    def set_page_size
