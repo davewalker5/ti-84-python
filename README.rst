@@ -39,7 +39,7 @@ Structure
 +-------------------------------+----------------------------------------------------------------------+
 | **Package**                   | **Contents**                                                         |
 +-------------------------------+----------------------------------------------------------------------+
-| src                           | Python files in the root source folder contain common code           |
+| src/common                    | Python files in the root source folder contain common code           |
 +-------------------------------+----------------------------------------------------------------------+
 | src/examples                  | Examples based on the code in the other packages                     |
 +-------------------------------+----------------------------------------------------------------------+
@@ -107,7 +107,7 @@ Pre-requisites
 --------------
 
 To run the applications on a desktop machine, a virtual environment should be created, the requirements should
-be installed using pip and the environment should be activated. Both the "src" and "src/maths" folders should be
+be installed using pip and the environment should be activated. The "src", "src/common" and "src/maths" folders should be
 added to PYTHONPATH.
 
 Running the Applications
@@ -134,7 +134,7 @@ Unit Tests and Coverage
 =======================
 
 To run the unit tests, a virtual environment should be created, the requirements should be installed using pip and the
-environment should be activated. Both the "src" and "src/maths" folders should be added to PYTHONPATH.
+environment should be activated. The "src", "src/common" and "src/maths" folders should be added to PYTHONPATH.
 
 The tests can then be run from the command line, at the root of the project folder, as follows:
 
@@ -156,8 +156,8 @@ Generating Documentation
 ========================
 
 To generate the documentation, a virtual environment should be created, the requirements should be installed
-using pip and the environment should be activated. Both the "src" and "src/maths" folders should be added
-to PYTHONPATH.
+using pip and the environment should be activated. The "src", "src/common" and "src/maths" folders should be
+added to PYTHONPATH.
 
 HTML documentation can then be created by running the following commands from the "docs" sub-folder:
 

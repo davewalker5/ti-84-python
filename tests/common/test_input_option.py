@@ -8,18 +8,18 @@ class TestInputOption(unittest.TestCase):
 
     @patch("builtins.input", side_effect=["1"])
     def test_can_select_method(self, _):
-        from src.iptutils import prompt_for_option
+        from src.common.iptutils import prompt_for_option
         option = prompt_for_option(TestInputOption.OPTIONS, TestInputOption.USER_PROMPT)
         assert 1 == option
 
     @patch("builtins.input", side_effect=["0", ""])
     def test_cannot_select_less_than_minimum_option(self, _):
-        from src.iptutils import prompt_for_option
+        from src.common.iptutils import prompt_for_option
         option = prompt_for_option(TestInputOption.OPTIONS, TestInputOption.USER_PROMPT)
         assert not option
 
     @patch("builtins.input", side_effect=["4", ""])
     def test_cannot_select_more_than_maximum_option(self, _):
-        from src.iptutils import prompt_for_option
+        from src.common.iptutils import prompt_for_option
         option = prompt_for_option(TestInputOption.OPTIONS, TestInputOption.USER_PROMPT)
         assert not option
