@@ -33,11 +33,11 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with unittest
       run: |
-        export PYTHONPATH=`pwd`/src;`pwd`/src/common;`pwd`/src/maths
+        export PYTHONPATH=`pwd`/src:`pwd`/src/common:`pwd`/src/maths
         python -m unittest
     - name: Generate Coverage Report
       run: |
-        export PYTHONPATH=`pwd`/src;`pwd`/src/common;`pwd`/src/maths
+        export PYTHONPATH=`pwd`/src:`pwd`/src/common:`pwd`/src/maths
         coverage run --branch --source src -m unittest discover
         coverage xml
 
