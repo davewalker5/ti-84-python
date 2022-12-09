@@ -79,23 +79,23 @@ Applications
 
 The following table summarises the available applications:
 
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| File        | Location     | Comments                                                             | Dependencies             |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| odeex1.py   | src/examples | Example for the ODE Solver : Chart dy/dx = Ay                        | odelib.py, iptutils.py   |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| odeex2.py   | src/examples | Example for the ODE Solver : Chart dy/dx = y - t^2 + 1               | odelib.py, iptutils.py   |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| odeex3.py   | src/examples | Example for the ODE Solver : Chart dy/dx = yt^2 - y                  | odelib.py, iptutils.py   |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| odeex4.py   | src/examples | Example for the ODE Solver : Solve dy/dx = yt^2 - y with text output | odelib.py, iptutils.py   |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| odeex5.py   | src/examples | Example for the ODE Solver : Solve dy/dx = yt^2 - y with text output | odelib.py, iptutils.py   |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| odesolvr.py | src/maths    | Prompt for an equation and solution options then solve the equation  | odelib.py, iptutils.py   |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| fibonaci.py | src/maths    | Calculate and display the Fibonacci series                           | iptutils.py, oututils.py |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| File        | Location     | Comments                                                              | Dependencies             |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| odeex1.py   | src/examples | Example for the ODE Library : Chart dy/dx = Ay                        | odelib.py, iptutils.py   |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| odeex2.py   | src/examples | Example for the ODE Library : Chart dy/dx = y - t^2 + 1               | odelib.py, iptutils.py   |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| odeex3.py   | src/examples | Example for the ODE Library : Chart dy/dx = yt^2 - y                  | odelib.py, iptutils.py   |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| odeex4.py   | src/examples | Example for the ODE Library : Solve dy/dx = yt^2 - y with text output | odelib.py, iptutils.py   |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| odeex5.py   | src/examples | Example for the ODE Library : Solve dy/dx = yt^2 - y with text output | odelib.py, iptutils.py   |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| odesolvr.py | src/maths    | Prompt for an equation and solution options then solve the equation   | odelib.py, iptutils.py   |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| fibonaci.py | src/maths    | Calculate and display the Fibonacci series                            | iptutils.py, oututils.py |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
 
 Running the Applications on the Calculator
 ------------------------------------------
