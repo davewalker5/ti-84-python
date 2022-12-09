@@ -29,8 +29,14 @@ class TestInputYesNo(unittest.TestCase):
         response = prompt_for_yes_no(TestInputYesNo.YES_NO_PROMPT)
         assert not response
 
-    @patch("builtins.input", side_effect=["", "Wombat", "z", "123", "1.234", "y"])
+    @patch("builtins.input", side_effect=["Wombat", "z", "123", "1.234", "y"])
     def test_invalid_yes_no_reprompts(self, _):
         from src.common.iptutils import prompt_for_yes_no
         response = prompt_for_yes_no(TestInputYesNo.YES_NO_PROMPT)
         assert response
+
+    @patch("builtins.input", side_effect=[""])
+    def test_empty_input_cancels(self, _):
+        from src.common.iptutils import prompt_for_yes_no
+        response = prompt_for_yes_no(TestInputYesNo.YES_NO_PROMPT)
+        assert response is None

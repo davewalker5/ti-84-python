@@ -1,6 +1,6 @@
 import unittest
 from tests.maths.dyay import f
-from src.maths.odesolvr import solve, RUNGE_KUTTA_4, OUTPUT_SILENT
+from src.maths.odelib import solve, RUNGE_KUTTA_4, OUTPUT_SILENT
 
 EXPECTED_SOLUTION_FIXED_STEP_SIZE = [
     {'t': 0.0, 'y': 1.0},
@@ -46,7 +46,7 @@ class TestRK4(unittest.TestCase):
             "method": RUNGE_KUTTA_4,
             "limit": 5.0,
             "step_size": 0.5,
-            "adjust_step_size": False,
+            "auto_step_size": False,
             "initial_value": 1.0,
             "precision": 4,
             "output_type": OUTPUT_SILENT
@@ -65,7 +65,7 @@ class TestRK4(unittest.TestCase):
             "method": RUNGE_KUTTA_4,
             "limit": 5.0,
             "step_size": 0.5,
-            "adjust_step_size": False,
+            "auto_step_size": False,
             "initial_value": 1.0,
             "precision": 4,
             "output_type": OUTPUT_SILENT
@@ -84,7 +84,7 @@ class TestRK4(unittest.TestCase):
             "method": RUNGE_KUTTA_4,
             "limit": 10.0,
             "step_size": 0.5,
-            "adjust_step_size": True,
+            "auto_step_size": True,
             "initial_value": 1.0,
             "precision": 4,
             "tolerance": 0.001,

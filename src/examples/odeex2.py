@@ -2,13 +2,13 @@
 Chart the solution for dy/dx = y - t^2 + 1 using the RK4 method, with the differential equation as a Python function
 """
 
-from odesolvr import solve, OUTPUT_CHART, RUNGE_KUTTA_4
+from odelib import solve, OUTPUT_CHART, RUNGE_KUTTA_4
 
 #: Solution and charting options dictionary
 EXAMPLE_OPTIONS = {
     "method": RUNGE_KUTTA_4,
     "limit": 5,
-    "adjust_step_size": False,
+    "auto_step_size": False,
     "step_size": 0.5,
     "initial_value": 0.5,
     "tolerance": 0,

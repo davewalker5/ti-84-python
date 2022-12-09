@@ -39,29 +39,31 @@ Structure
 +--------------+----------------------------------------------------------------------+
 | **Package**  | **Contents**                                                         |
 +--------------+----------------------------------------------------------------------+
-| common       | Common code                                                          |
+| common       | Library code implementing cross-cutting concerns                     |
 +--------------+----------------------------------------------------------------------+
 | examples     | Examples based on the code in the other packages                     |
 +--------------+----------------------------------------------------------------------+
-| maths        | Maths applications                                                   |
+| maths        | Maths applications and library code                                  |
 +--------------+----------------------------------------------------------------------+
 
-Common Code
------------
+Library Code
+------------
 
-Python modules in the root of the "src" folder are common code, used across the other applications, as follows:
+The following contain library code that is used across the other applications:
 
-+---------------+-------------------------------------------------------+
-| File Name     | Contents                                              |
-+---------------+-------------------------------------------------------+
-| iptutils.py   | Utility methods to prompt for an validate user input  |
-+---------------+-------------------------------------------------------+
-| oututils.py   | Utility methods for text-based output                 |
-+---------------+-------------------------------------------------------+
-| strutils.py   | Utility methods for string manipulation               |
-+---------------+-------------------------------------------------------+
-| ti_plotlib.py | Minimal implementation of TI PlotLib using Matplotlib |
-+---------------+-------------------------------------------------------+
++---------------+------------+-------------------------------------------------------+
+| File Name     | Location   | Contents                                              |
++---------------+------------+-------------------------------------------------------+
+| iptutils.py   | src/common | Utility methods to prompt for an validate user input  |
++---------------+------------+------------------------------------------------------+
+| oututils.py   | src/common | Utility methods for text-based output                 |
++---------------+------------+-------------------------------------------------------+
+| strutils.py   | src/common | Utility methods for string manipulation               |
++---------------+------------+-------------------------------------------------------+
+| ti_plotlib.py | src/common | Minimal implementation of TI PlotLib using Matplotlib |
++---------------+------------+-------------------------------------------------------+
+| odelib.py     | src/maths  | Ordinary Differential Euqation solver                 |
++---------------+------------+-------------------------------------------------------+
 
 ti_plotlib
 ----------
@@ -77,21 +79,23 @@ Applications
 
 The following table summarises the available applications:
 
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| File        | Location     | Comments                                                             | Dependencies             |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| odeex1.py   | src/examples | Example for the ODE Solver : Chart dy/dx = Ay                        | odesolvr.py              |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| odeex2.py   | src/examples | Example for the ODE Solver : Chart dy/dx = y - t^2 + 1               | odesolvr.py              |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| odeex3.py   | src/examples | Example for the ODE Solver : Chart dy/dx = yt^2 - y                  | odesolvr.py              |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| odeex4.py   | src/examples | Example for the ODE Solver : Solve dy/dx = yt^2 - y with text output | odesolvr.py              |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| odeex5.py   | src/examples | Example for the ODE Solver : Solve dy/dx = yt^2 - y with text output | odesolvr.py              |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
-| fibonaci.py | src/maths    | Calculate and display the Fibonacci series                           | iptutils.py, oututils.py |
-+-------------+--------------+----------------------------------------------------------------------+--------------------------+
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| File        | Location     | Comments                                                              | Dependencies             |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| odeex1.py   | src/examples | Example for the ODE Library : Chart dy/dx = Ay                        | odelib.py, iptutils.py   |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| odeex2.py   | src/examples | Example for the ODE Library : Chart dy/dx = y - t^2 + 1               | odelib.py, iptutils.py   |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| odeex3.py   | src/examples | Example for the ODE Library : Chart dy/dx = yt^2 - y                  | odelib.py, iptutils.py   |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| odeex4.py   | src/examples | Example for the ODE Library : Solve dy/dx = yt^2 - y with text output | odelib.py, iptutils.py   |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| odeex5.py   | src/examples | Example for the ODE Library : Solve dy/dx = yt^2 - y with text output | odelib.py, iptutils.py   |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| odesolvr.py | src/maths    | Prompt for an equation and solution options then solve the equation   | odelib.py, iptutils.py   |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| fibonaci.py | src/maths    | Calculate and display the Fibonacci series                            | iptutils.py, oututils.py |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
 
 Running the Applications on the Calculator
 ------------------------------------------

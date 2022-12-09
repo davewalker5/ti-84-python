@@ -1,6 +1,6 @@
 import unittest
 from tests.maths.dyay import f
-from src.maths.odesolvr import solve, PREDICTOR_CORRECTOR, OUTPUT_SILENT
+from src.maths.odelib import solve, PREDICTOR_CORRECTOR, OUTPUT_SILENT
 
 EXPECTED_SOLUTION = [
     {'t': 0.0, 'y': 1.0},
@@ -23,7 +23,7 @@ class TestPredictorCorrector(unittest.TestCase):
             "method": PREDICTOR_CORRECTOR,
             "limit": 5.0,
             "step_size": 0.5,
-            "adjust_step_size": False,
+            "auto_step_size": False,
             "initial_value": 1.0,
             "precision": 4,
             "output_type": OUTPUT_SILENT

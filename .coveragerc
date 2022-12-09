@@ -3,6 +3,7 @@ omit =
     tests/*
     src/examples/*
     src/common/ti_plotlib.py
+    src/maths/odesolvr.py
 
 [report]
 exclude_lines =
