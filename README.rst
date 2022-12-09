@@ -99,6 +99,26 @@ Running the Applications on the Calculator
 Transfer the application and its dependencies to the Calculator using the TI Connect CE application then run the
 application as normal.
 
+Minimising the Source Code
+--------------------------
+
+The docstrings and comments in the code are of little use when viewed on the calculator screen so, optionally, to reduce
+the size of the code a simple "minimiser" is provided that can be run prior to transferring it to the calculator.
+
+While it falls short of a true minification, it does the following:
+
+- Removes docstrings
+- Removes full-line comments
+
+To run the minimiser, run the following commands:
+
+::
+
+    python minimiser/minimiser.py
+
+This will iterate over eligible Python source files in the "src" folder and will write reduced-size versions of each file
+to the minimiser/minimised folder. These can then be transferred to the calculator.
+
 
 Running the Examples on a Desktop Machine
 =========================================
