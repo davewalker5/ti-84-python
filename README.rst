@@ -106,15 +106,16 @@ application as normal.
 Minimising the Source Code
 --------------------------
 
-The docstrings and comments in the code are of little use when viewed on the calculator screen so, optionally, to reduce
-the size of the code a simple "minimiser" is provided that can be run prior to transferring it to the calculator.
+The docstrings and comments in the code are of little use when viewed on the calculator screen so a simple "minimiser" is
+provided that can be run to reduce the size of the code prior to transferring it to the calculator. This is optional as
+the code will still run without being reduced in size.
 
-While it falls short of a true minification, it does the following:
+While the process falls short of a true minification, it does the following:
 
 - Removes docstrings
 - Removes full-line comments
 
-To run the minimiser, run the following commands:
+To run the minimiser, enter the following commands:
 
 ::
 
