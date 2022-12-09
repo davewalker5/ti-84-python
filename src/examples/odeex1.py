@@ -2,7 +2,7 @@
 Chart the solution for dy/dx = Ay using the RK4 method, with the differential equation as a Python function
 """
 
-from odesolvr import solve, OUTPUT_CHART, RUNGE_KUTTA_4
+from odelib import solve, OUTPUT_CHART, RUNGE_KUTTA_4
 
 #: Solution and charting options dictionary
 EXAMPLE_OPTIONS = {
@@ -10,7 +10,7 @@ EXAMPLE_OPTIONS = {
     "limit": 20.0,
     "tolerance": 0.005,
     "step_size": 0.5,
-    "adjust_step_size": True,
+    "auto_step_size": True,
     "initial_value": 1.0,
     "precision": 4,
     "output_type": OUTPUT_CHART,

@@ -81,12 +81,14 @@ def prompt_for_yes_no(prompt):
     Prompt for a Y/N input
 
     :param prompt: User-friendly prompt
-    :return: True for Y, False for N
+    :return: True for Y, False for N, None for cancel
     """
     while True:
         # Prompt for user input
         user_input = input(prompt + ("?" if not prompt.endswith("?") else "") + " ").lower()
-        if user_input in ["y", "n"]:
+        if user_input == "":
+            return None
+        elif user_input in ["y", "n"]:
             return user_input == "y"
 
         print("Please enter Y or N")

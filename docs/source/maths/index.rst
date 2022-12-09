@@ -6,4 +6,5 @@ The maths Package
    :caption: Contents:
 
    fibonaci
+   odelib
    odesolvr
