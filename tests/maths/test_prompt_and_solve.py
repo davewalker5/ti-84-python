@@ -90,17 +90,3 @@ class TestPromptAndSolve(unittest.TestCase):
         x_points, y_points = prompt_and_solve()
         assert x_points is None
         assert y_points is None
-
-    @patch("builtins.input", side_effect=["0.5*y", "1", "5.0", "1.0", "0.5", "n", "4", "2", ""])
-    def test_cancel_on_y_min_prompt(self, _):
-        from src.maths.odelib import prompt_and_solve
-        x_points, y_points = prompt_and_solve()
-        assert x_points is None
-        assert y_points is None
-
-    @patch("builtins.input", side_effect=["0.5*y", "1", "5.0", "1.0", "0.5", "n", "4", "2", "0.0", ""])
-    def test_cancel_on_y_max_prompt(self, _):
-        from src.maths.odelib import prompt_and_solve
-        x_points, y_points = prompt_and_solve()
-        assert x_points is None
-        assert y_points is None
