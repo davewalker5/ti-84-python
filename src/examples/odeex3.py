@@ -15,10 +15,6 @@ EXAMPLE_OPTIONS = {
     "tolerance": 0.0001,
     "precision": 4,
     "output_type": OUTPUT_CHART,
-    "x_min": 0.0,
-    "x_max": 2.5,
-    "y_min": 0.0,
-    "y_max": 2.5,
     "title": "dy/dx = t*t*y - y"
 }
 

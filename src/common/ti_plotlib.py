@@ -4,13 +4,23 @@ Minimal implementation of ti_plotlib using Matplotlib
 
 import matplotlib.pyplot as plt
 
-_x_min = None
-_x_max = None
-_y_min = None
-_y_max = None
+xmin = None
+xmax = None
+ymin = None
+ymax = None
 
 _current_colour = (0.0, 0.0, 1.0)
 _line_width = 1
+
+
+def auto_window(x_points, y_points):
+    """
+    Auto-scale the window to fit the specified lists of points
+
+    :param x_points: List of X-values
+    :param y_points: List of corresponding Y-values
+    """
+    window(min(x_points), max(x_points), min(y_points), max(y_points))
 
 
 def window(x_min, x_max, y_min, y_max):
@@ -22,17 +32,12 @@ def window(x_min, x_max, y_min, y_max):
     :param y_min: Minimum Y for axis scaling
     :param y_max: Maximum Y for axis scaling
     """
-    # Clear the points lists
-    global _x_coordinates, _y_coordinates
-    _x_coordinates = []
-    _y_coordinates = []
-
     # Capture the chart limits
-    global _x_min, _x_max, _y_min, _y_max
-    _x_min = x_min
-    _x_max = x_max
-    _y_min = y_min
-    _y_max = y_max
+    global xmin, xmax, ymin, ymax
+    xmin = x_min
+    xmax = x_max
+    ymin = y_min
+    ymax = y_max
 
     # Initialise the plot window
     plt.xlim([x_min, x_max])
@@ -46,12 +51,12 @@ def cls():
     plt.clf()
 
 
-def grid(_x_interval, _y_interval, _style):
+def grid(_x_scale, _y_scale, _style):
     """
     Configure the grid
 
-    :param _x_interval: X interval for gridlines - ignored in this implementation
-    :param _y_interval: Y interval for gridlines - ignored in this implementation
+    :param _x_scale: X scale for gridlines - ignored in this implementation
+    :param _y_scale: Y scale for gridlines - ignored in this implementation
     :param _style: Line style - ignored in this implementation
     """
     plt.grid(True)
@@ -90,7 +95,7 @@ def axes(_):
     pass
 
 
-def line(_x1, _y1, _x2, _y2, _style):
+def line(_x1, _y1, _x2, _y2, _arrow_style):
     """
     Draw a line between two points
 
@@ -98,7 +103,7 @@ def line(_x1, _y1, _x2, _y2, _style):
     :param _y1: Y-coordinate for 1st point
     :param _x2: X-coordinate for 2nd point
     :param _y2: Y-coordinate for 2nd point
-    :param _style: Line style
+    :param _arrow_style: Arrow style
     """
     pass
 

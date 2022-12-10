@@ -9,35 +9,35 @@ OUTPUT_TEXT = 0
 OUTPUT_CHART = 1
 OUTPUT_SILENT = 2
 PAGE_SIZE = 10
-GRID_INTERVAL = 10
+GRID_SCALE = 10
 
 
-def draw_chart(x_min, x_max, y_min, y_max, title, x_points, y_points):
+def draw_chart(title, x_points, y_points):
     """
     Draw a chart of a solution
 
-    :param x_min: Minimum X for axis scaling
-    :param x_max: Maximum X for axis scaling
-    :param y_min: Minimum Y for axis scaling
-    :param y_max: Maximum Y for axis scaling
     :param title: Chart title
     :param x_points: List of X points to plot
     :param y_points: Corresponding list of Y points to plot
     """
     # Set up the window
+    plt.auto_window(x_points, y_points)
     plt.cls()
-    plt.window(x_min, x_max, y_min, y_max)
     plt.title(title)
 
+    # Draw the grid
+    plt.color(192, 192, 192)
+    x_scale = (plt.xmax - plt.xmin) / GRID_SCALE
+    y_scale = (plt.ymax - plt.ymin) / GRID_SCALE
+    plt.grid(x_scale, y_scale, "dash")
+
     # Draw the axes
+    plt.color(0, 0, 0)
     plt.axes("on")
-    plt.pen("medium", "dash")
-    plt.line(x_min, 0, x_max, 0, "")
-    plt.line(0, y_min, 0, y_max, "")
 
     # Draw the graph
-    plt.color(255, 0, 0)
     plt.pen("medium", "solid")
+    plt.color(255, 0, 0)
     plt.plot(x_points, y_points, "")
 
     plt.show_plot()
@@ -235,11 +235,7 @@ def solve(f, options):
     if options["output_type"] == OUTPUT_TEXT:
         _ = input("Press ENTER to finish")
     elif options["output_type"] == OUTPUT_CHART:
-        draw_chart(options["x_min"],
-                   options["x_max"],
-                   options["y_min"],
-                   options["y_max"],
-                   options["title"],
+        draw_chart(options["title"],
                    t_points,
                    y_points)
 
@@ -293,18 +289,6 @@ def prompt_and_solve():
         return None, None
     output_type = output_type - 1
 
-    if output_type == OUTPUT_CHART:
-        y_min = prompt_for_float("Y-axis minimum")
-        if y_min is None:
-            return None, None
-
-        y_max = prompt_for_float("Y-axis maximum")
-        if y_max is None:
-            return None, None
-    else:
-        y_min = 0.0
-        y_max = 0.0
-
     print("Solving dy/dx = " + equation + " ...")
     return solve(equation, {
         "method": method,
@@ -315,9 +299,5 @@ def prompt_and_solve():
         "tolerance": tolerance,
         "precision": precision,
         "output_type": output_type,
-        "x_min": 0.0,
-        "x_max": limit,
-        "y_min": y_min,
-        "y_max": y_max,
         "title": "dy/dx = " + equation
     })
