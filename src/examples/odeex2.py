@@ -14,10 +14,6 @@ EXAMPLE_OPTIONS = {
     "tolerance": 0,
     "precision": 4,
     "output_type": OUTPUT_CHART,
-    "x_min": 0.0,
-    "x_max": 6.0,
-    "y_min": -100.0,
-    "y_max": 20.0,
     "title": "dy/dx = y - t*t + 1"
 }
 

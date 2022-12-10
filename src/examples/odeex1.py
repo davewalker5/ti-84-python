@@ -14,10 +14,6 @@ EXAMPLE_OPTIONS = {
     "initial_value": 1.0,
     "precision": 4,
     "output_type": OUTPUT_CHART,
-    "x_min": 0.0,
-    "x_max": 21.0,
-    "y_min": 0.0,
-    "y_max": 23000.0,
     "title": "dy/dx = Ay"
 }
 
