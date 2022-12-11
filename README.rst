@@ -45,6 +45,8 @@ Structure
 +--------------+----------------------------------------------------------------------+
 | maths        | Maths applications and library code                                  |
 +--------------+----------------------------------------------------------------------+
+| science      | Science applications and library code                                |
++--------------+----------------------------------------------------------------------+
 
 Library Code
 ------------
@@ -55,7 +57,7 @@ The following contain library code that is used across the other applications:
 | File Name     | Location   | Contents                                              |
 +---------------+------------+-------------------------------------------------------+
 | iptutils.py   | src/common | Utility methods to prompt for an validate user input  |
-+---------------+------------+------------------------------------------------------+
++---------------+------------+-------------------------------------------------------+
 | oututils.py   | src/common | Utility methods for text-based output                 |
 +---------------+------------+-------------------------------------------------------+
 | strutils.py   | src/common | Utility methods for string manipulation               |
@@ -95,6 +97,8 @@ The following table summarises the available applications:
 | odesolvr.py | src/maths    | Prompt for an equation and solution options then solve the equation   | odelib.py, iptutils.py   |
 +-------------+--------------+-----------------------------------------------------------------------+--------------------------+
 | fibonaci.py | src/maths    | Calculate and display the Fibonacci series                            | iptutils.py, oututils.py |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| tempconv.py | src/science  | Centigrade, Fahrenheit and Kelvin temperature converter               | iptutils.py, oututils.py |
 +-------------+--------------+-----------------------------------------------------------------------+--------------------------+
 
 Running the Applications on the Calculator
