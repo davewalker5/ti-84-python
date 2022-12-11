@@ -10,3 +10,5 @@ exclude_lines =
     def wrapper
     def print_list
     def draw_chart
+    def pressure_conversion
+    def calculate_pressure

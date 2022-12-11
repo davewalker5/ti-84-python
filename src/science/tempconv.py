@@ -103,6 +103,9 @@ def convert(value, from_unit, to_unit, precision):
 
 
 def wrapper():
+    """
+    Wrapper around the temperature converter that prompts for user input
+    """
     print_title("Temperature Converter")
     while True:
         from_units = prompt_for_option_with_values(TEMPERATURE_SCALES, TEMPERATURE_UNITS, "From")
