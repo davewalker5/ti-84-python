@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch
 
 
-class TestFibonacci(unittest.TestCase):
+class TestTempConv(unittest.TestCase):
     @patch("builtins.input", side_effect=[""])
     def test_c_to_f(self, _):
         from src.science.tempconv import centigrade_to_fahrenheit

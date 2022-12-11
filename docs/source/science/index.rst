@@ -5,4 +5,5 @@ The science Package
    :maxdepth: 2
    :caption: Contents:
 
+   barometr
    tempconv

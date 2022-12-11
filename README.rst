@@ -64,7 +64,7 @@ The following contain library code that is used across the other applications:
 +---------------+------------+-------------------------------------------------------+
 | ti_plotlib.py | src/common | Minimal implementation of TI PlotLib using Matplotlib |
 +---------------+------------+-------------------------------------------------------+
-| odelib.py     | src/maths  | Ordinary Differential Euqation solver                 |
+| odelib.py     | src/maths  | Ordinary Differential Equation solver                 |
 +---------------+------------+-------------------------------------------------------+
 
 ti_plotlib
@@ -99,6 +99,8 @@ The following table summarises the available applications:
 | fibonaci.py | src/maths    | Calculate and display the Fibonacci series                            | iptutils.py, oututils.py |
 +-------------+--------------+-----------------------------------------------------------------------+--------------------------+
 | tempconv.py | src/science  | Centigrade, Fahrenheit and Kelvin temperature converter               | iptutils.py, oututils.py |
++-------------+--------------+-----------------------------------------------------------------------+--------------------------+
+| barometr.py | src/science  | Biometric pressure converter and calculator                           | iptutils.py, oututils.py |
 +-------------+--------------+-----------------------------------------------------------------------+--------------------------+
 
 Running the Applications on the Calculator

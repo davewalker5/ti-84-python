@@ -1,5 +1,5 @@
 tempconv.py
 ===========
 
-.. automodule:: maths.tempconv
+.. automodule:: science.tempconv
    :members:
