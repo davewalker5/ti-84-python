@@ -7,6 +7,7 @@ KELVIN = 2
 
 TEMPERATURE_SCALES = ["Centigrade", "Fahrenheit", "Kelvin"]
 TEMPERATURE_UNITS = [CENTIGRADE, FAHRENHEIT, KELVIN]
+TEMPERATURE_REPORT = ["\u00b0C", "\u00b0F", "K"]
 
 
 def centigrade_to_fahrenheit(c):
@@ -88,16 +89,17 @@ CONVERSION_TABLE = {
 }
 
 
-def convert(value, from_unit, to_unit):
+def convert(value, from_unit, to_unit, precision):
     """
     Convert a temperature from one unit to another
 
     :param value: Temperature value
     :param from_unit: Unit for the specified temperature
     :param to_unit: Unit to convert to
+    :param precision: Precision to round to
     :return: Converted temperature
     """
-    return CONVERSION_TABLE[from_unit][to_unit](value)
+    return round(CONVERSION_TABLE[from_unit][to_unit](value), precision)
 
 
 def wrapper():
@@ -120,11 +122,11 @@ def wrapper():
             return
 
         # Perform the conversion and output the results
-        converted_temperature = convert(temperature, from_units, to_units)
+        converted_temperature = convert(temperature, from_units, to_units, 4)
 
         print()
-        print(str(temperature) + " " + TEMPERATURE_SCALES[from_units] + " = " +
-              str(converted_temperature) + " " + TEMPERATURE_SCALES[to_units])
+        print(str(temperature) + TEMPERATURE_REPORT[from_units] + " = " +
+              str(converted_temperature) + TEMPERATURE_REPORT[to_units])
         print()
 
 
