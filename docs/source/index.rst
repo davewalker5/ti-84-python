@@ -6,6 +6,7 @@ TI-84 CE-T Python Edition
    :caption: Contents:
 
    maths/index
+   science/index
    common/index
    examples/index
 

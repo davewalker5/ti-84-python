@@ -94,12 +94,14 @@ def prompt_for_yes_no(prompt):
         print("Please enter Y or N")
 
 
-def prompt_for_option(options, prompt):
+def prompt_for_option_with_values(options, values, prompt):
     """
     Prompt for an option from a list of options
 
     :param options: List of options
-    :return: Index for the selected option
+    :param values: Corresponding values
+    :param prompt: User prompt
+    :return: Corresponding value for the selected option
     """
     label_length = len(str(len(options)))
     for i, option in enumerate(options):
@@ -107,4 +109,16 @@ def prompt_for_option(options, prompt):
         print(label + ": " + str(option))
 
     selection = prompt_for_integer(prompt, minimum_value=1, maximum_value=len(options))
-    return selection
+    value = values[selection - 1] if selection is not None and values else selection
+    return value
+
+
+def prompt_for_option(options, prompt):
+    """
+    Prompt for an option from a list of options
+
+    :param options: List of options
+    :param prompt: User prompt
+    :return: Index for the selected option
+    """
+    return prompt_for_option_with_values(options, None, prompt)
