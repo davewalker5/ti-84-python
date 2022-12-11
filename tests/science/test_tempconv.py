@@ -42,35 +42,35 @@ class TestFibonacci(unittest.TestCase):
     @patch("builtins.input", side_effect=[""])
     def test_convert_c_to_f(self, _):
         from src.science.tempconv import convert, CENTIGRADE, FAHRENHEIT
-        f = convert(45.6, CENTIGRADE, FAHRENHEIT)
-        assert 114.08 == round(f, 2)
+        f = convert(45.6, CENTIGRADE, FAHRENHEIT, 2)
+        assert 114.08 == f
 
     @patch("builtins.input", side_effect=[""])
     def test_convert_c_to_k(self, _):
         from src.science.tempconv import convert, CENTIGRADE, KELVIN
-        k = convert(45.6, CENTIGRADE, KELVIN)
-        assert 318.75 == round(k, 2)
+        k = convert(45.6, CENTIGRADE, KELVIN, 2)
+        assert 318.75 == k
 
     @patch("builtins.input", side_effect=[""])
     def test_convert_f_to_c(self, _):
         from src.science.tempconv import convert, CENTIGRADE, FAHRENHEIT
-        c = convert(67.8, FAHRENHEIT, CENTIGRADE)
-        assert 19.89 == round(c, 2)
+        c = convert(67.8, FAHRENHEIT, CENTIGRADE, 2)
+        assert 19.89 == c
 
     @patch("builtins.input", side_effect=[""])
     def test_convert_f_to_k(self, _):
         from src.science.tempconv import convert, KELVIN, FAHRENHEIT
-        k = convert(67.8, FAHRENHEIT, KELVIN)
-        assert 293.04 == round(k, 2)
+        k = convert(67.8, FAHRENHEIT, KELVIN, 2)
+        assert 293.04 == k
 
     @patch("builtins.input", side_effect=[""])
     def test_convert_k_to_c(self, _):
         from src.science.tempconv import convert, KELVIN, CENTIGRADE
-        c = convert(134.6, KELVIN, CENTIGRADE)
-        assert -138.55 == round(c, 2)
+        c = convert(134.6, KELVIN, CENTIGRADE, 2)
+        assert -138.55 == c
 
     @patch("builtins.input", side_effect=[""])
     def test_convert_k_to_f(self, _):
         from src.science.tempconv import convert, KELVIN, FAHRENHEIT
-        f = convert(134.6, KELVIN, FAHRENHEIT)
-        assert -217.39 == round(f, 2)
+        f = convert(134.6, KELVIN, FAHRENHEIT, 2)
+        assert -217.39 == f
