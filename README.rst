@@ -27,8 +27,8 @@
     :alt: GitHub code size in bytes
 
 
-TI-84 Python Coding Exercise
-============================
+TI-84 Python Applications
+=========================
 
 Python applications and coding exercises for the TI-84 CE-T Python Edition Graphing Calculator.
 
