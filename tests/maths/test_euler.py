@@ -31,8 +31,8 @@ class TestEuler(unittest.TestCase):
 
         x_points, y_points = solve(f, options)
 
-        assert len(EXPECTED_SOLUTION) == len(x_points)
-        assert len(EXPECTED_SOLUTION) == len(y_points)
+        self.assertEqual(len(EXPECTED_SOLUTION), len(x_points))
+        self.assertEqual(len(EXPECTED_SOLUTION), len(y_points))
         for i, point in enumerate(EXPECTED_SOLUTION):
-            assert point["t"] == x_points[i]
-            assert point["y"] == y_points[i]
+            self.assertEqual(point["t"], x_points[i])
+            self.assertEqual(point["y"], y_points[i])

@@ -22,71 +22,71 @@ class TestPromptAndSolve(unittest.TestCase):
         from src.maths.odelib import prompt_and_solve
         x_points, y_points = prompt_and_solve()
 
-        assert len(EXPECTED_SOLUTION) == len(x_points)
-        assert len(EXPECTED_SOLUTION) == len(y_points)
+        self.assertEqual(len(EXPECTED_SOLUTION), len(x_points))
+        self.assertEqual(len(EXPECTED_SOLUTION), len(y_points))
         for i, point in enumerate(EXPECTED_SOLUTION):
-            assert point["t"] == x_points[i]
-            assert point["y"] == y_points[i]
+            self.assertEqual(point["t"], x_points[i])
+            self.assertEqual(point["y"], y_points[i])
 
     @patch("builtins.input", side_effect=[""])
     def test_cancel_on_equation_prompt(self, _):
         from src.maths.odelib import prompt_and_solve
         x_points, y_points = prompt_and_solve()
-        assert x_points is None
-        assert y_points is None
+        self.assertIsNone(x_points)
+        self.assertIsNone(y_points)
 
     @patch("builtins.input", side_effect=["0.5*y", ""])
     def test_cancel_on_method_prompt(self, _):
         from src.maths.odelib import prompt_and_solve
         x_points, y_points = prompt_and_solve()
-        assert x_points is None
-        assert y_points is None
+        self.assertIsNone(x_points)
+        self.assertIsNone(y_points)
 
     @patch("builtins.input", side_effect=["0.5*y", "1", ""])
     def test_cancel_on_limit_prompt(self, _):
         from src.maths.odelib import prompt_and_solve
         x_points, y_points = prompt_and_solve()
-        assert x_points is None
-        assert y_points is None
+        self.assertIsNone(x_points)
+        self.assertIsNone(y_points)
 
     @patch("builtins.input", side_effect=["0.5*y", "1", "5.0", ""])
     def test_cancel_on_initial_value_prompt(self, _):
         from src.maths.odelib import prompt_and_solve
         x_points, y_points = prompt_and_solve()
-        assert x_points is None
-        assert y_points is None
+        self.assertIsNone(x_points)
+        self.assertIsNone(y_points)
 
     @patch("builtins.input", side_effect=["0.5*y", "1", "5.0", "1.0", ""])
     def test_cancel_on_step_size_prompt(self, _):
         from src.maths.odelib import prompt_and_solve
         x_points, y_points = prompt_and_solve()
-        assert x_points is None
-        assert y_points is None
+        self.assertIsNone(x_points)
+        self.assertIsNone(y_points)
 
     @patch("builtins.input", side_effect=["0.5*y", "1", "5.0", "1.0", "0.5", ""])
     def test_cancel_on_auto_step_size_prompt(self, _):
         from src.maths.odelib import prompt_and_solve
         x_points, y_points = prompt_and_solve()
-        assert x_points is None
-        assert y_points is None
+        self.assertIsNone(x_points)
+        self.assertIsNone(y_points)
 
     @patch("builtins.input", side_effect=["0.5*y", "1", "5.0", "1.0", "0.5", "y", ""])
     def test_cancel_on_tolerance_prompt(self, _):
         from src.maths.odelib import prompt_and_solve
         x_points, y_points = prompt_and_solve()
-        assert x_points is None
-        assert y_points is None
+        self.assertIsNone(x_points)
+        self.assertIsNone(y_points)
 
     @patch("builtins.input", side_effect=["0.5*y", "1", "5.0", "1.0", "0.5", "n", ""])
     def test_cancel_on_precision_prompt(self, _):
         from src.maths.odelib import prompt_and_solve
         x_points, y_points = prompt_and_solve()
-        assert x_points is None
-        assert y_points is None
+        self.assertIsNone(x_points)
+        self.assertIsNone(y_points)
 
     @patch("builtins.input", side_effect=["0.5*y", "1", "5.0", "1.0", "0.5", "n", "4", ""])
     def test_cancel_on_output_prompt(self, _):
         from src.maths.odelib import prompt_and_solve
         x_points, y_points = prompt_and_solve()
-        assert x_points is None
-        assert y_points is None
+        self.assertIsNone(x_points)
+        self.assertIsNone(y_points)

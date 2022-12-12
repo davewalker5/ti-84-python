@@ -19,4 +19,4 @@ class TestFibonacci(unittest.TestCase):
     def test_can_return_n_entries(self, _):
         from src.maths.fibonaci import fibonacci
         series = fibonacci(8)
-        assert [1, 1, 2, 3, 5, 8, 13, 21] == series
+        self.assertEqual([1, 1, 2, 3, 5, 8, 13, 21], series)

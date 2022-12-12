@@ -1,5 +1,6 @@
 import ti_plotlib as plt
 from iptutils import prompt_for_option, prompt_for_float, prompt_for_integer, prompt_for_yes_no
+from strutils import truncate_string
 
 EULER = 0
 PREDICTOR_CORRECTOR = 1
@@ -227,7 +228,9 @@ def solve(f, options):
         y_points.append(round(y, options["precision"]))
 
         if options["output_type"] == OUTPUT_TEXT:
-            print(current_step, t_points[-1], y_points[-1])
+            print(current_step,
+                  truncate_string(t_points[-1], options["precision"]),
+                  truncate_string(y_points[-1], options["precision"]))
             if ((current_step + 1) % PAGE_SIZE) == 0:
                 _ = input("Press ENTER for next page")
 

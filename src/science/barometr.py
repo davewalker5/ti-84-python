@@ -1,5 +1,6 @@
 from iptutils import prompt_for_option, prompt_for_option_with_values, prompt_for_float
 from oututils import print_title
+from strutils import truncate_string
 from math import exp
 
 #: Gravitational acceleration m/s/s
@@ -22,6 +23,8 @@ MMHG = 2
 PRESSURE_SCALES = ["Pascal (Pa)", "Hectopascal (hPa, mb)", "mmHg"]
 PRESSURE_UNITS = [PASCAL, HECTOPASCAL, MMHG]
 PRESSURE_REPORT = ["Pa", "hPa", "mmHg"]
+
+DECIMAL_PLACES = 4
 
 
 def pa_to_hpa(p):
@@ -169,11 +172,11 @@ def pressure_conversion():
         return
 
     # Perform the conversion and output the results
-    converted_pressure = convert(pressure, from_units, to_units, 4)
+    converted_pressure = convert(pressure, from_units, to_units, DECIMAL_PLACES)
 
     print()
     print(str(pressure) + PRESSURE_REPORT[from_units] + " = " +
-          str(converted_pressure) + PRESSURE_REPORT[to_units])
+          truncate_string(converted_pressure, DECIMAL_PLACES) + PRESSURE_REPORT[to_units])
     print()
 
 
@@ -198,10 +201,12 @@ def calculate_pressure():
     if t is None:
         return
 
-    pressure = calculate_p_from_p0(p, h, t, 4) if calculation == 1 else calculate_p0_from_p(p, h, t, 4)
+    pressure = calculate_p_from_p0(p, h, t, DECIMAL_PLACES) \
+        if calculation == 1 \
+        else calculate_p0_from_p(p, h, t, DECIMAL_PLACES)
 
     print()
-    print("P" + ("0" if calculation == 2 else "") + " = " + str(pressure) + "Pa")
+    print("P" + ("0" if calculation == 2 else "") + " = " + truncate_string(pressure, DECIMAL_PLACES) + "Pa")
     print()
 
 
