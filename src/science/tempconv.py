@@ -1,5 +1,6 @@
 from iptutils import prompt_for_option_with_values, prompt_for_float
 from oututils import print_title
+from strutils import truncate_string
 
 CENTIGRADE = 0
 FAHRENHEIT = 1
@@ -8,6 +9,8 @@ KELVIN = 2
 TEMPERATURE_SCALES = ["Centigrade", "Fahrenheit", "Kelvin"]
 TEMPERATURE_UNITS = [CENTIGRADE, FAHRENHEIT, KELVIN]
 TEMPERATURE_REPORT = ["\u00b0C", "\u00b0F", "K"]
+
+DECIMAL_PLACES = 4
 
 
 def centigrade_to_fahrenheit(c):
@@ -125,11 +128,11 @@ def wrapper():
             return
 
         # Perform the conversion and output the results
-        converted_temperature = convert(temperature, from_units, to_units, 4)
+        converted_temperature = convert(temperature, from_units, to_units, DECIMAL_PLACES)
 
         print()
         print(str(temperature) + TEMPERATURE_REPORT[from_units] + " = " +
-              str(converted_temperature) + TEMPERATURE_REPORT[to_units])
+              truncate_string(converted_temperature, DECIMAL_PLACES) + TEMPERATURE_REPORT[to_units])
         print()
 
 

@@ -54,11 +54,12 @@ class TestRK4(unittest.TestCase):
 
         x_points, y_points = solve(f, options)
 
-        assert len(EXPECTED_SOLUTION_FIXED_STEP_SIZE) == len(x_points)
-        assert len(EXPECTED_SOLUTION_FIXED_STEP_SIZE) == len(y_points)
+        self.assertEqual(len(EXPECTED_SOLUTION_FIXED_STEP_SIZE), len(x_points))
+        self.assertEqual(len(EXPECTED_SOLUTION_FIXED_STEP_SIZE), len(y_points))
         for i, point in enumerate(EXPECTED_SOLUTION_FIXED_STEP_SIZE):
-            assert point["t"] == x_points[i]
-            assert point["y"] == y_points[i]
+            self.assertEqual(point["t"], x_points[i])
+            self.assertEqual(point["y"], y_points[i])
+
 
     def test_rk4_with_string_function(self):
         options = {
@@ -73,11 +74,11 @@ class TestRK4(unittest.TestCase):
 
         x_points, y_points = solve("0.5*y", options)
 
-        assert len(EXPECTED_SOLUTION_FIXED_STEP_SIZE) == len(x_points)
-        assert len(EXPECTED_SOLUTION_FIXED_STEP_SIZE) == len(y_points)
+        self.assertEqual(len(EXPECTED_SOLUTION_FIXED_STEP_SIZE), len(x_points))
+        self.assertEqual(len(EXPECTED_SOLUTION_FIXED_STEP_SIZE), len(y_points))
         for i, point in enumerate(EXPECTED_SOLUTION_FIXED_STEP_SIZE):
-            assert point["t"] == x_points[i]
-            assert point["y"] == y_points[i]
+            self.assertEqual(point["t"], x_points[i])
+            self.assertEqual(point["y"], y_points[i])
 
     def test_rk4__variable_step_solution(self):
         options = {
@@ -93,8 +94,8 @@ class TestRK4(unittest.TestCase):
 
         x_points, y_points = solve(f, options)
 
-        assert len(EXPECTED_SOLUTION_VARIABLE_STEP) == len(x_points)
-        assert len(EXPECTED_SOLUTION_VARIABLE_STEP) == len(y_points)
+        self.assertEqual(len(EXPECTED_SOLUTION_VARIABLE_STEP), len(x_points))
+        self.assertEqual(len(EXPECTED_SOLUTION_VARIABLE_STEP), len(y_points))
         for i, point in enumerate(EXPECTED_SOLUTION_VARIABLE_STEP):
-            assert point["t"] == x_points[i]
-            assert point["y"] == y_points[i]
+            self.assertEqual(point["t"], x_points[i])
+            self.assertEqual(point["y"], y_points[i])
