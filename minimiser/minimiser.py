@@ -2,7 +2,7 @@ from os import makedirs
 from os.path import basename, dirname, join, exists
 from pathlib import Path
 
-EXCLUDED_FILES = ["__init__.py", "ti_plotlib.py"]
+EXCLUDED_FILES = ["__init__.py", "ti_plotlib.py", "ti_system.py", "turtle.py"]
 
 
 def get_project_folder():
