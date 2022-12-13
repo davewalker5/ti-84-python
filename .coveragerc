@@ -4,6 +4,8 @@ omit =
     src/examples/*
     src/common/ti_plotlib.py
     src/maths/odesolvr.py
+    src/mocks/*
+    src/turtle_apps/*
 
 [report]
 exclude_lines =
