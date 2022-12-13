@@ -5,12 +5,15 @@ omit =
     src/common/ti_plotlib.py
     src/maths/odesolvr.py
     src/mocks/*
-    src/turtle_apps/*
+    src/turtle_apps/turtplay.py
+    src/turtle_apps/turtintr.py
 
 [report]
 exclude_lines =
+    pragma: no cover
     def wrapper
     def print_list
     def draw_chart
     def pressure_conversion
     def calculate_pressure
+    def replay
