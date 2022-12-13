@@ -7,6 +7,7 @@ TI-84 CE-T Python Edition
 
    maths/index
    science/index
+   turtle_apps/index
    common/index
    examples/index
 

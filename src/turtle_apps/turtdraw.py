@@ -61,6 +61,15 @@ class TurtleDraw(Turtle):
         else:
             self.penup()
 
+    @property
+    def pen_state(self):
+        """
+        Return the current state of the pen
+
+        :return: True if the pen is down, False if not
+        """
+        return self._pen_state
+
     def replay(self):
         """
         Replay all instructions in the history
@@ -85,12 +94,32 @@ class TurtleDraw(Turtle):
             self.move(270, TurtleDraw.STEP_SIZE)
         elif key_code == TurtleDraw.KEY_P:
             self.toggle_pen_state()
-        elif key_code == TurtleDraw.KEY_H:
+        elif key_code == TurtleDraw.KEY_H:  # pragma: no cover
             if self._history:
                 self.replay()
         elif key_code == TurtleDraw.KEY_CLEAR:
             self.reset()
             self._history.clear()
+
+    @staticmethod
+    def map_key_code_to_character(key_code):
+        """
+        Map a key code to the corresponding character from the "play_string" instruction set
+
+        :param key_code: Key code to map
+        :return: Corresponding character
+        """
+        return [k for k, v in TurtleDraw.INSTRUCTION_MAP.items()if v == key_code][0]
+
+    @property
+    def instructions_string(self):
+        """
+        Return the current history as an instruction string
+
+        :return: Instructions string suitable for use with play_string
+        """
+        instructions = "".join(list(map(TurtleDraw.map_key_code_to_character, self._history)))
+        return instructions
 
     def play_string(self, instructions):
         """
@@ -104,7 +133,7 @@ class TurtleDraw(Turtle):
                 key_code = TurtleDraw.INSTRUCTION_MAP[c]
                 if key_code == TurtleDraw.KEY_QUIT:
                     return
-                elif key_code != TurtleDraw.KEY_H:
+                elif key_code != TurtleDraw.KEY_H:  # pragma: no cover
                     self._history.append(key_code)
                 self.handle_key(key_code)
             except KeyError:
@@ -121,7 +150,8 @@ class TurtleDraw(Turtle):
         while True:
             key_code = wait_key()
             if key_code == TurtleDraw.KEY_QUIT:
+                print("BREAKING")
                 break
-            elif key_code != TurtleDraw.KEY_H:
+            elif key_code != TurtleDraw.KEY_H:  # pragma: no cover
                 self._history.append(key_code)
             self.handle_key(key_code)
