@@ -5,20 +5,20 @@ if _OS in ["windows", "darwin"]:
     from pynput import keyboard
     from pynput.keyboard import Key
 
-#: Mapping between Pynput keystrokes and TI key codes
-#: Only those mappings needed to support the apps in this repo are represented
-KEY_CODE_MAP = {
-    Key.right: 1,
-    Key.left: 2,
-    Key.up: 3,
-    Key.down: 4,
-    "p": 150,
-    "P": 150,
-    "h": 132,
-    "H": 132,
-    Key.backspace: 9,
-    Key.esc: 64
-}
+    #: Mapping between Pynput keystrokes and TI key codes
+    #: Only those mappings needed to support the apps in this repo are represented
+    KEY_CODE_MAP = {
+        Key.right: 1,
+        Key.left: 2,
+        Key.up: 3,
+        Key.down: 4,
+        "p": 150,
+        "P": 150,
+        "h": 132,
+        "H": 132,
+        Key.backspace: 9,
+        Key.esc: 64
+    }
 
 _key = None
 
