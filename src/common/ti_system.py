@@ -1,5 +1,9 @@
-from pynput import keyboard
-from pynput.keyboard import Key
+from platform import system
+_OS = system().casefold()
+
+if _OS in ["windows", "darwin"]:
+    from pynput import keyboard
+    from pynput.keyboard import Key
 
 #: Mapping between Pynput keystrokes and TI key codes
 #: Only those mappings needed to support the apps in this repo are represented
@@ -48,12 +52,16 @@ def wait_key():
 
     :return: TI key code
     """
-    # Note that on MacOS, if this application is run in e.g. PyCharm then PyCharm needs to be
-    # added to the "Accessibility" settings under System Settings
-    with keyboard.Listener(on_press=on_press_key, on_release=on_release_key, suppress=True) as listener:
-        listener.join()
+    global _OS
+    if _OS in ["windows", "darwin"]:
+        # Note that on MacOS, if this application is run in e.g. PyCharm then PyCharm needs to be
+        # added to the "Accessibility" settings under System Settings
+        with keyboard.Listener(on_press=on_press_key, on_release=on_release_key, suppress=True) as listener:
+            listener.join()
 
-    # Map the desktop keycode to the set of configured TI-84 key codes
-    global _key
-    ti_keycode = KEY_CODE_MAP[_key] if _key in KEY_CODE_MAP.keys() else None
-    return ti_keycode
+        # Map the desktop keycode to the set of configured TI-84 key codes
+        global _key
+        ti_keycode = KEY_CODE_MAP[_key] if _key in KEY_CODE_MAP.keys() else None
+        return ti_keycode
+    else:
+        return None
