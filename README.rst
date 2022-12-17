@@ -45,12 +45,16 @@ Structure
 +--------------+----------------------------------------------------------------------+
 | maths        | Maths applications and library code                                  |
 +--------------+----------------------------------------------------------------------+
-| mocks        | Mock implementations of TI-specific libraries                        |
-+--------------+----------------------------------------------------------------------+
 | science      | Science applications and library code                                |
++--------------+----------------------------------------------------------------------+
+| ti_desktop   | Minimal/mock implementations of TI-specific libraries                |
 +--------------+----------------------------------------------------------------------+
 | turtle_apps  | Applciations written over the TI "turtle" library                    |
 +--------------+----------------------------------------------------------------------+
+
+The ti_desktop package contains minimal implementations of the TI libraries that allow the applications to be
+developed, tested and run on a desktop machine. It is not a full implementation of the TI libraries and contains
+just sufficient implementation to support the applications in this repository.
 
 Library Code
 ------------
@@ -66,21 +70,10 @@ The following contain library code that is used across the other applications:
 +---------------+------------------+-------------------------------------------------------+
 | strutils.py   | src/common       | Utility methods for string manipulation               |
 +---------------+------------------+-------------------------------------------------------+
-| ti_plotlib.py | src/common       | Minimal implementation of TI PlotLib using Matplotlib |
-+---------------+------------------+-------------------------------------------------------+
 | odelib.py     | src/maths        | Ordinary Differential Equation solver                 |
 +---------------+------------------+-------------------------------------------------------+
 | turtdraw.py   | src/turtle_apps  | Interactive wrapper over the TI Turtle class          |
 +---------------+------------------+-------------------------------------------------------+
-
-ti_plotlib
-----------
-
-The ti_plotlib module is a minimal implementation of TI PlotLib using Matplotlib and allows the applications to
-be run on a desktop machine, for development and testing purposes. Note that it is not a full implementation of
-ti_plotlib as found on the calculator and contains just sufficient implementation to support the applications in
-this repository.
-
 
 Applications
 ============
@@ -148,13 +141,13 @@ Pre-requisites
 --------------
 
 To run the applications on a desktop machine, a virtual environment should be created, the requirements should
-be installed using pip and the environment should be activated. The "src", "src/common" and "src/maths" folders should be
-added to PYTHONPATH.
+be installed using pip and the environment should be activated. The sub-folders in the "src" folder should all be
+added to PYTHONPATH, with the exception of the "utils" sub-folder.
 
 Running the Applications
 ------------------------
 
-With the pre-requisites in place, the ODE Solver examples can then be run from the command line, at the root of the project folder, as follows:
+With the pre-requisites in place, applciations can then be run from the command line, at the root of the project folder, as follows:
 
 ::
 
@@ -167,15 +160,13 @@ example:
 
     python src/examples/odeex1.py
 
-The first command adds the source folder, containing the application source , to the PYTHONPATH environment variable
-so the packages will be found at run time. The command will need to be modified based on the current operating system.
-
 
 Unit Tests and Coverage
 =======================
 
-To run the unit tests, a virtual environment should be created, the requirements should be installed using pip and the
-environment should be activated. The "src", "src/common" and "src/maths" folders should be added to PYTHONPATH.
+To run the unit tests, a virtual environment should be created, the requirements should be installed using pip and the environment should be
+activated. The "tests\mocks" folder and the sub-folders in the "src" folder should all be added to PYTHONPATH, with the exception of the "ti_desktop"
+and "utils" sub-folders.
 
 The tests can then be run from the command line, at the root of the project folder, as follows:
 
@@ -196,9 +187,9 @@ This will create a folder "cov_html" containing the coverage report in HTML form
 Generating Documentation
 ========================
 
-To generate the documentation, a virtual environment should be created, the requirements should be installed
-using pip and the environment should be activated. The "src", "src/common" and "src/maths" folders should be
-added to PYTHONPATH.
+To generate the documentation, a virtual environment should be created, the requirements should be installed using pip and the
+environment should be activated. The "tests\mocks" folder and the sub-folders in the "src" folder should all be added to
+PYTHONPATH, with the exception of the "ti_desktop" and "utils" sub-folders.
 
 HTML documentation can then be created by running the following commands from the "docs" sub-folder:
 
@@ -210,8 +201,8 @@ The resulting documentation is written to the docs/build/html folder and can be 
 in a web browser.
 
 Note that, currently, the example applications will run while the documentation is being generated and the prompts
-for input and any plot windows produced will need to be dismissed, as the implementation of Python for the TI-84
-doesn't support "__main__", which could be used to suppress this behaviour.
+for input will need to be dismissed, as the implementation of Python for the TI-84 doesn't support "__main__", which could
+be used to suppress this behaviour.
 
 
 Dependencies
