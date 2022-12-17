@@ -165,7 +165,7 @@ Unit Tests and Coverage
 =======================
 
 To run the unit tests, a virtual environment should be created, the requirements should be installed using pip and the environment should be
-activated. The "tests\mocks" folder and the sub-folders in the "src" folder should all be added to PYTHONPATH, with the exception of the "ti_desktop"
+activated. The "tests\\mocks" folder and the sub-folders in the "src" folder should all be added to PYTHONPATH, with the exception of the "ti_desktop"
 and "utils" sub-folders.
 
 The tests can then be run from the command line, at the root of the project folder, as follows:
@@ -188,7 +188,7 @@ Generating Documentation
 ========================
 
 To generate the documentation, a virtual environment should be created, the requirements should be installed using pip and the
-environment should be activated. The "tests\mocks" folder and the sub-folders in the "src" folder should all be added to
+environment should be activated. The "tests\\mocks" folder and the sub-folders in the "src" folder should all be added to
 PYTHONPATH, with the exception of the "ti_desktop" and "utils" sub-folders.
 
 HTML documentation can then be created by running the following commands from the "docs" sub-folder:
