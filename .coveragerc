@@ -2,10 +2,8 @@
 omit =
     tests/*
     src/examples/*
-    src/common/ti_plotlib.py
-    src/common/ti_system.py
     src/maths/odesolvr.py
-    src/mocks/*
+    src/ti_desktop/*
     src/turtle_apps/turtplay.py
     src/turtle_apps/turtintr.py
     src/utils/*
