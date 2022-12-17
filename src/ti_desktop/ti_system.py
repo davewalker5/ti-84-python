@@ -1,7 +1,7 @@
 from platform import system
 _OS = system().casefold()
 
-if _OS in ["windows", "darwin"]:
+if _OS in ["windows", "win32", "darwin"]:
     from pynput import keyboard
     from pynput.keyboard import Key
 
@@ -53,7 +53,7 @@ def wait_key():
     :return: TI key code
     """
     global _OS
-    if _OS in ["windows", "darwin"]:
+    if _OS in ["windows", "win32", "darwin"]:
         # Note that on MacOS, if this application is run in e.g. PyCharm then PyCharm needs to be
         # added to the "Accessibility" settings under System Settings
         with keyboard.Listener(on_press=on_press_key, on_release=on_release_key, suppress=True) as listener:
