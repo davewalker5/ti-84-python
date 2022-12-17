@@ -8,5 +8,3 @@ Common Code
    iptutils
    oututils
    strutils
-   ti_plotlib
-   ti_system

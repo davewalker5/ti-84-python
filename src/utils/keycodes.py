@@ -9,4 +9,4 @@ while key_code != 64:
     print("Press a key ", end="")
     key_code = wait_key()
     if key_code != 64:
-        print(key_code, chr(key_code))
+        print("Key code = " + str(key_code))
