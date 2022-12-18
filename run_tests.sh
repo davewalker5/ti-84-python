@@ -2,5 +2,22 @@
 
 export PROJECT_ROOT=$( cd "$(dirname "$0")" ; pwd -P )
 source "$PROJECT_ROOT/venv/bin/activate"
-export PYTHONPATH="$PROJECT_ROOT/src:$PROJECT_ROOT/src/common:$PROJECT_ROOT/src/mocks:$PROJECT_ROOT/src/maths"
+
+src_paths=""
+for dir in $PROJECT_ROOT/src/* ; do
+  dir_name=$dir:t
+  if [ -d "$dir" ] && [ "$dir_name" != "__pycache__" ] && [ "$dir_name" != "ti_desktop" ]; then
+    if [ "$src_paths" != "" ] ; then
+      src_paths="$src_paths:$dir"
+    else
+      src_paths=$dir
+    fi
+  fi
+done
+
+export PYTHONPATH="$PROJECT_ROOT/tests/mocks:$src_paths"
+
+echo Project root = $PROJECT_ROOT
+echo Python Path  = $PYTHONPATH
+
 python -m unittest
