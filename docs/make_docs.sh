@@ -3,7 +3,7 @@
 source ../venv/bin/activate
 PROJECT_ROOT=${0:a:h}/..
 
-src_paths=""
+src_paths="$PROJECT_ROOT/src"
 for dir in $PROJECT_ROOT/src/* ; do
   dir_name=$dir:t
   if [ -d "$dir" ] && [ "$dir_name" != "__pycache__" ] && [ "$dir_name" != "ti_desktop" ]; then
