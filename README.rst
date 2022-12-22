@@ -66,19 +66,19 @@ The following contain library code that is used across the other applications:
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | File Name     | Location         | Contents                                              | Dependencies         |
 +---------------+------------------+-------------------------------------------------------+----------------------+
-| iptutils.py   | src/common       | Utility methods to prompt for an validate user input  | -                    |
+| iptutils.py   | src/common       | Utility methods to prompt for an validate user input  | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
-| oututils.py   | src/common       | Utility methods for text-based output                 | -                    |
+| oututils.py   | src/common       | Utility methods for text-based output                 | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
-| strutils.py   | src/common       | Utility methods for string manipulation               | -                    |
+| strutils.py   | src/common       | Utility methods for string manipulation               | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
-| fibonaci.py   | src/maths        | Fibonnaci series calculator                           | -                    |
+| fibonaci.py   | src/maths        | Fibonnaci series calculator                           | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | odelib.py     | src/maths        | Ordinary Differential Equation solver                 | ti_plotlib, strutils |
 +---------------+------------------+-------------------------------------------------------+----------------------+
-| barometr.py   | src/science      | Barometric pressure calculations and conversions      | -                    |
+| barometr.py   | src/science      | Barometric pressure calculations and conversions      | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
-| tempconv.py   | src/science      | Temperature conversions                               | -                    |
+| tempconv.py   | src/science      | Temperature conversions                               | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | turtdraw.py   | src/turtle_apps  | Interactive wrapper over the TI Turtle class          | ti_system, turtle    |
 +---------------+------------------+-------------------------------------------------------+----------------------+
