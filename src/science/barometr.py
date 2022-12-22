@@ -1,5 +1,4 @@
 from iptutils import prompt_for_option, prompt_for_option_with_values, prompt_for_float
-from oututils import print_title
 from strutils import truncate_string
 from math import exp
 
@@ -209,19 +208,3 @@ def calculate_pressure():
     print("P" + ("0" if calculation == 2 else "") + " = " + truncate_string(pressure, DECIMAL_PLACES) + "Pa")
     print()
 
-
-def wrapper():
-    """
-    Wrapper round the pressure converter and calculator that prompts for user input
-    """
-    print_title("Pressure Converter/Calculator")
-    while True:
-        option = prompt_for_option(["Pressure conversion", "Pressure calculation"], "Calculation type")
-        if option == 1:
-            pressure_conversion()
-        elif option == 2:
-            calculate_pressure()
-        else:
-            return
-
-wrapper()
