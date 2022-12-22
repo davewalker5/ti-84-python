@@ -37,8 +37,8 @@ class TurtleDraw(Turtle):
         """
         Reset the state of the Turtle but do not clear the history
         """
-        self.clear()
         self.home()
+        self.clear()
         self._pen_state = True
 
     def move(self, heading, distance):
@@ -149,6 +149,7 @@ class TurtleDraw(Turtle):
         self.showturtle()
         while True:
             key_code = wait_key()
+            print(key_code)
             if key_code == TurtleDraw.KEY_QUIT:
                 break
             elif key_code != TurtleDraw.KEY_H:  # pragma: no cover
