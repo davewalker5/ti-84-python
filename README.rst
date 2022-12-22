@@ -63,61 +63,61 @@ Library Code
 
 The following contain library code that is used across the other applications:
 
-+---------------+------------------+-------------------------------------------------------+
-| File Name     | Location         | Contents                                              |
-+---------------+------------------+-------------------------------------------------------+
-| iptutils.py   | src/common       | Utility methods to prompt for an validate user input  |
-+---------------+------------------+-------------------------------------------------------+
-| oututils.py   | src/common       | Utility methods for text-based output                 |
-+---------------+------------------+-------------------------------------------------------+
-| strutils.py   | src/common       | Utility methods for string manipulation               |
-+---------------+------------------+-------------------------------------------------------+
-| fibonaci.py   | src/maths        | Fibonnaci series calculator                           |
-+---------------+------------------+-------------------------------------------------------+
-| odelib.py     | src/maths        | Ordinary Differential Equation solver                 |
-+---------------+------------------+-------------------------------------------------------+
-| barometr.py   | src/science      | Barometric pressure calculations and conversions      |
-+---------------+------------------+-------------------------------------------------------+
-| tempconv.py   | src/science      | Temperature conversions                               |
-+---------------+------------------+-------------------------------------------------------+
-| turtdraw.py   | src/turtle_apps  | Interactive wrapper over the TI Turtle class          |
-+---------------+------------------+-------------------------------------------------------+
++---------------+------------------+-------------------------------------------------------+----------------------+
+| File Name     | Location         | Contents                                              | Dependencies         |
++---------------+------------------+-------------------------------------------------------+----------------------+
+| iptutils.py   | src/common       | Utility methods to prompt for an validate user input  | -                    |
++---------------+------------------+-------------------------------------------------------+----------------------+
+| oututils.py   | src/common       | Utility methods for text-based output                 | -                    |
++---------------+------------------+-------------------------------------------------------+----------------------+
+| strutils.py   | src/common       | Utility methods for string manipulation               | -                    |
++---------------+------------------+-------------------------------------------------------+----------------------+
+| fibonaci.py   | src/maths        | Fibonnaci series calculator                           | -                    |
++---------------+------------------+-------------------------------------------------------+----------------------+
+| odelib.py     | src/maths        | Ordinary Differential Equation solver                 | ti_plotlib, strutils |
++---------------+------------------+-------------------------------------------------------+----------------------+
+| barometr.py   | src/science      | Barometric pressure calculations and conversions      | -                    |
++---------------+------------------+-------------------------------------------------------+----------------------+
+| tempconv.py   | src/science      | Temperature conversions                               | -                    |
++---------------+------------------+-------------------------------------------------------+----------------------+
+| turtdraw.py   | src/turtle_apps  | Interactive wrapper over the TI Turtle class          | ti_system, turtle    |
++---------------+------------------+-------------------------------------------------------+----------------------+
 
 Applications
 ============
 
 The following table summarises the available applications:
 
-+-------------+------------------+------------------------------------------------------------------------------------+--------------------------+
-| File        | Location         | Comments                                                                           | Dependencies             |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------------------+
-| odeex1.py   | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = Ay                        | odelib.py, iptutils.py   |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------------------+
-| odeex2.py   | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = y - t^2 + 1               | odelib.py, iptutils.py   |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------------------+
-| odeex3.py   | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = yt^2 - y                  | odelib.py, iptutils.py   |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------------------+
-| odeex4.py   | src/examples     | Programmatic example for the ODE Library : Solve dy/dx = yt^2 - y with text output | odelib.py, iptutils.py   |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------------------+
-| odeex5.py   | src/examples     | Example for the ODE Library : Solve dy/dx = yt^2 - y with text output              | odelib.py, iptutils.py   |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------------------+
-| baromui.py  | src/ui           | Biometric pressure converter and calculator                                        | iptutils.py, oututils.py |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------------------+
-| fibonaui.py | src/ui           | Calculate and display the Fibonacci series                                         | iptutils.py, oututils.py |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------------------+
-| odesolvr.py | src/ui           | Prompt for an equation and solution options then solve the equation                | odelib.py, iptutils.py   |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------------------+
-| temperui.py | src/ui           | Centigrade, Fahrenheit and Kelvin temperature converter                            | iptutils.py, oututils.py |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------------------+
-| turtplay.py | src/turtle_apps  | Replay a pre-prepared string of instructions for TurtleDraw                        | turtdraw.py              |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------------------+
-| turtintr.py | src/turtle_apps  | Interactive control of TurtleDraw                                                  | turtdraw.py              |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------------------+
++-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------------+
+| File        | Location         | Comments                                                                           | Dependencies                                       |
++-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------------+
+| odeex1.py   | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = Ay                        | odelib.py                                          |
++-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------------+
+| odeex2.py   | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = y - t^2 + 1               | odelib.py                                          |
++-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------------+
+| odeex3.py   | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = yt^2 - y                  | odelib.py                                          |
++-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------------+
+| odeex4.py   | src/examples     | Programmatic example for the ODE Library : Solve dy/dx = yt^2 - y with text output | odelib.py                                          |
++-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------------+
+| odeex5.py   | src/examples     | Example for the ODE Library : Solve dy/dx = yt^2 - y with text output              | odelib.py                                          |
++-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------------+
+| turtplay.py | src/examples     | Replay a pre-prepared string of instructions for TurtleDraw                        | turtdraw.py                                        |
++-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------------+
+| baromui.py  | src/ui           | Biometric pressure converter and calculator                                        | iptutils.py, oututils.py, strutils.py, barometr.py |
++-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------------+
+| fibonaui.py | src/ui           | Calculate and display the Fibonacci series                                         | iptutils.py, oututils.py, fibonaci.py              |
++-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------------+
+| odesolvr.py | src/ui           | Prompt for an equation and solution options then solve the equation                | odelib.py, iptutils.py                             |
++-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------------+
+| temperui.py | src/ui           | Centigrade, Fahrenheit and Kelvin temperature converter                            | iptutils.py, oututils.py, strutils.py, tempconv.py |
++-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------------+
+| turtleui.py | src/ui           | Interactive control of TurtleDraw                                                  | turtdraw.py                                        |
++-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------------+
 
 Running the Applications on the Calculator
 ------------------------------------------
 
-Transfer the application and its dependencies to the Calculator using the TI Connect CE application then run the
+Transfer the application and its dependencies (including the dependecies of the library code it uses) to the Calculator using the TI Connect CE application then run the
 application as normal.
 
 Minimising the Source Code
