@@ -168,8 +168,8 @@ def calculate_difference(t, y, step_size, f, is_function, method):
 
 def adjust_step_size(t, y, step_size, tolerance, f, is_function, method):
     """
-    Adjust the step size to find one that is as large as possible while still
-    giving a result that's within tolerance limits
+    Adjust the step size to find one that is as large as possible while still giving a result that's within
+    tolerance limits
 
     :param t: Independent variable
     :param y: Dependent variable
@@ -181,6 +181,11 @@ def adjust_step_size(t, y, step_size, tolerance, f, is_function, method):
     :return: Tuple of updated time, dependent variable and step size and the difference
     """
     t1, y1, y2, difference = calculate_difference(t, y, step_size, f, is_function, method)
+
+    while difference <= tolerance:
+        step_size = step_size * 2
+        t1, y1, y2, difference = calculate_difference(t, y, step_size, f, is_function, method)
+
     while difference > tolerance:
         step_size = step_size / 2
         t1, y1, y2, difference = calculate_difference(t, y, step_size, f, is_function, method)
