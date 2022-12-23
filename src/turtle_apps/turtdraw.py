@@ -149,7 +149,6 @@ class TurtleDraw(Turtle):
         self.showturtle()
         while True:
             key_code = wait_key()
-            print(key_code)
             if key_code == TurtleDraw.KEY_QUIT:
                 break
             elif key_code != TurtleDraw.KEY_H:  # pragma: no cover
