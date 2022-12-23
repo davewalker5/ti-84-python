@@ -7,4 +7,3 @@ The maths Package
 
    fibonaci
    odelib
-   odesolvr

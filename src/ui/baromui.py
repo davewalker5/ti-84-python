@@ -1,12 +1,8 @@
-"""
-Wrapper round the barometric pressure converter and calculator that prompts for user input
-"""
-
 from iptutils import prompt_for_option, prompt_for_option_with_values, prompt_for_float
 from oututils import print_title
 from strutils import truncate_string
 from barometr import PASCAL, HECTOPASCAL, MMHG, convert, calculate_p0_from_p, calculate_p_from_p0
-
+from os import environ
 
 PRESSURE_SCALES = ["Pascal (Pa)", "Hectopascal (hPa, mb)", "mmHg"]
 PRESSURE_UNITS = [PASCAL, HECTOPASCAL, MMHG]
@@ -74,12 +70,20 @@ def calculate_pressure():
     print()
 
 
-print_title("Pressure Converter/Calculator")
-while True:
-    option = prompt_for_option(["Pressure conversion", "Pressure calculation"], "Calculation type")
-    if option == 1:
-        pressure_conversion()
-    elif option == 2:
-        calculate_pressure()
-    else:
-        break
+def main():
+    """
+    Entry point for the barometric pressure application
+    """
+    print_title("Pressure Converter/Calculator")
+    while True:
+        option = prompt_for_option(["Pressure conversion", "Pressure calculation"], "Calculation type")
+        if option == 1:
+            pressure_conversion()
+        elif option == 2:
+            calculate_pressure()
+        else:
+            break
+
+
+if "DOCBUILD" not in environ:
+    main()

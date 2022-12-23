@@ -10,3 +10,4 @@ The examples Package
    odeex3
    odeex4
    odeex5
+   turtplay

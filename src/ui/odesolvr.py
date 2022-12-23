@@ -1,13 +1,9 @@
-"""
-Wrapper around the ODE library that prompts for the equation and solution options then solves the supplied
-equation
-"""
-
 from iptutils import prompt_for_option, prompt_for_float, prompt_for_integer, prompt_for_yes_no
 from odelib import solve
+from os import environ
 
 
-def prompt_and_solve():
+def main():
     """
     Prompt for the equation to solve and the solution options then solve the equation.
 
@@ -68,4 +64,6 @@ def prompt_and_solve():
     })
 
 
-prompt_and_solve()
+
+if "DOCBUILD" not in environ:
+    main()
