@@ -34,9 +34,9 @@ Programmatic mode is illustrated in the ODEEX*.py examples. These all follow the
 - Run the solution using the solve() method
 - Optionally, capture the solution history, returned by solve(), and perform further operations on it
 
-Defining the function is optional as it is possible to supply the function as a string representation in
-programmatic mode, as is the case in the ODEEX2.py and ODEEX5.py examples. However, as noted above, this
-is inefficient and the expected approach is to supply the function to solve as a Python function.
+In principle, defining a Python function to solve is optional as it is possible to supply the function as
+a string representation in programmatic mode. However, as noted above, this is inefficient and the expected
+approach is to supply the function to solve as a Python function.
 
 The solve function returns a tuple of a list of two lists of points in the solution, for the independent
 and dependent variables, in that order.
