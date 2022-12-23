@@ -1,7 +1,6 @@
 from iptutils import prompt_for_integer, prompt_for_yes_no
 from oututils import print_title, print_list
 from fibonaci import fibonacci
-from os import environ
 
 
 def main():
@@ -26,5 +25,12 @@ def main():
             print("Entry #" + str(number) + " = " + str(series[-1]))
 
 
-if "DOCBUILD" not in environ:
+try:
+    # Suppress the application if we're building documentation
+    from os import environ
+    if "DOCBUILD" not in environ:
+        main()
+
+except ImportError:
+    # Likely to be running on the calculator so run the application
     main()

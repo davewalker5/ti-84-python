@@ -2,7 +2,6 @@ from iptutils import prompt_for_option, prompt_for_option_with_values, prompt_fo
 from oututils import print_title
 from strutils import truncate_string
 from barometr import PASCAL, HECTOPASCAL, MMHG, convert, calculate_p0_from_p, calculate_p_from_p0
-from os import environ
 
 PRESSURE_SCALES = ["Pascal (Pa)", "Hectopascal (hPa, mb)", "mmHg"]
 PRESSURE_UNITS = [PASCAL, HECTOPASCAL, MMHG]
@@ -85,5 +84,12 @@ def main():
             break
 
 
-if "DOCBUILD" not in environ:
+try:
+    # Suppress the application if we're building documentation
+    from os import environ
+    if "DOCBUILD" not in environ:
+        main()
+
+except ImportError:
+    # Likely to be running on the calculator so run the application
     main()

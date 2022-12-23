@@ -1,19 +1,15 @@
 [run]
 omit =
     tests/*
+    src/common/oututils.py
     src/examples/*
     src/maths/odesolvr.py
     src/ti_desktop/*
-    src/turtle_apps/turtplay.py
-    src/turtle_apps/turtintr.py
+    src/ui/*
     src/utils/*
 
 [report]
 exclude_lines =
     pragma: no cover
-    def wrapper
-    def print_list
     def draw_chart
-    def pressure_conversion
-    def calculate_pressure
     def replay

@@ -1,6 +1,5 @@
 from iptutils import prompt_for_option, prompt_for_float, prompt_for_integer, prompt_for_yes_no
 from odelib import solve
-from os import environ
 
 
 def main():
@@ -64,6 +63,12 @@ def main():
     })
 
 
+try:
+    # Suppress the application if we're building documentation
+    from os import environ
+    if "DOCBUILD" not in environ:
+        main()
 
-if "DOCBUILD" not in environ:
+except ImportError:
+    # Likely to be running on the calculator so run the application
     main()

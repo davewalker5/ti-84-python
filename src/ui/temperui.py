@@ -2,7 +2,6 @@ from iptutils import prompt_for_option_with_values, prompt_for_float
 from oututils import print_title
 from strutils import truncate_string
 from tempconv import CENTIGRADE, FAHRENHEIT, KELVIN, DECIMAL_PLACES, convert
-from os import environ
 
 
 TEMPERATURE_SCALES = ["Centigrade", "Fahrenheit", "Kelvin"]
@@ -41,5 +40,12 @@ def main():
         print()
 
 
-if "DOCBUILD" not in environ:
+try:
+    # Suppress the application if we're building documentation
+    from os import environ
+    if "DOCBUILD" not in environ:
+        main()
+
+except ImportError:
+    # Likely to be running on the calculator so run the application
     main()

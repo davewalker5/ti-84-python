@@ -1,5 +1,4 @@
 from turtdraw import TurtleDraw
-from os import environ
 
 
 def main():
@@ -10,5 +9,12 @@ def main():
     td.event_loop()
 
 
-if "DOCBUILD" not in environ:
+try:
+    # Suppress the application if we're building documentation
+    from os import environ
+    if "DOCBUILD" not in environ:
+        main()
+
+except ImportError:
+    # Likely to be running on the calculator so run the application
     main()
