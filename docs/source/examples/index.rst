@@ -8,6 +8,4 @@ The examples Package
    odeex1
    odeex2
    odeex3
-   odeex4
-   odeex5
    turtplay

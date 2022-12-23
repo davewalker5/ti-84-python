@@ -1,6 +1,9 @@
 turtdraw.py
 ===========
 
+Overview
+--------
+
 TURTDRAW.py implements an interactive wrapper round Python's Turtle drawing library. The following table
 summarises the keys used to control the turtle on the calculator, their desktop equivalents and the
 character that should be used to achieve that action in a playback string:
@@ -25,6 +28,9 @@ character that should be used to achieve that action in a playback string:
 | Quit             | 2nd + quit  | Q           | Q            |
 +------------------+-------------+-------------+--------------+
 
+Interactive Mode
+----------------
+
 To run the application in interactive mode, use the following code:
 
 .. code-block::
@@ -33,6 +39,9 @@ To run the application in interactive mode, use the following code:
 
    td = TurtleDraw()
    td.event_loop()
+
+Playback Mode
+-------------
 
 The turtle can also playback a string of actions expressed using the characters summarised in the above
 table. For example:
