@@ -10,36 +10,18 @@ The ODELIB package implements an Ordinary Differential Equation (ODE) solver sup
 - Euler Predictor-Corrector
 - 4th-Order Runge-Kutta
 
-The solver supports automatic step size adjustment, based on supplied tolerance.
-
-Two entry points are supplied:
-
-+------------------+--------------+------------------------------------------------------------------------+
-| **Method**       | **Mode**     | **Description**                                                        |
-+------------------+--------------+------------------------------------------------------------------------+
-| prompt_and_solve | Interactive  | Prompts for equation and integration parameters                        |
-+------------------+--------------+------------------------------------------------------------------------+
-| solve            | Programmatic | Receives the function to solve and integration parameters as arguments |
-+------------------+--------------+------------------------------------------------------------------------+
+The solver supports automatic step size adjustment, based on supplied tolerance and can be called programatically or
+in interactive mode, via the UI provided in ODESOLVR.py.
 
 Interactive Mode
 ----------------
 
-Interactive mode prompts for the equation to solve, expressed in terms of the independent variable, "t",
-and the dependent variable, "y", and the integration parameters. It then solves the equation and either
-outputs the data as text or charts it.
+The interactive mode implemented in the ODESOLVR.py UI wrapper doesn't require creation of any additional Python code to
+call the solver but it suffers from the disadvantage that the only way to supply the equation is as a string representation
+which is evaluated on each step in the solution.
 
-The following image shows an example of the prompts for parameters, on the left, and the chart output, to
-the right:
-
-.. image:: odelib_side_by_side.png
-  :width: 600
-  :alt: ODELIB Interactive Mode
-
-Interactive mode doesn't require creation of any additional Python code to call the solver but it suffers
-from the disadvantage that the only way to supply the equation is as a string representation which is
-evaluated on each step in the solution. This is slower than the alternative available to programmatic
-mode, supplying a Python functon as the equation to solve.
+This is slower than the alternative available when using programmatic mode, which is to supply a Python
+functon as the equation to solve.
 
 Programmatic Mode
 -----------------
