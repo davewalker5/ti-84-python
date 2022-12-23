@@ -1,7 +1,3 @@
-"""
-Chart the solution for dy/dx = Ay using the RK4 method, with the differential equation as a Python function
-"""
-
 from odelib import solve, OUTPUT_CHART, RUNGE_KUTTA_4
 
 #: Solution and charting options dictionary
@@ -29,4 +25,12 @@ def f(_, y):
     return 0.5 * y
 
 
-solve(f, EXAMPLE_OPTIONS)
+try:
+    # Suppress the application if we're building documentation
+    from os import environ
+    if "DOCBUILD" not in environ:
+        solve(f, EXAMPLE_OPTIONS)
+
+except ImportError:
+    # Likely to be running on the calculator so run the application
+    solve(f, EXAMPLE_OPTIONS)
