@@ -2,7 +2,9 @@
 
 source ../venv/bin/activate
 PROJECT_ROOT=${0:a:h}/..
+export DOCBUILD=True
 
+# Add all the source sub-folders *except* the desktop implementation of the TI packages to PYTHONPATH
 src_paths="$PROJECT_ROOT/src"
 for dir in $PROJECT_ROOT/src/* ; do
   dir_name=$dir:t
@@ -15,8 +17,17 @@ for dir in $PROJECT_ROOT/src/* ; do
   fi
 done
 
+# Add the mocks for the TI packages to PYTHONPATH
 export PYTHONPATH="$PROJECT_ROOT/tests/mocks:$src_paths"
 
+# Create the dummy stdin file
+for n in {1..20}
+do
+  echo >> stdin.txt
+done
+
 echo "Python path is set to: $PYTHONPATH"
-make html
+make html < stdin.txt
+rm stdin.txt
+unset DOCBUILD
 deactivate
