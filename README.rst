@@ -191,7 +191,7 @@ added to PYTHONPATH, with the exception of the "utils" sub-folder.
 Running the Applications
 ------------------------
 
-With the pre-requisites in place, applciations can then be run from the command line, at the root of the project folder, as follows:
+With the pre-requisites in place, applications can then be run from the command line, at the root of the project folder, as follows:
 
 ::
 
