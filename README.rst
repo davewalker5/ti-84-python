@@ -58,11 +58,8 @@ The ti_desktop package contains minimal implementations of the TI libraries that
 developed, tested and run on a desktop machine. It is not a full implementation of the TI libraries and contains
 just sufficient implementation to support the applications in this repository.
 
-Library Code
-------------
-
 Common Code
-~~~~~~~~~~~
+-----------
 
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | File Name     | Location         | Contents                                              | Dependencies         |
@@ -75,7 +72,7 @@ Common Code
 +---------------+------------------+-------------------------------------------------------+----------------------+
 
 Maths Libraries
-~~~~~~~~~~~~~~~
+---------------
 
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | File Name     | Location         | Contents                                              | Dependencies         |
@@ -86,7 +83,7 @@ Maths Libraries
 +---------------+------------------+-------------------------------------------------------+----------------------+
 
 Science Libraries
-~~~~~~~~~~~~~~~~~
+-----------------
 
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | File Name     | Location         | Contents                                              | Dependencies         |
@@ -97,7 +94,7 @@ Science Libraries
 +---------------+------------------+-------------------------------------------------------+----------------------+
 
 Turtle Libraries
-~~~~~~~~~~~~~~~~
+----------------
 
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | File Name     | Location         | Contents                                              | Dependencies         |
@@ -109,7 +106,7 @@ Applications
 ============
 
 Programmatic Examples
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 +-------------+------------------+------------------------------------------------------------------------------------+--------------+
 | File        | Location         | Comments                                                                           | Dependencies |
@@ -124,7 +121,7 @@ Programmatic Examples
 +-------------+------------------+------------------------------------------------------------------------------------+--------------+
 
 Maths Applications
-~~~~~~~~~~~~~~~~~~~~~
+------------------
 
 +-------------+------------------+------------------------------------------------------------------------------------+------------------------------+
 | File        | Location         | Comments                                                                           | Dependencies                 |
@@ -135,7 +132,7 @@ Maths Applications
 +-------------+------------------+------------------------------------------------------------------------------------+------------------------------+
 
 Science Applications
-~~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 +-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------+
 | File        | Location         | Comments                                                                           | Dependencies                           |
@@ -144,8 +141,9 @@ Science Applications
 +-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------+
 | temperui.py | src/ui           | Centigrade, Fahrenheit and Kelvin temperature converter                            | iptutils, oututils, strutils, tempconv |
 +-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------+
-Science Applications
-~~~~~~~~~~~~~~~~~~~~~
+
+Turtle Applications
+-------------------
 
 +-------------+------------------+------------------------------------------------------------------------------------+--------------+
 | File        | Location         | Comments                                                                           | Dependencies |
@@ -179,7 +177,6 @@ To run the minimiser, enter the following commands:
 
 This will iterate over eligible Python source files in the "src" folder and will write reduced-size versions of each file
 to the minimiser/minimised folder. These can then be transferred to the calculator.
-
 
 Running the Examples on a Desktop Machine
 =========================================
