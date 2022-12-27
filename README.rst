@@ -66,6 +66,8 @@ Common Code
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | iptutils.py   | src/common       | Utility methods to prompt for an validate user input  | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
+| julian.py     | src/common       | Julian date conversion utilities                      | N/A                  |
++---------------+------------------+-------------------------------------------------------+----------------------+
 | oututils.py   | src/common       | Utility methods for text-based output                 | strutils             |
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | strutils.py   | src/common       | Utility methods for string manipulation               | N/A                  |
