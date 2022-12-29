@@ -11,12 +11,12 @@ class DateTime:
         self._second = second
 
     def __str__(self):
-        return self._pad_component(self._year, 4) + "-" + \
-            self._pad_component(self._month, 2) + "-" + \
-            self._pad_component(self._day, 2) + " " + \
-            self._pad_component(self._hour, 2) + ":" + \
-            self._pad_component(self._minute, 2) + ":" + \
-            self._pad_component(self._second, 2)
+        return self._pad_component(self.year, 4) + "-" + \
+            self._pad_component(self.month, 2) + "-" + \
+            self._pad_component(self.day, 2) + " " + \
+            self._pad_component(self.hour, 2) + ":" + \
+            self._pad_component(self.minute, 2) + ":" + \
+            self._pad_component(self.second, 2)
 
     @staticmethod
     def _pad_component(value, digits):
