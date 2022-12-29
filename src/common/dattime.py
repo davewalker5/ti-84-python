@@ -1,4 +1,4 @@
-from dateutil import seconds_since_epoch, timestamp_to_date
+from dateutl import seconds_since_epoch, timestamp_to_date
 
 
 class DateTime:
