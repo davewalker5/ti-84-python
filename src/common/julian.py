@@ -1,5 +1,3 @@
-import datetime as dt
-
 SECONDS_PER_DAY = 86400.0
 
 
@@ -8,7 +6,7 @@ def calculate_fraction_of_day(d, places=4):
     Calculate the fraction of the current Julian day represented by a Gregorian
     date and time
 
-    :param d: Gregorian date with time
+    :param d: Gregorian date with time, represented as a DateTime instance
     :param places: Number of decimal places in the answer
     :return: Fraction of the current Julian day
     """
@@ -16,13 +14,13 @@ def calculate_fraction_of_day(d, places=4):
     # noon yesterday, if the dat is in the morning, or noon today, if the date is in
     # the afternoon. Work out midnight and a delta-time that can be added to it to give
     # # the start of the day
-    midnight = dt.datetime(d.year, d.month, d.day, 0, 0, 0)
-    delta_hours = 12 if d.hour >= 12 else -12
-    day_start = midnight + dt.timedelta(hours=delta_hours)
+    midnight = d.zero_time().timestamp()
+    delta_seconds = 3600 * (12 if d.hour >= 12 else -12)
+    day_start = midnight + delta_seconds
 
     # The fraction of the current Julian day is now the number of seconds since the start
     # of the day divided by the number of seconds in the day
-    seconds_into_day = (d - day_start).total_seconds()
+    seconds_into_day = d.timestamp() - day_start
     fraction_of_day = seconds_into_day / SECONDS_PER_DAY
     return round(fraction_of_day, places)
 
@@ -31,7 +29,7 @@ def calculate_julian_midnight(d, places=4):
     """
     Calculate the Julian date for 00:00:00 on the specified Gregorian date
 
-    :param d: Gregorian date
+    :param d: Gregorian date with time, represented as a DateTime instance
     :param places: Number of decimal places in the answer
     :return: Corresponding Julian date
     """
@@ -57,7 +55,7 @@ def julian_date(d, places=4, include_time=False):
     """
     Calculate the Julian date from a Gregorian date, optionally including the time
 
-    :param d: Gregorian date
+    :param d: Gregorian date with time, represented as a DateTime instance
     :param places: Number of decimal places in the answer
     :param include_time: True to account for the time, False to ignore it
     :return: Corresponding Julian date

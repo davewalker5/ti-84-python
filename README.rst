@@ -64,6 +64,10 @@ Common Code
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | File Name     | Location         | Contents                                              | Dependencies         |
 +---------------+------------------+-------------------------------------------------------+----------------------+
+| dateutil.py   | src/common       | Date handling utilities, including Epoch conversions  | N/A                  |
++---------------+------------------+-------------------------------------------------------+----------------------+
+| dattime.py    | src/common       | Simplified date and time wrapper class                | dateutil             |
++---------------+------------------+-------------------------------------------------------+----------------------+
 | iptutils.py   | src/common       | Utility methods to prompt for an validate user input  | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | julian.py     | src/common       | Julian date conversion utilities                      | N/A                  |
@@ -93,6 +97,8 @@ Science Libraries
 | barometr.py   | src/science      | Barometric pressure calculations and conversions      | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | tempconv.py   | src/science      | Temperature conversions                               | N/A                  |
++---------------+------------------+-------------------------------------------------------+----------------------+
+| lunar.py      | src/science      | Lunar age and phase name calculator                   | dattime, julian      |
 +---------------+------------------+-------------------------------------------------------+----------------------+
 
 Turtle Libraries

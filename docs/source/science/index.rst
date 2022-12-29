@@ -7,3 +7,4 @@ The science Package
 
    barometr
    tempconv
+   lunar
