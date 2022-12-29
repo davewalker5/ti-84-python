@@ -10,3 +10,4 @@ The ui Package
    odesolvr
    temperui
    turtleui
+   julianui

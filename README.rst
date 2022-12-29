@@ -62,7 +62,7 @@ Common Code
 -----------
 
 +---------------+------------------+-------------------------------------------------------+----------------------+
-| File Name     | Location         | Contents                                              | Dependencies         |
+| **File Name** | **Location**     | **Contents**                                          | **Dependencies**     |
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | dateutil.py   | src/common       | Date handling utilities, including Epoch conversions  | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
@@ -81,7 +81,7 @@ Maths Libraries
 ---------------
 
 +---------------+------------------+-------------------------------------------------------+----------------------+
-| File Name     | Location         | Contents                                              | Dependencies         |
+| **File Name** | **Location**     | **Contents**                                          | **Dependencies**     |
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | fibonaci.py   | src/maths        | Fibonnaci series calculator                           | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
@@ -92,7 +92,7 @@ Science Libraries
 -----------------
 
 +---------------+------------------+-------------------------------------------------------+----------------------+
-| File Name     | Location         | Contents                                              | Dependencies         |
+| **File Name** | **Location**     | **Contents**                                          | **Dependencies**     |
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | barometr.py   | src/science      | Barometric pressure calculations and conversions      | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
@@ -105,7 +105,7 @@ Turtle Libraries
 ----------------
 
 +---------------+------------------+-------------------------------------------------------+----------------------+
-| File Name     | Location         | Contents                                              | Dependencies         |
+| **File Name** | **Location**     | **Contents**                                          | **Dependencies**     |
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | turtdraw.py   | src/turtle_apps  | Interactive wrapper over the TI Turtle class          | ti_system, turtle    |
 +---------------+------------------+-------------------------------------------------------+----------------------+
@@ -116,54 +116,56 @@ Applications
 Programmatic Examples
 ---------------------
 
-+-------------+------------------+------------------------------------------------------------------------------------+--------------+
-| File        | Location         | Comments                                                                           | Dependencies |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------+
-| odeex1.py   | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = Ay                        | odelib       |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------+
-| odeex2.py   | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = y - t^2 + 1               | odelib       |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------+
-| odeex3.py   | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = yt^2 - y                  | odelib       |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------+
-| turtplay.py | src/examples     | Replay a pre-prepared string of instructions for TurtleDraw                        | turtdraw     |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------+
++---------------+------------------+------------------------------------------------------------------------------------+------------------+
+| **File Name** | **Location**     | **Contents**                                                                       | **Dependencies** |
++---------------+------------------+------------------------------------------------------------------------------------+------------------+
+| odeex1.py     | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = Ay                        | odelib           |
++---------------+------------------+------------------------------------------------------------------------------------+------------------+
+| odeex2.py     | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = y - t^2 + 1               | odelib           |
++---------------+------------------+------------------------------------------------------------------------------------+------------------+
+| odeex3.py     | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = yt^2 - y                  | odelib           |
++---------------+------------------+------------------------------------------------------------------------------------+------------------+
+| turtplay.py   | src/examples     | Replay a pre-prepared string of instructions for TurtleDraw                        | turtdraw         |
++---------------+------------------+------------------------------------------------------------------------------------+------------------+
 
 Maths Applications
 ------------------
 
-+-------------+------------------+------------------------------------------------------------------------------------+------------------------------+
-| File        | Location         | Comments                                                                           | Dependencies                 |
-+-------------+------------------+------------------------------------------------------------------------------------+------------------------------+
-| fibonaui.py | src/ui           | Calculate and display the Fibonacci series                                         | iptutils, oututils, fibonaci |
-+-------------+------------------+------------------------------------------------------------------------------------+------------------------------+
-| odesolvr.py | src/ui           | Prompt for an equation and solution options then solve the equation                | odelib, iptutils             |
-+-------------+------------------+------------------------------------------------------------------------------------+------------------------------+
++---------------+------------------+------------------------------------------------------------------------------------+------------------------------+
+| **File Name** | **Location**     | **Contents**                                                                       | **Dependencies**             |
++---------------+------------------+------------------------------------------------------------------------------------+------------------------------+
+| fibonaui.py   | src/ui           | Calculate and display the Fibonacci series                                         | iptutils, oututils, fibonaci |
++---------------+------------------+------------------------------------------------------------------------------------+------------------------------+
+| odesolvr.py   | src/ui           | Prompt for an equation and solution options then solve the equation                | odelib, iptutils             |
++---------------+------------------+------------------------------------------------------------------------------------+------------------------------+
 
 Science Applications
 --------------------
 
-+-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------+
-| File        | Location         | Comments                                                                           | Dependencies                           |
-+-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------+
-| baromui.py  | src/ui           | Biometric pressure converter and calculator                                        | iptutils, oututils, strutils, barometr |
-+-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------+
-| temperui.py | src/ui           | Centigrade, Fahrenheit and Kelvin temperature converter                            | iptutils, oututils, strutils, tempconv |
-+-------------+------------------+------------------------------------------------------------------------------------+----------------------------------------+
++---------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------+
+| **File Name** | **Location**     | **Contents**                                                                       | **Dependencies**                             |
++---------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------+
+| baromui.py    | src/ui           | Biometric pressure converter and calculator                                        | iptutils, oututils, strutils, barometr       |
++---------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------+
+| temperui.py   | src/ui           | Centigrade, Fahrenheit and Kelvin temperature converter                            | iptutils, oututils, strutils, tempconv       |
++---------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------+
+| julianui.py   | src/ui           | Julian date conversions                                                            | iptutils, oututils, dateutil, dattim, julian |
++---------------+------------------+------------------------------------------------------------------------------------+----------------------------------------------+
 
 Turtle Applications
 -------------------
 
-+-------------+------------------+------------------------------------------------------------------------------------+--------------+
-| File        | Location         | Comments                                                                           | Dependencies |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------+
-| turtleui.py | src/ui           | Interactive control of TurtleDraw                                                  | turtdraw.py  |
-+-------------+------------------+------------------------------------------------------------------------------------+--------------+
++---------------+------------------+------------------------------------------------------------------------------------+------------------+
+| **File Name** | **Location**     | **Contents**                                                                       | **Dependencies** |
++---------------+------------------+------------------------------------------------------------------------------------+------------------+
+| turtleui.py   | src/ui           | Interactive control of TurtleDraw                                                  | turtdraw.py      |
++---------------+------------------+------------------------------------------------------------------------------------+------------------+
 
 Running the Applications on the Calculator
 ------------------------------------------
 
-Transfer the application and its dependencies (including the dependecies of the library code it uses) to the Calculator using the TI Connect CE application then run the
-application as normal.
+Transfer the application and its dependencies (**including the dependecies of the library code it uses**) to the Calculator using the TI Connect
+CE application then run the application as normal.
 
 Minimising the Source Code
 --------------------------
@@ -193,7 +195,7 @@ Pre-requisites
 --------------
 
 To run the applications on a desktop machine, a virtual environment should be created, the requirements should
-be installed using pip and the environment should be activated. The sub-folders in the "src" folder should all be
+be installed using pip and the environment should be activated. **NOTE:** The sub-folders in the "src" folder should all be
 added to PYTHONPATH, with the exception of the "utils" sub-folder.
 
 Running the Applications
@@ -217,8 +219,8 @@ Unit Tests and Coverage
 =======================
 
 To run the unit tests, a virtual environment should be created, the requirements should be installed using pip and the environment should be
-activated. The "tests\\mocks" folder and the sub-folders in the "src" folder should all be added to PYTHONPATH, with the exception of the "ti_desktop"
-and "utils" sub-folders.
+activated. **NOTE:** The "tests\\mocks" folder and the sub-folders in the "src" folder should all be added to PYTHONPATH, with the exception
+of the "ti_desktop" and "utils" sub-folders.
 
 The tests can then be run from the command line, at the root of the project folder, as follows:
 
@@ -240,7 +242,7 @@ Generating Documentation
 ========================
 
 To generate the documentation, a virtual environment should be created, the requirements should be installed using pip and the
-environment should be activated. The "tests\\mocks" folder and the sub-folders in the "src" folder should all be added to
+environment should be activated. **NOTE:** The "tests\\mocks" folder and the sub-folders in the "src" folder should all be added to
 PYTHONPATH, with the exception of the "ti_desktop" and "utils" sub-folders.
 
 HTML documentation can then be created by running the following commands from the "docs" sub-folder:
