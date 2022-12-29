@@ -1,7 +1,7 @@
 import unittest
 import datetime as dt
 from random import randrange
-from dateutil import is_leap_year, days_year_to_date, seconds_since_epoch, timestamp_to_date
+from dateutl import is_leap_year, days_year_to_date, seconds_since_epoch, timestamp_to_date
 
 
 class TestDateUtils(unittest.TestCase):
