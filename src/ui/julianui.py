@@ -1,5 +1,6 @@
 from iptutils import prompt_for_integer, prompt_for_yes_no
 from oututils import print_title
+from strutils import truncate_string
 from dateutl import is_leap_year
 from julian import julian_date
 from dattime import DateTime
@@ -62,7 +63,7 @@ def main():
         jd = julian_date(gd, include_time=include_time)
 
         print()
-        print(str(gd) + " = " + str(jd))
+        print(str(gd) + " = " + truncate_string(jd, 4))
         print()
 
 
