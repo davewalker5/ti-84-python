@@ -1,4 +1,3 @@
-from iptutils import prompt_for_integer
 from oututils import print_title
 from strutils import truncate_string
 from dateutl import prompt_for_date
