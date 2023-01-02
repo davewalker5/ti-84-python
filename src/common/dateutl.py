@@ -1,3 +1,5 @@
+from iptutils import prompt_for_integer
+
 DAYS_SINCE_1ST_JAN_BY_MONTH = [
     [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365],  # 365 days, non-leap
     [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366]   # 366 days, leap
@@ -133,3 +135,51 @@ def timestamp_to_date(timestamp):
             break
 
     return year, month, day, hour, minutes, seconds
+
+
+def prompt_for_date(minimum_year, maximum_year, include_time):
+    """
+    Prompt for the year, month and day
+
+    :param minimum_year: Minimum allowable year
+    :param maximum_year: Maximum allowable year
+    :param include_time: Prompt for time as well as date
+    :return: Tuple of the year, month, day, hour, minute and second
+    """
+    year = prompt_for_integer("Year", minimum_value=minimum_year, maximum_value=maximum_year)
+    if year is None:
+        return None, None, None, None, None, None
+
+    month = prompt_for_integer("Month", minimum_value=1, maximum_value=12)
+    if month is None:
+        return None, None, None, None, None, None
+
+    if month in [4, 6, 9, 11]:
+        maximum_day = 30
+    elif month != 2:
+        maximum_day = 31
+    elif is_leap_year(year):
+        maximum_day = 29
+    else:
+        maximum_day = 28
+
+    day = prompt_for_integer("Date", minimum_value=1, maximum_value=maximum_day)
+    if day is None:
+        return None, None, None, None, None, None
+
+    if include_time:
+        hour = prompt_for_integer("Hour", minimum_value=0, maximum_value=23)
+        if hour is None:
+            return None, None, None, None, None, None
+
+        minute = prompt_for_integer("Minute", minimum_value=0, maximum_value=59)
+        if minute is None:
+            return None, None, None, None, None, None
+
+        second = prompt_for_integer("Second", minimum_value=0, maximum_value=59)
+        if second is None:
+            return None, None, None, None, None, None
+    else:
+        hour = minute = second = 0
+
+    return year, month, day, hour, minute, second
