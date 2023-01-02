@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 import datetime as dt
 from random import randrange
 from dateutl import is_leap_year, days_year_to_date, seconds_since_epoch, timestamp_to_date
@@ -62,3 +63,135 @@ class TestDateUtils(unittest.TestCase):
         self.assertEqual(date.hour, h)
         self.assertEqual(date.minute, mi)
         self.assertEqual(date.second, s)
+
+    @patch("builtins.input", side_effect=["2023", "1", "2", "12", "34", "45"])
+    def test_input_date_and_time(self, _):
+        from src.common.dateutl import prompt_for_date
+        year, month, day, hour, minute, second = prompt_for_date(1970, None, True)
+        self.assertEqual(2023, year)
+        self.assertEqual(1, month)
+        self.assertEqual(2, day)
+        self.assertEqual(12, hour)
+        self.assertEqual(34, minute)
+        self.assertEqual(45, second)
+
+    @patch("builtins.input", side_effect=["2023", "8", "15"])
+    def test_input_date(self, _):
+        from src.common.dateutl import prompt_for_date
+        year, month, day, hour, minute, second = prompt_for_date(1970, None, False)
+        self.assertEqual(2023, year)
+        self.assertEqual(8, month)
+        self.assertEqual(15, day)
+        self.assertEqual(0, hour)
+        self.assertEqual(0, minute)
+        self.assertEqual(0, second)
+
+    @patch("builtins.input", side_effect=[""])
+    def test_cancel_on_year(self, _):
+        from src.common.dateutl import prompt_for_date
+        year, month, day, hour, minute, second = prompt_for_date(1970, None, False)
+        self.assertIsNone(year)
+        self.assertIsNone(month)
+        self.assertIsNone(day)
+        self.assertIsNone(hour)
+        self.assertIsNone(minute)
+        self.assertIsNone(second)
+
+    @patch("builtins.input", side_effect=["2023", ""])
+    def test_cancel_on_month(self, _):
+        from src.common.dateutl import prompt_for_date
+        year, month, day, hour, minute, second = prompt_for_date(1970, None, False)
+        self.assertIsNone(year)
+        self.assertIsNone(month)
+        self.assertIsNone(day)
+        self.assertIsNone(hour)
+        self.assertIsNone(minute)
+        self.assertIsNone(second)
+
+    @patch("builtins.input", side_effect=["2023", "8", ""])
+    def test_cancel_on_day(self, _):
+        from src.common.dateutl import prompt_for_date
+        year, month, day, hour, minute, second = prompt_for_date(1970, None, False)
+        self.assertIsNone(year)
+        self.assertIsNone(month)
+        self.assertIsNone(day)
+        self.assertIsNone(hour)
+        self.assertIsNone(minute)
+        self.assertIsNone(second)
+
+    @patch("builtins.input", side_effect=["2023", "8", "15", ""])
+    def test_cancel_on_hour(self, _):
+        from src.common.dateutl import prompt_for_date
+        year, month, day, hour, minute, second = prompt_for_date(1970, None, True)
+        self.assertIsNone(year)
+        self.assertIsNone(month)
+        self.assertIsNone(day)
+        self.assertIsNone(hour)
+        self.assertIsNone(minute)
+        self.assertIsNone(second)
+
+    @patch("builtins.input", side_effect=["2023", "8", "15", "23", ""])
+    def test_cancel_on_minute(self, _):
+        from src.common.dateutl import prompt_for_date
+        year, month, day, hour, minute, second = prompt_for_date(1970, None, True)
+        self.assertIsNone(year)
+        self.assertIsNone(month)
+        self.assertIsNone(day)
+        self.assertIsNone(hour)
+        self.assertIsNone(minute)
+        self.assertIsNone(second)
+
+    @patch("builtins.input", side_effect=["2023", "8", "15", "23", "19", ""])
+    def test_cancel_on_second(self, _):
+        from src.common.dateutl import prompt_for_date
+        year, month, day, hour, minute, second = prompt_for_date(1970, None, True)
+        self.assertIsNone(year)
+        self.assertIsNone(month)
+        self.assertIsNone(day)
+        self.assertIsNone(hour)
+        self.assertIsNone(minute)
+        self.assertIsNone(second)
+
+    @patch("builtins.input", side_effect=["2023", "4", "30"])
+    def test_last_day_of_april(self, _):
+        from src.common.dateutl import prompt_for_date
+        year, month, day, hour, minute, second = prompt_for_date(1970, None, False)
+        self.assertEqual(2023, year)
+        self.assertEqual(4, month)
+        self.assertEqual(30, day)
+        self.assertEqual(0, hour)
+        self.assertEqual(0, minute)
+        self.assertEqual(0, second)
+
+    @patch("builtins.input", side_effect=["2023", "1", "31"])
+    def test_last_day_of_january(self, _):
+        from src.common.dateutl import prompt_for_date
+        year, month, day, hour, minute, second = prompt_for_date(1970, None, False)
+        self.assertEqual(2023, year)
+        self.assertEqual(1, month)
+        self.assertEqual(31, day)
+        self.assertEqual(0, hour)
+        self.assertEqual(0, minute)
+        self.assertEqual(0, second)
+
+    @patch("builtins.input", side_effect=["2000", "2", "29"])
+    def test_last_day_of_february_leap_year(self, _):
+        from src.common.dateutl import prompt_for_date
+        year, month, day, hour, minute, second = prompt_for_date(1970, None, False)
+        self.assertEqual(2000, year)
+        self.assertEqual(2, month)
+        self.assertEqual(29, day)
+        self.assertEqual(0, hour)
+        self.assertEqual(0, minute)
+        self.assertEqual(0, second)
+
+    @patch("builtins.input", side_effect=["1999", "2", "28"])
+    def test_last_day_of_february_non_leap_year(self, _):
+        from src.common.dateutl import prompt_for_date
+        year, month, day, hour, minute, second = prompt_for_date(1970, None, False)
+        self.assertEqual(1999, year)
+        self.assertEqual(2, month)
+        self.assertEqual(28, day)
+        self.assertEqual(0, hour)
+        self.assertEqual(0, minute)
+        self.assertEqual(0, second)
