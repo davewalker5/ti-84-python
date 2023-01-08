@@ -5,5 +5,7 @@ The maths Package
    :maxdepth: 2
    :caption: Contents:
 
+   complx
    fibonaci
+   quadrat
    odelib

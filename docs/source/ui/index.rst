@@ -7,6 +7,7 @@ The ui Package
 
    baromui
    fibonaui
+   quadui
    odesolvr
    temperui
    turtleui
