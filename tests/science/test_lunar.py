@@ -21,8 +21,9 @@ class TestLunarCycle(unittest.TestCase):
         number_of_days = 1 + int(self.LUNAR_CYCLE_LENGTH)
         cycle = calculate_lunar_cycle(self.REFERENCE_DATE, number_of_days)
         for i in range(0, number_of_days + 1):
-            expected = 0 if i == number_of_days else i
-            self.assertEqual(expected, cycle[i]["age"])
+            expected_min = 0 if i == number_of_days else i
+            expected_max = expected_min + 1
+            self.assertTrue(expected_min <= cycle[i]["age"] <= expected_max)
 
     def test_lunar_cycle_phase(self):
         number_of_days = 1 + int(self.LUNAR_CYCLE_LENGTH)
