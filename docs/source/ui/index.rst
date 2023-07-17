@@ -13,3 +13,5 @@ The ui Package
    turtleui
    julianui
    lunarui
+   ipv4nwui
+   ipv4snui
