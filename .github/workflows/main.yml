@@ -33,11 +33,11 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with unittest
       run: |
-        export PYTHONPATH=`pwd`/src:`pwd`/src/common:`pwd`/src/maths:`pwd`/src/science:`pwd`/src/turtle_apps:`pwd`/tests/mocks
+        export PYTHONPATH=`pwd`/src:`pwd`/src/common:`pwd`/src/computing:`pwd`/src/maths:`pwd`/src/science:`pwd`/src/turtle_apps:`pwd`/tests/mocks
         python -m unittest
     - name: Generate Coverage Report
       run: |
-        export PYTHONPATH=`pwd`/src:`pwd`/src/common:`pwd`/src/maths:`pwd`/src/science:`pwd`/src/turtle_apps:`pwd`/tests/mocks
+        export PYTHONPATH=`pwd`/src:`pwd`/src/common:`pwd`/src/computing:`pwd`/src/maths:`pwd`/src/science:`pwd`/src/turtle_apps:`pwd`/tests/mocks
         coverage run --branch --source src -m unittest discover
         coverage xml
     - name: Upload Coverage to Codecov
