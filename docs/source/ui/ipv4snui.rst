@@ -7,8 +7,9 @@ The application prompts for the following details:
 
 - IP address for the network to subnet
 - Subnet mask
-- Number of hosts per subnet, or 0 to calculate for a number of subnets
-- Number of networks required, or 0 to calculate for a number of hosts per network
+- Number of hosts per subnet, or 0 to calculate for a number of subnets or network bits
+- Number of networks required, or 0 to calculate for a number of hosts per network or network bits
+- Number of network bits required, or 0 to calculate for a number of hosts per network or number of networks
 
 The IP address can be entered with the "/n" suffix specifying the number of network bits, in which case the subnet mask can be empty, or without the suffix, in which case the subnet mask is required.
 
