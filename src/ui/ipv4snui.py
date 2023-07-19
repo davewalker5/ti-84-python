@@ -60,11 +60,15 @@ def main():
         if networks is None:
             break
 
+        network_bits = prompt_for_integer("Number of Network Bits?", 0, None)
+        if network_bits is None:
+            break
+
         print()
 
         try:
             # Calculate the subnet details
-            subnets = calculate_subnets(ip_address, subnet_mask, hosts, networks)
+            subnets = calculate_subnets(ip_address, subnet_mask, hosts, networks, network_bits)
             display_subnets(subnets["subnet_mask"],
                             subnets["subnet_count"],
                             subnets["first_network"],
