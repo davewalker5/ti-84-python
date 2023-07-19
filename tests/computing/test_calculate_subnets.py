@@ -4,31 +4,43 @@ from src.computing.ipv4nths import nth_subnet
 
 
 class TestCalculateSubnets(unittest.TestCase):
-    def test_calculate_subnets_for_hosts_with_suffix(self):
+    def test_calculate_subnets_for_hosts_with_suffix_1(self):
         subnets = calculate_subnets("10.1.1.0/24", None, 14, 0)
         self.assertEqual(16, subnets["subnet_count"])
         self.assertEqual(28, subnets["network_bits"])
         self.assertEqual("255.255.255.240", subnets["subnet_mask"])
 
-    def test_calculate_subnets_for_hosts_without_suffix(self):
+    def test_calculate_subnets_for_hosts_without_suffix_1(self):
         subnets = calculate_subnets("10.1.1.0", "255.255.255.0", 14, 0)
         self.assertEqual(16, subnets["subnet_count"])
         self.assertEqual(28, subnets["network_bits"])
         self.assertEqual("255.255.255.240", subnets["subnet_mask"])
 
-    def test_calculate_subnets_for_networks_with_suffix(self):
+    def test_calculate_subnets_for_hosts_with_suffix_2(self):
+        subnets = calculate_subnets("192.168.1.64/26", None, 8, 0)
+        assert 4 == subnets["subnet_count"]
+        assert 28 == subnets["network_bits"]
+        assert "255.255.255.240" == subnets["subnet_mask"]
+
+    def test_calculate_subnets_for_hosts_without_suffix_2(self):
+        subnets = calculate_subnets("192.168.1.64", "255.255.255.192", 8, 0)
+        assert 4 == subnets["subnet_count"]
+        assert 28 == subnets["network_bits"]
+        assert "255.255.255.240" == subnets["subnet_mask"]
+
+    def test_calculate_subnets_for_networks_with_suffix_3(self):
         subnets = calculate_subnets("10.128.192.0/18", None, 0, 30)
         self.assertEqual(32, subnets["subnet_count"])
         self.assertEqual(23, subnets["network_bits"])
         self.assertEqual("255.255.254.0", subnets["subnet_mask"])
 
-    def test_calculate_subnets_for_networks_without_suffix(self):
+    def test_calculate_subnets_for_networks_without_suffix_3(self):
         subnets = calculate_subnets("10.128.192.0", "255.255.192.0", 0, 30)
         self.assertEqual(32, subnets["subnet_count"])
         self.assertEqual(23, subnets["network_bits"])
         self.assertEqual("255.255.254.0", subnets["subnet_mask"])
 
-    def test_get_subnet_details_for_networks_with_suffix(self):
+    def test_get_subnet_details_for_networks_with_suffix_1(self):
         subnets = calculate_subnets("192.168.1.0/24", None, 0, 4)
         details = nth_subnet(subnets["first_network"], subnets["network_bits"], subnets["subnet_bits"], 3)
         self.assertEqual("192.168.1.128/26", details["network"])
@@ -36,13 +48,29 @@ class TestCalculateSubnets(unittest.TestCase):
         self.assertEqual("192.168.1.190", details["last"])
         self.assertEqual("192.168.1.191", details["broadcast"])
 
-    def test_get_subnet_details_for_networks_without_suffix(self):
+    def test_get_subnet_details_for_networks_without_suffix_1(self):
         subnets = calculate_subnets("192.168.1.0", "255.255.255.0", 0, 4)
         details = nth_subnet(subnets["first_network"], subnets["network_bits"], subnets["subnet_bits"], 3)
         self.assertEqual("192.168.1.128/26", details["network"])
         self.assertEqual("192.168.1.129", details["first"])
         self.assertEqual("192.168.1.190", details["last"])
         self.assertEqual("192.168.1.191", details["broadcast"])
+
+    def test_get_subnet_details_for_networks_with_suffix_2(self):
+        subnets = calculate_subnets("192.168.1.64/26", None, 8, 0)
+        details = nth_subnet(subnets["first_network"], subnets["network_bits"], subnets["subnet_bits"], 2)
+        self.assertEqual("192.168.1.80/28", details["network"])
+        self.assertEqual("192.168.1.81", details["first"])
+        self.assertEqual("192.168.1.94", details["last"])
+        self.assertEqual("192.168.1.95", details["broadcast"])
+
+    def test_get_subnet_details_for_networks_without_suffix_2(self):
+        subnets = calculate_subnets("192.168.1.64/26", "255.255.255.192", 8, 0)
+        details = nth_subnet(subnets["first_network"], subnets["network_bits"], subnets["subnet_bits"], 2)
+        self.assertEqual("192.168.1.80/28", details["network"])
+        self.assertEqual("192.168.1.81", details["first"])
+        self.assertEqual("192.168.1.94", details["last"])
+        self.assertEqual("192.168.1.95", details["broadcast"])
 
     def test_invalid_hosts_error(self):
         with self.assertRaises(ValueError):

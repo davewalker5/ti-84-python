@@ -1,4 +1,5 @@
 from ipv4lib import get_network_bits, calculate_octets
+from ipv4bits import subnet_for_networks, subnet_for_hosts
 
 
 def calculate_subnets(ip_address, subnet_mask, number_of_hosts, number_of_networks):
@@ -30,20 +31,14 @@ def calculate_subnets(ip_address, subnet_mask, number_of_hosts, number_of_networ
     ip_address, network_bits = get_network_bits(ip_address, subnet_mask)
 
     # Calculate the number of bits we need to take from the host portion
-    for n in range(0, 32):
-        if number_of_hosts > 0:
-            number_of_hosts_for_n = pow(2, n) - 2
-            if number_of_hosts_for_n >= number_of_hosts:
-                break
-        else:
-            number_of_networks_for_n = pow(2, n)
-            if number_of_networks_for_n >= number_of_networks:
-                break
+    if number_of_hosts > 0:
+        new_network_bits, number_of_subnet_bits = subnet_for_hosts(network_bits, number_of_hosts)
+    else:
+        new_network_bits, number_of_subnet_bits = subnet_for_networks(network_bits, number_of_networks)
 
     # Calculate the new number of network bits and check it's in range
-    new_network_bits = network_bits + n
-    if new_network_bits > 32:
-        raise ValueError("Not enough host bits left")
+    if new_network_bits < network_bits or new_network_bits > 32:
+        raise ValueError("Subnetting parameters result in an invalid number of network bits")
 
     # Split the address into octets, get the binary version and generate a non-delimited binary
     # string representing the IP address
@@ -62,7 +57,7 @@ def calculate_subnets(ip_address, subnet_mask, number_of_hosts, number_of_networ
     return {
         "network_bits": new_network_bits,
         "subnet_mask": subnet_mask,
-        "subnet_bits": n,
-        "subnet_count": pow(2, n),
+        "subnet_bits": number_of_subnet_bits,
+        "subnet_count": pow(2, number_of_subnet_bits),
         "first_network": network_string
     }
