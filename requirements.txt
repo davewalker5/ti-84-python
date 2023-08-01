@@ -1,6 +1,6 @@
 alabaster==0.7.12
 Babel==2.11.0
-certifi==2022.12.7
+certifi==2023.7.22
 charset-normalizer==2.1.1
 colorama==0.4.6
 contourpy==1.0.6
@@ -17,10 +17,13 @@ matplotlib==3.6.2
 numpy==1.23.5
 packaging==21.3
 Pillow==9.3.0
-Pygments==2.13.0
+Pygments==2.15.1
+pynput==1.7.6
 pyparsing==3.0.9
 python-dateutil==2.8.2
+python-minifier==2.9.0
 pytz==2022.6
+requests==2.31.0
 six==1.16.0
 snowballstemmer==2.2.0
 Sphinx==5.3.0
@@ -31,4 +34,4 @@ sphinxcontrib-htmlhelp==2.0.0
 sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.5
-pynput; sys_platform == 'darwin' or sys_platform == 'windows' or sys_platform == 'win32'
+urllib3==2.0.3

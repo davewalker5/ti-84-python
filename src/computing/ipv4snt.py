@@ -89,7 +89,7 @@ def same_subnet(ip_address_1, ip_address_2, subnet_mask=None):
 
     # If the number of network bits aren't the same, they're not on the same subnet
     if network_bits_1 != network_bits_2:
-        return false
+        return False
 
     # Calculate which octet the network bits end in
     final_network_octet = network_bits_1 // 8
