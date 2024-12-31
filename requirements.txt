@@ -10,7 +10,7 @@ docutils==0.17.1
 fonttools==4.43.0
 idna==3.7
 imagesize==1.4.1
-Jinja2==3.1.4
+Jinja2==3.1.5
 kiwisolver==1.4.4
 MarkupSafe==2.1.1
 matplotlib==3.6.2
@@ -19,6 +19,11 @@ packaging==21.3
 pillow==10.3.0
 Pygments==2.15.1
 pynput==1.7.6
+pyobjc-core==10.3.2
+pyobjc-framework-ApplicationServices==10.3.2
+pyobjc-framework-Cocoa==10.3.2
+pyobjc-framework-CoreText==10.3.2
+pyobjc-framework-Quartz==10.3.2
 pyparsing==3.0.9
 python-dateutil==2.8.2
 python-minifier==2.9.0
