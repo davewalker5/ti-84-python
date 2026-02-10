@@ -30,15 +30,16 @@ jobs:
       run: |
         export PYTHONPATH=`pwd`/src:`pwd`/src/common:`pwd`/src/computing:`pwd`/src/maths:`pwd`/src/science:`pwd`/src/turtle_apps:`pwd`/tests/mocks
         python -m unittest
-    - name: Generate Coverage Report
-      run: |
-        export PYTHONPATH=`pwd`/src:`pwd`/src/common:`pwd`/src/computing:`pwd`/src/maths:`pwd`/src/science:`pwd`/src/turtle_apps:`pwd`/tests/mocks
-        coverage run --branch --source src -m unittest discover
-        coverage xml
-    - name: Upload Coverage to Codecov
-      uses: codecov/codecov-action@v2
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+    # - name: Generate Coverage Report
+    #   run: |
+    #     export PYTHONPATH=`pwd`/src:`pwd`/src/common:`pwd`/src/computing:`pwd`/src/maths:`pwd`/src/science:`pwd`/src/turtle_apps:`pwd`/tests/mocks
+    #     coverage run --branch --source src -m unittest discover
+    #     coverage xml
+    # - name: Upload Coverage to Codecov
+    #   uses: codecov/codecov-action@v2
+    #   with:
+    #     token: ${{ secrets.CODECOV_TOKEN }}
+
 
 
 
