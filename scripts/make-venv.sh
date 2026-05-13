@@ -1,4 +1,7 @@
-#!/bin/bash -f
+#!/usr/bin/env bash
+
+export PROJECT_ROOT=$( cd "$(dirname "$0")/.." ; pwd -P )
+cd "$PROJECT_ROOT"
 
 # Deactivate and remove the old virtual environment, if present
 echo "Removing existing Virtual Environment, if present ..."
@@ -14,4 +17,4 @@ python -m venv venv
 pip install --upgrade pip
 
 # Install the requirements
-pip install -r requirements.txt
+pip install -e .

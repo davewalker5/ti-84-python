@@ -1,6 +1,7 @@
 from os import makedirs
 from os.path import basename, dirname, join, exists
 from pathlib import Path
+from python_minifier import minify
 
 EXCLUDED_FILES = ["__init__.py", "ti_plotlib.py", "ti_system.py", "turtle.py"]
 
@@ -12,16 +13,13 @@ def get_project_folder():
     return dirname(dirname(__file__))
 
 
-def minimise(file_path):
+def remove_comments(lines):
     """
-    Give the full path to a source file, generate a "minimised" version in the output folder
+    Give the content of a source file as a list of individual lines, remove docstrings and comments
 
-    :param file_path: Full path to the source file
+    :param lines: Source code lines
+    :return: List of source code lines without docstrings and comments
     """
-    # Read the file content as an array of strings
-    with open(file_path, mode="rt", encoding="utf-8") as in_handle:
-        lines = in_handle.readlines()
-
     # Enumerate the lines identifying the indices for those to be removed - using del[] on the list
     # while enumerating it doesn't work, so capture the indices and delete later
     in_docstring = False
@@ -42,6 +40,20 @@ def minimise(file_path):
     for i in sorted(idx_to_remove, reverse=True):
         del lines[i]
 
+    # Return the updated set of lines
+    return lines
+
+
+def minify_file(file_path):
+    # Read the source
+    with open(file_path, mode="rt", encoding="utf-8") as in_handle:
+        lines = in_handle.readlines()
+
+    # Minify it
+    lines = remove_comments(lines)
+    source = "".join(lines)
+    minified = minify(source, file_path, remove_pass=False)
+
     # Create the output folder
     output_folder = join(get_project_folder(), "minimiser", "minimised")
     if not exists(output_folder):
@@ -50,7 +62,7 @@ def minimise(file_path):
     # Write the "minimised" file
     output_file_path = join(output_folder, basename(file_path))
     with open(output_file_path, mode="wt", encoding="UTF-8") as out_handle:
-        out_handle.writelines(lines)
+        out_handle.writelines(minified)
 
 
 def minimise_all_source_files():
@@ -60,7 +72,7 @@ def minimise_all_source_files():
     source_folder = join(get_project_folder(), "src")
     for file in Path(source_folder).rglob("*.py"):
         if file.name not in EXCLUDED_FILES:
-            minimise(file.absolute())
+            minify_file(file.absolute())
 
 
 minimise_all_source_files()
