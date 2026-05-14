@@ -11,6 +11,7 @@ requires-python = ">=3.13"
 dependencies = [
     "coverage==7.14.0",
     "flake8==7.3.0",
+    "python_minifier==3.2.0",
     "vulture==2.16"
 ]
 
