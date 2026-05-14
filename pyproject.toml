@@ -4,12 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ti-84-python"
-version = "1.62.0"
+version = "1.63.0"
 description = "TI-84 Plus CE-T Python Edition Applications"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "coverage==7.14.0"
+    "coverage==7.14.0",
+    "flake8==7.3.0",
+    "vulture==2.16"
 ]
 
 [tool.setuptools]

@@ -36,4 +36,3 @@ def quadratic_roots(a, b, c, places):
         roots = [root1, root2]
 
     return roots, are_complex
-

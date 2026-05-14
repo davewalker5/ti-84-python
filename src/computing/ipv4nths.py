@@ -29,7 +29,8 @@ def nth_subnet(first_network_ip_address, network_bits, subnet_bits, n):
     # They're the "n" bits starting at network_bits + 1: Generate a binary IP address string
     # with this combination in the subnet bits and 0 in the host bits
     subnet_portion = pad_string(bin(n - 1).replace("0b", ""), "0", subnet_bits, True)
-    subnet_binary_string = binary_ip_address[:network_bits - subnet_bits] + subnet_portion + "0" * (32 - network_bits + subnet_bits)
+    subnet_binary_string = binary_ip_address[:network_bits - subnet_bits] + subnet_portion + \
+        "0" * (32 - network_bits + subnet_bits)
 
     # Convert back to a set of octets
     subnet_octets = []

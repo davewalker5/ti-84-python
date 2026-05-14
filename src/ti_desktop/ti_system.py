@@ -1,5 +1,9 @@
 from platform import system
+
 _OS = system().casefold()
+_key = None
+_strings = {}
+
 
 if _OS in ["windows", "win32", "darwin"]:
     from pynput import keyboard
@@ -19,8 +23,6 @@ if _OS in ["windows", "win32", "darwin"]:
         Key.backspace: 9,
         Key.esc: 64
     }
-
-_key = None
 
 
 def on_press_key(key):
@@ -52,7 +54,6 @@ def wait_key():
 
     :return: TI key code
     """
-    global _OS
     if _OS in ["windows", "win32", "darwin"]:
         # Note that on MacOS, if this application is run in e.g. PyCharm then PyCharm needs to be
         # added to the "Accessibility" settings under System Settings
@@ -60,8 +61,27 @@ def wait_key():
             listener.join()
 
         # Map the desktop keycode to the set of configured TI-84 key codes
-        global _key
         ti_keycode = KEY_CODE_MAP[_key] if _key in KEY_CODE_MAP.keys() else None
         return ti_keycode
     else:
         return None
+
+
+def store_string(name, value):
+    """
+    Store a string for later recall
+
+    :param name: String name
+    :param value: Value to store
+    """
+    _strings[name] = value
+
+
+def recall_string(name):
+    """
+    Retrieve the value of a stored string
+
+    :param name: String name
+    :return: Associated value or none
+    """
+    return _strings[name] if name in _strings.keys() else None

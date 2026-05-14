@@ -157,7 +157,7 @@ def calculate_difference(t, y, step_size, f, is_function, method):
     # Calculate using two half-steps
     half_step_size = step_size / 2
     ti, yi = solve_step(t, y, half_step_size, f, is_function, method)
-    t2, y2 = solve_step(ti, yi, half_step_size, f, is_function, method)
+    _, y2 = solve_step(ti, yi, half_step_size, f, is_function, method)
 
     # Calculate the difference
     difference = abs(y2 - y1)
@@ -220,7 +220,7 @@ def solve(f, options):
             # For automatic step-size adjustment, start at the current step multiplied
             # by a suitable multiplier - this allows the step size to grow as well as
             # shrink, where appropriate
-            tf, yf, step_size_decimal, difference = \
+            tf, yf, _, _ = \
                 adjust_step_size(t, y, 1.5 * options["step_size"], options["tolerance"], f,
                                  is_function, options["method"])
         else:
