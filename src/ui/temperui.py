@@ -36,7 +36,7 @@ def main():
 
         print()
         print(str(temperature) + TEMPERATURE_REPORT[from_units] + " = " +
-            truncate_string(converted_temperature, DECIMAL_PLACES) + TEMPERATURE_REPORT[to_units])
+              truncate_string(converted_temperature, DECIMAL_PLACES) + TEMPERATURE_REPORT[to_units])
         print()
 
 

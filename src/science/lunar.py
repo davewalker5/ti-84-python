@@ -43,24 +43,3 @@ def phase_name(lunar_age):
     phase_length = LUNAR_CYCLE_LENGTH_DAYS / 8.0
     phase_number = int(lunar_age / phase_length)
     return PHASE_NAMES[phase_number]
-
-
-def calculate_lunar_cycle(d, number_of_days):
-    """
-    Starting from the specified date, calculate the phases in the lunar cycle for the next "n" days
-
-    :param d: Date to calculate for
-    :param number_of_days: Number of days to calculate
-    :return: Dictionary of phase information
-    """
-    cycle = {}
-    timestamp = d.timestamp()
-    for i in range(0, number_of_days + 1):
-        current_date = DateTime.from_timestamp(timestamp + i * 86400)
-        age = calculate_lunar_age(current_date, 0)
-        cycle[i] = {
-            "date": str(current_date),
-            "age": age,
-            "phase": phase_name(age)
-        }
-    return cycle

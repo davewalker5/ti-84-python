@@ -56,26 +56,6 @@ def prompt_for_float(prompt, minimum_value=None, maximum_value=None):
     return prompt_for_number(prompt, "number", float, minimum_value, maximum_value)
 
 
-def prompt_for_list_integer(prompt, minimum_value=None, maximum_value=None):
-    """
-    Prompt for a list of integers, one at a time
-
-    :param prompt: User-friendly prompt
-    :param minimum_value: Minimum acceptable value
-    :param maximum_value: Maximum acceptable value
-    :return: List of integer values, which may be empty
-    """
-    list_of_int = []
-    while True:
-        number = prompt_for_integer(prompt, minimum_value, maximum_value)
-        if number is None:
-            break
-
-        list_of_int.append(number)
-
-    return list_of_int
-
-
 def prompt_for_yes_no(prompt):
     """
     Prompt for a Y/N input

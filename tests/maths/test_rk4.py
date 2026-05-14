@@ -52,7 +52,7 @@ class TestRK4(unittest.TestCase):
             "output_type": OUTPUT_SILENT
         }
 
-        x_points, y_points = solve(f, options)
+        x_points, y_points = solve(f, None, None, options)
 
         self.assertEqual(len(EXPECTED_SOLUTION_FIXED_STEP_SIZE), len(x_points))
         self.assertEqual(len(EXPECTED_SOLUTION_FIXED_STEP_SIZE), len(y_points))
@@ -72,7 +72,7 @@ class TestRK4(unittest.TestCase):
             "output_type": OUTPUT_SILENT
         }
 
-        x_points, y_points = solve("0.5*y", options)
+        x_points, y_points = solve("0.5*y", None, None, options)
 
         self.assertEqual(len(EXPECTED_SOLUTION_FIXED_STEP_SIZE), len(x_points))
         self.assertEqual(len(EXPECTED_SOLUTION_FIXED_STEP_SIZE), len(y_points))
@@ -92,7 +92,7 @@ class TestRK4(unittest.TestCase):
             "output_type": OUTPUT_SILENT
         }
 
-        x_points, y_points = solve(f, options)
+        x_points, y_points = solve(f, None, None, options)
 
         self.assertEqual(len(EXPECTED_SOLUTION_VARIABLE_STEP), len(x_points))
         self.assertEqual(len(EXPECTED_SOLUTION_VARIABLE_STEP), len(y_points))

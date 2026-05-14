@@ -2,7 +2,7 @@
 Prompt for keypresses and report the key code until 2nd + quit is pressed to exit
 """
 
-from ti_system import *
+from ti_system import wait_key
 
 key_code = None
 while key_code != 64:

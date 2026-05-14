@@ -157,7 +157,7 @@ def calculate_difference(t, y, step_size, f, is_function, method):
     # Calculate using two half-steps
     half_step_size = step_size / 2
     ti, yi = solve_step(t, y, half_step_size, f, is_function, method)
-    t2, y2 = solve_step(ti, yi, half_step_size, f, is_function, method)
+    _, y2 = solve_step(ti, yi, half_step_size, f, is_function, method)
 
     # Calculate the difference
     difference = abs(y2 - y1)
@@ -192,15 +192,22 @@ def adjust_step_size(t, y, step_size, tolerance, f, is_function, method):
     return t1, y1, step_size, difference
 
 
-def solve(f, options):
+def solve(f, pre_hook, post_hook, options):
     """
     Solve the equation for the specified range of the independent variable,
     starting at t = 0
 
     :param f: Function to solve : Either a Python function or a string expressed in terms of t and y
+    :param pre_hook: Pre-solution hook method
+    :param post_hook: Post-solution hook method
     :param options: Dictionary of solution and, if required, charting options
     :return: Tuple of lists of t and y points in the solution
     """
+
+    # Call the pre-solution hook, if supplied
+    if pre_hook is not None:
+        pre_hook(options)
+
     # Initialise
     t = 0.0
     y = options["initial_value"]
@@ -220,7 +227,7 @@ def solve(f, options):
             # For automatic step-size adjustment, start at the current step multiplied
             # by a suitable multiplier - this allows the step size to grow as well as
             # shrink, where appropriate
-            tf, yf, step_size_decimal, difference = \
+            tf, yf, _, _ = \
                 adjust_step_size(t, y, 1.5 * options["step_size"], options["tolerance"], f,
                                  is_function, options["method"])
         else:
@@ -245,5 +252,9 @@ def solve(f, options):
         draw_chart(options["title"],
                    t_points,
                    y_points)
+
+    # Call the pre-solution hook, if supplied
+    if post_hook is not None:
+        post_hook(t_points, y_points)
 
     return t_points, y_points

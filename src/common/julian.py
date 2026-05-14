@@ -46,7 +46,7 @@ def calculate_julian_midnight(d, places=4):
     c = 2 - a + b
     e = int(365.25 * (y + 4716))
     f = int(30.6001 * (m + 1))
-    
+
     jd = c + d.day + e + f - 1524.5
     return round(jd, places)
 

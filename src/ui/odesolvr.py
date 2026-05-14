@@ -50,7 +50,7 @@ def main():
     output_type = output_type - 1
 
     print("Solving dy/dx = " + equation + " ...")
-    return solve(equation, {
+    return solve(equation, None, None, {
         "method": method,
         "limit": limit,
         "auto_step_size": auto_step_size,

@@ -29,8 +29,8 @@ try:
     # Suppress the application if we're building documentation
     from os import environ
     if "DOCBUILD" not in environ:
-        solve(f, EXAMPLE_OPTIONS)
+        solve(f, None, None, EXAMPLE_OPTIONS)
 
 except ImportError:
     # Likely to be running on the calculator so run the application
-    solve(f, EXAMPLE_OPTIONS)
+    solve(f, None, None, EXAMPLE_OPTIONS)
