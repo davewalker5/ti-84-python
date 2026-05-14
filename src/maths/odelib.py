@@ -192,15 +192,22 @@ def adjust_step_size(t, y, step_size, tolerance, f, is_function, method):
     return t1, y1, step_size, difference
 
 
-def solve(f, options):
+def solve(f, pre_hook, post_hook, options):
     """
     Solve the equation for the specified range of the independent variable,
     starting at t = 0
 
     :param f: Function to solve : Either a Python function or a string expressed in terms of t and y
+    :param pre_hook: Pre-solution hook method
+    :param post_hook: Post-solution hook method
     :param options: Dictionary of solution and, if required, charting options
     :return: Tuple of lists of t and y points in the solution
     """
+
+    # Call the pre-solution hook, if supplied
+    if pre_hook is not None:
+        pre_hook(options)
+
     # Initialise
     t = 0.0
     y = options["initial_value"]
@@ -245,5 +252,9 @@ def solve(f, options):
         draw_chart(options["title"],
                    t_points,
                    y_points)
+
+    # Call the pre-solution hook, if supplied
+    if post_hook is not None:
+        post_hook(t_points, y_points)
 
     return t_points, y_points
