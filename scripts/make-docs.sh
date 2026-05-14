@@ -1,8 +1,13 @@
-#!/bin/zsh -f
+#!/usr/bin/env bash
 
-source ../venv/bin/activate
-PROJECT_ROOT=${0:a:h}/..
+export PROJECT_ROOT=$( cd "$(dirname "$0")/.." ; pwd -P )
+export PYTHONPATH="$PROJECT_ROOT/src:$PROJECT_ROOT/tests/mocks"
+source "$PROJECT_ROOT/venv/bin/activate"
 export DOCBUILD=True
+
+# Capture the current folder
+CWD=`pwd`
+cd "$PROJECT_ROOT/docs"
 
 # Add all the source sub-folders *except* the desktop implementation of the TI packages to PYTHONPATH
 src_paths="$PROJECT_ROOT/src"
@@ -31,3 +36,6 @@ make html < stdin.txt
 rm stdin.txt
 unset DOCBUILD
 deactivate
+
+# Restore the working folder
+cd "$CWD"

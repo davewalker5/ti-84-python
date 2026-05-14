@@ -35,10 +35,10 @@ EXAMPLE_OPTIONS = {
     "initial_value": 0.0,
     "precision": 4,
     "output_type": OUTPUT_CHART,
-    "title": "Seasonal Presence"
+    "title": "Winter Presence"
 }
 
-# Model parameters
+# Model parameters : Redwing
 PARAMETERS = {
   "SCORE": 0.109,
   "INITIAL_Y": 0.953,
@@ -53,8 +53,7 @@ PARAMETERS = {
   "AUTUMN_WIDTH": 4.105,
   "SUMMER_DIP": 0.188,
   "SUMMER_LOW": 6.55,
-  "SUMMER_WIDTH": 3.288,
-  "SPECIES": "Redwing"
+  "SUMMER_WIDTH": 3.288
 }
 
 

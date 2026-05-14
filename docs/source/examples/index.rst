@@ -8,4 +8,7 @@ The examples Package
    odeex1
    odeex2
    odeex3
+   resident
+   seasonal
    turtplay
+   winter

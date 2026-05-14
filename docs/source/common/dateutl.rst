@@ -1,5 +1,5 @@
 dateutil.py
 ===========
 
-.. automodule:: dateutil
+.. automodule:: dateutl
    :members:
