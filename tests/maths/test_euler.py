@@ -29,7 +29,7 @@ class TestEuler(unittest.TestCase):
             "output_type": OUTPUT_SILENT
         }
 
-        x_points, y_points = solve(f, options)
+        x_points, y_points = solve(f, None, None, options)
 
         self.assertEqual(len(EXPECTED_SOLUTION), len(x_points))
         self.assertEqual(len(EXPECTED_SOLUTION), len(y_points))
