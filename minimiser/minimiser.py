@@ -1,9 +1,11 @@
 from os import makedirs
 from os.path import basename, dirname, join, exists
 from pathlib import Path
+from datetime import datetime
 from python_minifier import minify
 
 EXCLUDED_FILES = ["__init__.py", "ti_plotlib.py", "ti_system.py", "turtle.py"]
+AGGRESSIVE_MINIMISATION = ["resident.py"]
 
 
 def get_project_folder():
@@ -44,7 +46,27 @@ def remove_comments(lines):
     return lines
 
 
-def minify_file(file_path):
+def print_message(message):
+    """
+    Show a timestamped message
+
+    :param message: Message text
+    """
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"{timestamp} : {message}")
+
+
+def minify_file(file_path, aggressive):
+    """
+    Minify a Python source file
+
+    :param file_path: Path to the file to minimise
+    :param aggressive: Use aggressive minimisation options
+    """
+
+    # Capture the initial size
+    original_size = Path(file_path).stat().st_size
+
     # Read the source
     with open(file_path, mode="rt", encoding="utf-8") as in_handle:
         lines = in_handle.readlines()
@@ -52,7 +74,7 @@ def minify_file(file_path):
     # Minify it
     lines = remove_comments(lines)
     source = "".join(lines)
-    minified = minify(source, file_path, remove_pass=False)
+    minified = minify(source, file_path, remove_pass=False, rename_locals=True, rename_globals=aggressive)
 
     # Create the output folder
     output_folder = join(get_project_folder(), "minimiser", "minimised")
@@ -64,15 +86,21 @@ def minify_file(file_path):
     with open(output_file_path, mode="wt", encoding="UTF-8") as out_handle:
         out_handle.writelines(minified)
 
+    minified_file = Path(output_file_path)
+    minified_size = minified_file.stat().st_size
+    reduction = 100.0 - 100.0 * minified_size / original_size
+    print_message(f"Minified {minified_file.name} : {original_size} bytes -> {minified_size} bytes, {round(reduction)}% reduction")
+
 
 def minimise_all_source_files():
     """
     Find all Python files and "minimise" them prior to transfer to the calculator
     """
     source_folder = join(get_project_folder(), "src")
-    for file in Path(source_folder).rglob("*.py"):
+    for file in sorted(Path(source_folder).rglob("*.py"), key=lambda p: p.name.lower()):
         if file.name not in EXCLUDED_FILES:
-            minify_file(file.absolute())
+            aggressive = file.name in AGGRESSIVE_MINIMISATION
+            minify_file(file.absolute(), aggressive)
 
 
 minimise_all_source_files()

@@ -2,7 +2,7 @@
 Resident Detectability Model
 ============================
 
-This model represents species that are **always present but variably detectable**, describing a continuous
+This is a seasonal wildlife detecmodel represents species that are **always present but variably detectable**, describing a continuous
 presence in which detectability rises and falls through the year without ever reaching zero.
 
 It provides a minimal explanation for patterns seen in the seasonal analysis of observations, showing that
@@ -32,88 +32,90 @@ EXAMPLE_OPTIONS = {
     "tolerance": 0.005,
     "step_size": 0.1,
     "auto_step_size": True,
-    "initial_value": 0.0,
+    "initial_value": 0.944,
     "precision": 4,
     "output_type": OUTPUT_CHART,
-    "title": "Seasonal Presence"
+    "title": "Resident Detectability"
 }
 
-# Model parameters
-PARAMETERS = {
-  "SCORE": 0.227,
-  "INITIAL_Y": 0.944,
-  "GROWTH_RATE": 2.04,
-  "DECAY_RATE": 2.477,
-  "SUMMER_DECAY_BOOST": 4.388,
-  "PRE_SUMMER_DECAY_REDUCTION": 0.486,
-  "PRE_SUMMER_DECAY_END": 7.245,
-  "PRE_SUMMER_DECAY_SHARPNESS": 6.676,
-  "SPRING_CARRYOVER_WEIGHT": 0.285,
-  "SPRING_CARRYOVER_END": 7.14,
-  "SPRING_CARRYOVER_SHARPNESS": 17.608,
-  "BASELINE": 0.369,
-  "WINTER_WEIGHT": 0.316,
-  "AUTUMN_WEIGHT": 0.02,
-  "WINTER_PEAK": 3.165,
-  "AUTUMN_PEAK": 10.955,
-  "AUTUMN_ONSET": 10.815,
-  "AUTUMN_GATE_SHARPNESS": 7.04,
-  "WINTER_WIDTH": 11.35,
-  "WINTER_RISE_WIDTH": 11.584,
-  "WINTER_FALL_WIDTH": 11.882,
-  "AUTUMN_WIDTH": 6.309,
-  "AUTUMN_RISE_WIDTH": 5.614,
-  "AUTUMN_FALL_WIDTH": 6.913,
-  "SUMMER_DIP": 0.182,
-  "SUMMER_LOW": 8.965,
-  "SUMMER_ONSET": 7.125,
-  "SUMMER_GATE_SHARPNESS": 3.458,
-  "SUMMER_DECAY_ONSET": 7.13,
-  "SUMMER_DECAY_GATE_SHARPNESS": 13.265,
-  "SUMMER_WIDTH": 26.087,
-  "SUMMER_RISE_WIDTH": 41.09,
-  "SUMMER_FALL_WIDTH": 12.577,
-  "SCALE": 1.316,
-  "YEAR_END_WEIGHT": 0.182,
-  "YEAR_END_PEAK": 12.154,
-  "YEAR_END_WIDTH": 86.954,
-  "YEAR_END_RISE_WIDTH": 162.556,
-  "YEAR_END_FALL_WIDTH": 11.63,
-  "SPECIES": "Blackbird"
-}
+# Model parameters : Blackbird
+PARAMETERS = (
+    2.04,
+    2.477,
+    4.388,
+    0.486,
+    7.245,
+    6.676,
+    0.285,
+    7.14,
+    17.608,
+    0.369,
+    0.316,
+    0.02,
+    3.165,
+    10.955,
+    10.815,
+    7.04,
+    11.35,
+    11.584,
+    11.882,
+    6.309,
+    5.614,
+    6.913,
+    0.182,
+    8.965,
+    7.125,
+    3.458,
+    7.13,
+    13.265,
+    26.087,
+    41.09,
+    12.577,
+    1.316,
+    0.182,
+    12.154,
+    86.954,
+    162.556,
+    11.63
+)
 
-
-def pre_hook(options):
-    # Get the initial value for Y
-    value = PARAMETERS.get("INITIAL_Y")
-    options["initial_value"] = value
-
-
-def month_from_t(t):
-    """
-    Convert solver time into a repeating month number in the range 1..12.
-
-    The solver typically runs from t = 0, so adding ONE makes t = 0 correspond
-    to January / month 1 rather than month 0.
-    """
-    month = t + 1
-    return ((month - 1) % 12) + 1
-
-
-def get_parameter_or(name: str, default):
-    """
-    Read a Decimal parameter, returning a default when it is absent.
-
-    This keeps the asymmetric model backward-compatible with older fitted
-    parameter JSON files that only contain WINTER_WIDTH / AUTUMN_WIDTH /
-    SUMMER_WIDTH.
-    """
-    value = PARAMETERS.get(name)
-
-    if value is None:
-        return default
-
-    return value
+GROWTH_RATE, \
+DECAY_RATE, \
+SUMMER_DECAY_BOOST, \
+PRE_SUMMER_DECAY_REDUCTION, \
+PRE_SUMMER_DECAY_END, \
+PRE_SUMMER_DECAY_SHARPNESS, \
+SPRING_CARRYOVER_WEIGHT, \
+SPRING_CARRYOVER_END, \
+SPRING_CARRYOVER_SHARPNESS, \
+BASELINE, \
+WINTER_WEIGHT, \
+AUTUMN_WEIGHT, \
+WINTER_PEAK, \
+AUTUMN_PEAK, \
+AUTUMN_ONSET, \
+AUTUMN_GATE_SHARPNESS, \
+WINTER_WIDTH, \
+WINTER_RISE_WIDTH, \
+WINTER_FALL_WIDTH, \
+AUTUMN_WIDTH, \
+AUTUMN_RISE_WIDTH, \
+AUTUMN_FALL_WIDTH, \
+SUMMER_DIP, \
+SUMMER_LOW, \
+SUMMER_ONSET, \
+SUMMER_GATE_SHARPNESS, \
+SUMMER_DECAY_ONSET, \
+SUMMER_DECAY_GATE_SHARPNESS, \
+SUMMER_WIDTH, \
+SUMMER_RISE_WIDTH, \
+SUMMER_FALL_WIDTH, \
+SCALE, \
+YEAR_END_WEIGHT, \
+YEAR_END_PEAK, \
+YEAR_END_WIDTH, \
+YEAR_END_RISE_WIDTH, \
+YEAR_END_FALL_WIDTH = PARAMETERS
 
 
 def signed_month_distance(t, peak):
@@ -156,7 +158,7 @@ def asymmetric_annual_bump(t, peak, rise_width, fall_width):
     return exp(width * log(profile))
 
 
-def logistic_onset_gate(t, onset, sharpness):
+def logistic_onset_gate(t, onset, sharpness, inverse):
     """
     Smooth annual onset gate in the range 0..1.
 
@@ -179,18 +181,8 @@ def logistic_onset_gate(t, onset, sharpness):
     if x < -40.0:
         return 0.0
 
-    return 1.0 / (1.0 + exp(-x))
-
-
-def inverse_logistic_onset_gate(t, onset, sharpness):
-    """
-    Smooth annual gate that is high before onset and low after onset.
-
-    This is useful for modelling retained winter/spring detectability: the
-    model can decay slowly before the summer-collapse period, then return to
-    ordinary decay dynamics once the true summer dip begins.
-    """
-    return 1.0 - logistic_onset_gate(t, onset, sharpness)
+    onset_gate = 1.0 / (1.0 + exp(-x))
+    return 1.0 - onset_gate if inverse else onset_gate
 
 
 def autumn_onset_gate(t, onset, sharpness):
@@ -229,8 +221,8 @@ def resident_target_components(t):
     year, with detectability varying around a persistent BASELINE.
 
     The seasonal bumps are asymmetric. Older single-width parameter files still
-    work because *_RISE_WIDTH and *_FALL_WIDTH fall back to the corresponding
-    *_WIDTH value.
+    work because ``*_RISE_WIDTH`` and ``*_FALL_WIDTH`` fall back to the corresponding
+    ``*_WIDTH`` value.
 
     The autumn bump can also be multiplied by a smooth onset gate. This lets
     the fitter delay the late-year rise without imposing a hard calendar-month
@@ -238,44 +230,42 @@ def resident_target_components(t):
     AUTUMN_GATE_SHARPNESS is absent, the gate returns 1 and the model behaves
     like the asymmetric v2 model.
     """
-    winter_width = PARAMETERS.get("WINTER_WIDTH")
-    autumn_width = PARAMETERS.get("AUTUMN_WIDTH")
-    summer_width = PARAMETERS.get("SUMMER_WIDTH")
 
     winter = asymmetric_annual_bump(
         t,
-        PARAMETERS.get("WINTER_PEAK"),
-        get_parameter_or("WINTER_RISE_WIDTH", winter_width),
-        get_parameter_or("WINTER_FALL_WIDTH", winter_width),
+        WINTER_PEAK,
+        WINTER_RISE_WIDTH,
+        WINTER_FALL_WIDTH
     )
     autumn = asymmetric_annual_bump(
         t,
-        PARAMETERS.get("AUTUMN_PEAK"),
-        get_parameter_or("AUTUMN_RISE_WIDTH", autumn_width),
-        get_parameter_or("AUTUMN_FALL_WIDTH", autumn_width),
+        AUTUMN_PEAK,
+        AUTUMN_RISE_WIDTH,
+        AUTUMN_FALL_WIDTH
     )
     autumn *= autumn_onset_gate(
         t,
-        PARAMETERS.get("AUTUMN_ONSET"),
-        PARAMETERS.get("AUTUMN_GATE_SHARPNESS"),
+        AUTUMN_ONSET,
+        AUTUMN_GATE_SHARPNESS
     )
     summer = asymmetric_annual_bump(
         t,
-        PARAMETERS.get("SUMMER_LOW"),
-        get_parameter_or("SUMMER_RISE_WIDTH", summer_width),
-        get_parameter_or("SUMMER_FALL_WIDTH", summer_width),
+        SUMMER_LOW,
+        SUMMER_RISE_WIDTH,
+        SUMMER_FALL_WIDTH
     )
     summer *= logistic_onset_gate(
         t,
-        PARAMETERS.get("SUMMER_ONSET"),
-        PARAMETERS.get("SUMMER_GATE_SHARPNESS"),
+        SUMMER_ONSET,
+        SUMMER_GATE_SHARPNESS,
+        False
     )
 
     year_end = asymmetric_annual_bump(
         t,
-        PARAMETERS.get("YEAR_END_PEAK"),
-        get_parameter_or("YEAR_END_RISE_WIDTH", PARAMETERS.get("YEAR_END_WIDTH")),
-        get_parameter_or("YEAR_END_FALL_WIDTH", PARAMETERS.get("YEAR_END_WIDTH")),
+        YEAR_END_PEAK,
+        YEAR_END_RISE_WIDTH,
+        YEAR_END_FALL_WIDTH
     )
 
     # Optional spring / early-summer carry-over support.
@@ -290,43 +280,27 @@ def resident_target_components(t):
     # The inverse gate is close to 1 before SPRING_CARRYOVER_END and falls
     # towards 0 afterwards.  Species that do not need it, such as blue tit, can
     # simply fit SPRING_CARRYOVER_WEIGHT close to zero.
-    spring_carryover = inverse_logistic_onset_gate(
+    spring_carryover = logistic_onset_gate(
         t,
-        get_parameter_or("SPRING_CARRYOVER_END", 6.75),
-        get_parameter_or("SPRING_CARRYOVER_SHARPNESS", 10.0),
+        SPRING_CARRYOVER_END,
+        SPRING_CARRYOVER_SHARPNESS,
+        True
     )
 
     target = (
-        PARAMETERS.get("BASELINE")
-        + PARAMETERS.get("WINTER_WEIGHT") * winter
-        + PARAMETERS.get("AUTUMN_WEIGHT") * autumn
-        + PARAMETERS.get("YEAR_END_WEIGHT") * year_end
-        + get_parameter_or("SPRING_CARRYOVER_WEIGHT", 0.0) * spring_carryover
-        - PARAMETERS.get("SUMMER_DIP") * summer
+        BASELINE
+        + WINTER_WEIGHT * winter
+        + AUTUMN_WEIGHT * autumn
+        + YEAR_END_WEIGHT * year_end
+        + SPRING_CARRYOVER_WEIGHT * spring_carryover
+        - SUMMER_DIP * summer
     )
 
     # Keep the target non-negative in case parameters are pushed too far.
     if target < 0.0:
         target = 0.0
 
-    return target, {
-        "winter": winter,
-        "autumn": autumn,
-        "summer": summer,
-        "year_end": year_end,
-        "spring_carryover": spring_carryover,
-    }
-
-
-def resident_target(t):
-    """
-    Resident seasonal detectability target.
-
-    Kept as a wrapper so older plotting/export code that calls resident_target()
-    continues to work unchanged.
-    """
-    target, _ = resident_target_components(t)
-    return target
+    return target, winter, autumn, summer, year_end, spring_carryover
 
 
 def f(t, y):
@@ -349,14 +323,15 @@ def f(t, y):
     preventing the broad summer component from pulling April-July down too soon.
     If these parameters are absent, older parameter files behave as before.
     """
-    t_mod = month_from_t(t)
-    target, components = resident_target_components(t_mod)
+
+    # Convert solver time into a repeating month number in the range 1..12.
+    month = t + 1
+    t_mod = ((month - 1) % 12) + 1
+    target, _, _, summer, _, _ = resident_target_components(t_mod)
 
     if target > y:
-        rate = PARAMETERS.get("GROWTH_RATE")
+        rate = GROWTH_RATE
     else:
-        summer = components["summer"]
-
         # Some residents, especially blackbird-like curves, retain high
         # winter/spring detectability for several months and only then collapse
         # into the summer trough.  A single DECAY_RATE has to compromise between
@@ -364,18 +339,19 @@ def f(t, y):
         # retention gate lets decay be reduced before the fitted end month, but
         # leaves ordinary residents unchanged when PRE_SUMMER_DECAY_REDUCTION is
         # fitted close to zero.
-        pre_summer_retention = inverse_logistic_onset_gate(
+        pre_summer_retention = logistic_onset_gate(
             t_mod,
-            PARAMETERS.get("PRE_SUMMER_DECAY_END"),
-            PARAMETERS.get("PRE_SUMMER_DECAY_SHARPNESS"),
+            PRE_SUMMER_DECAY_END,
+            PRE_SUMMER_DECAY_SHARPNESS,
+            True
         )
-        decay_reduction = get_parameter_or("PRE_SUMMER_DECAY_REDUCTION", 0.0)
+        decay_reduction = PRE_SUMMER_DECAY_REDUCTION
         if decay_reduction < 0.0:
             decay_reduction = 0.0
         if decay_reduction > 0.95:
             decay_reduction = 0.95
 
-        retained_decay = PARAMETERS.get("DECAY_RATE") * (1.0 - decay_reduction * pre_summer_retention)
+        retained_decay = DECAY_RATE * (1.0 - decay_reduction * pre_summer_retention)
 
         # Do not let the summer-specific decay acceleration start just because
         # the broad summer target component is beginning to form.  Blackbird-like
@@ -385,14 +361,15 @@ def f(t, y):
         # behave as before because the fallback onset is SUMMER_ONSET.
         summer_decay_gate = logistic_onset_gate(
             t_mod,
-            get_parameter_or("SUMMER_DECAY_ONSET", PARAMETERS.get("SUMMER_ONSET")),
-            get_parameter_or("SUMMER_DECAY_GATE_SHARPNESS", PARAMETERS.get("SUMMER_GATE_SHARPNESS")),
+            SUMMER_DECAY_ONSET,
+            SUMMER_DECAY_GATE_SHARPNESS,
+            False
         )
         summer_decay_drive = summer * summer_decay_gate
 
         rate = (
             retained_decay
-            + get_parameter_or("SUMMER_DECAY_BOOST", 0.0) * summer_decay_drive
+            + SUMMER_DECAY_BOOST * summer_decay_drive
         )
 
     return rate * (target - y)
@@ -402,8 +379,8 @@ try:
     # Suppress the application if we're building documentation
     from os import environ
     if "DOCBUILD" not in environ:
-        solve(f, pre_hook, None, EXAMPLE_OPTIONS)
+        solve(f, None, None, EXAMPLE_OPTIONS)
 
 except ImportError:
     # Likely to be running on the calculator so run the application
-    solve(f, pre_hook, None, EXAMPLE_OPTIONS)
+    solve(f, None, None, EXAMPLE_OPTIONS)

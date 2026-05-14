@@ -1,6 +1,3 @@
-import ti_plotlib as plt
-from strutils import truncate_string
-
 EULER = 0
 PREDICTOR_CORRECTOR = 1
 RUNGE_KUTTA_4 = 2
@@ -12,6 +9,20 @@ PAGE_SIZE = 10
 GRID_SCALE = 10
 
 
+def truncate_string(number, places):
+    """
+    Given a number that has been rounded to "places" decimals, return a string representation that
+    is truncated to "places" decimal places.
+
+    :param number: String representation of a number
+    :param places: Number of decimal places to truncate at
+    :return: Truncated string
+    """
+    str_number = str(number)
+    decimal_idx = str_number.find(".")
+    return str_number[:decimal_idx + places + 1] if decimal_idx >= 0 else str_number
+
+
 def draw_chart(title, x_points, y_points):
     """
     Draw a chart of a solution
@@ -20,6 +31,8 @@ def draw_chart(title, x_points, y_points):
     :param x_points: List of X points to plot
     :param y_points: Corresponding list of Y points to plot
     """
+    import ti_plotlib as plt
+
     # Set up the window
     plt.auto_window(x_points, y_points)
     plt.cls()

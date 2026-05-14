@@ -38,7 +38,7 @@ EXAMPLE_OPTIONS = {
     "title": "Seasonal Presence"
 }
 
-#: Model parameters
+#: Model parameters : Bluebell
 PARAMETERS = {
   "GROWTH": 3.345,
   "DECAY": 1.582,
@@ -48,9 +48,7 @@ PARAMETERS = {
   "SEASON_START": 4.185,
   "SEASON_END": 5.595,
   "SHARPNESS": 8.554,
-  "FORCING_PEAK": 4.88,
-  "SCORE": 0.047,
-  "SPECIES": "Bluebell"
+  "FORCING_PEAK": 4.88
 }
 
 
