@@ -20,102 +20,10 @@ https://github.com/davewalker5/OdeSolver
 """
 
 from math import cos, log, exp
-from odelib import solve, OUTPUT_CHART, RUNGE_KUTTA_4
+from odelib import solve
 
 # Useful constants
 TWO_PI = 6.283185307179586476925286766559
-
-#: Solution and charting options dictionary
-EXAMPLE_OPTIONS = {
-    "method": RUNGE_KUTTA_4,
-    "limit": 12.0,
-    "tolerance": 0.005,
-    "step_size": 0.1,
-    "auto_step_size": True,
-    "initial_value": 0.944,
-    "precision": 4,
-    "output_type": OUTPUT_CHART,
-    "title": "Resident Detectability"
-}
-
-# Model parameters : Blackbird
-PARAMETERS = (
-    2.04,
-    2.477,
-    4.388,
-    0.486,
-    7.245,
-    6.676,
-    0.285,
-    7.14,
-    17.608,
-    0.369,
-    0.316,
-    0.02,
-    3.165,
-    10.955,
-    10.815,
-    7.04,
-    11.35,
-    11.584,
-    11.882,
-    6.309,
-    5.614,
-    6.913,
-    0.182,
-    8.965,
-    7.125,
-    3.458,
-    7.13,
-    13.265,
-    26.087,
-    41.09,
-    12.577,
-    1.316,
-    0.182,
-    12.154,
-    86.954,
-    162.556,
-    11.63
-)
-
-GROWTH_RATE, \
-DECAY_RATE, \
-SUMMER_DECAY_BOOST, \
-PRE_SUMMER_DECAY_REDUCTION, \
-PRE_SUMMER_DECAY_END, \
-PRE_SUMMER_DECAY_SHARPNESS, \
-SPRING_CARRYOVER_WEIGHT, \
-SPRING_CARRYOVER_END, \
-SPRING_CARRYOVER_SHARPNESS, \
-BASELINE, \
-WINTER_WEIGHT, \
-AUTUMN_WEIGHT, \
-WINTER_PEAK, \
-AUTUMN_PEAK, \
-AUTUMN_ONSET, \
-AUTUMN_GATE_SHARPNESS, \
-WINTER_WIDTH, \
-WINTER_RISE_WIDTH, \
-WINTER_FALL_WIDTH, \
-AUTUMN_WIDTH, \
-AUTUMN_RISE_WIDTH, \
-AUTUMN_FALL_WIDTH, \
-SUMMER_DIP, \
-SUMMER_LOW, \
-SUMMER_ONSET, \
-SUMMER_GATE_SHARPNESS, \
-SUMMER_DECAY_ONSET, \
-SUMMER_DECAY_GATE_SHARPNESS, \
-SUMMER_WIDTH, \
-SUMMER_RISE_WIDTH, \
-SUMMER_FALL_WIDTH, \
-SCALE, \
-YEAR_END_WEIGHT, \
-YEAR_END_PEAK, \
-YEAR_END_WIDTH, \
-YEAR_END_RISE_WIDTH, \
-YEAR_END_FALL_WIDTH = PARAMETERS
 
 
 def signed_month_distance(t, peak):
@@ -183,11 +91,10 @@ def logistic_onset_gate(t, onset, sharpness, inverse):
     In the resident detectability model, this gate can be used to introduce
     delayed seasonal effects, such as:
 
-        - delayed onset of summer suppression
-        - gradual activation of post-breeding decline
-        - seasonal carry-over effects
-        - smooth year-end or spring transition controls
-
+    - delayed onset of summer suppression
+    - gradual activation of post-breeding decline
+    - seasonal carry-over effects
+    - smooth year-end or spring transition controls
 
     The key purpose is to let seasonal processes begin progressively at an
     ecologically meaningful point in the year without introducing hard
@@ -211,7 +118,6 @@ def logistic_onset_gate(t, onset, sharpness, inverse):
 
     if x < -40.0:
         return 0.0
-
 
     # Calculate the normal onset gate: before onset -> near 0.0, after
     # onset  -> near 1.0
@@ -414,12 +320,35 @@ def f(t, y):
     return rate * (target - y)
 
 
-try:
-    # Suppress the application if we're building documentation
-    from os import environ
-    if "DOCBUILD" not in environ:
-        solve(f, None, None, EXAMPLE_OPTIONS)
+def run(solver_options, model_parameters):
+    """
+    Entry point for running the seasonal model
 
-except ImportError:
-    # Likely to be running on the calculator so run the application
-    solve(f, None, None, EXAMPLE_OPTIONS)
+    :param solver_options: Dictionary of ODE solver options
+    :param parameters: Species parameter set for the model
+    """
+    global GROWTH_RATE, DECAY_RATE, SUMMER_DECAY_BOOST, PRE_SUMMER_DECAY_REDUCTION, \
+        PRE_SUMMER_DECAY_END, PRE_SUMMER_DECAY_SHARPNESS, SPRING_CARRYOVER_WEIGHT, \
+        SPRING_CARRYOVER_END, SPRING_CARRYOVER_SHARPNESS, BASELINE, WINTER_WEIGHT, \
+        AUTUMN_WEIGHT, WINTER_PEAK, AUTUMN_PEAK, AUTUMN_ONSET, AUTUMN_GATE_SHARPNESS, \
+        WINTER_WIDTH, WINTER_RISE_WIDTH, WINTER_FALL_WIDTH, AUTUMN_WIDTH, \
+        AUTUMN_RISE_WIDTH, AUTUMN_FALL_WIDTH, SUMMER_DIP, SUMMER_LOW, SUMMER_ONSET, \
+        SUMMER_GATE_SHARPNESS, SUMMER_DECAY_ONSET, SUMMER_DECAY_GATE_SHARPNESS, \
+        SUMMER_WIDTH, SUMMER_RISE_WIDTH, SUMMER_FALL_WIDTH, SCALE, YEAR_END_WEIGHT, \
+        YEAR_END_PEAK, YEAR_END_WIDTH, YEAR_END_RISE_WIDTH, YEAR_END_FALL_WIDTH
+
+    # Set the model parameters from the supplied parameter set
+    INITIAL_Y, GROWTH_RATE, DECAY_RATE, SUMMER_DECAY_BOOST, PRE_SUMMER_DECAY_REDUCTION, \
+        PRE_SUMMER_DECAY_END, PRE_SUMMER_DECAY_SHARPNESS, SPRING_CARRYOVER_WEIGHT, \
+        SPRING_CARRYOVER_END, SPRING_CARRYOVER_SHARPNESS, BASELINE, WINTER_WEIGHT, \
+        AUTUMN_WEIGHT, WINTER_PEAK, AUTUMN_PEAK, AUTUMN_ONSET, AUTUMN_GATE_SHARPNESS, \
+        WINTER_WIDTH, WINTER_RISE_WIDTH, WINTER_FALL_WIDTH, AUTUMN_WIDTH, \
+        AUTUMN_RISE_WIDTH, AUTUMN_FALL_WIDTH, SUMMER_DIP, SUMMER_LOW, SUMMER_ONSET, \
+        SUMMER_GATE_SHARPNESS, SUMMER_DECAY_ONSET, SUMMER_DECAY_GATE_SHARPNESS, \
+        SUMMER_WIDTH, SUMMER_RISE_WIDTH, SUMMER_FALL_WIDTH, SCALE, YEAR_END_WEIGHT, \
+        YEAR_END_PEAK, YEAR_END_WIDTH, YEAR_END_RISE_WIDTH, YEAR_END_FALL_WIDTH = model_parameters
+
+    # Override the title specified in the options, set y(0) and run the solution
+    solver_options["title"] = "Resident Detectability"
+    solver_options["initial_value"] = INITIAL_Y
+    solve(f, None, None, solver_options)

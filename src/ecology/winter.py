@@ -8,9 +8,9 @@ activity spanning the year boundary, and near-absence through spring and summer.
 It provides a minimal explanation for patterns seen in the seasonal analysis of observations, showing
 that a small number of simple processes can produce:
 
-- Winter-centred presence  
-- Distinct arrival phases  
-- Extended absence through summer  
+- Winter-centred presence
+- Distinct arrival phases
+- Extended absence through summer
 
 The model forms part of the *Field Notes Journal* project:
 https://www.fieldnotesjournal.uk
@@ -20,64 +20,10 @@ https://github.com/davewalker5/OdeSolver
 """
 
 from math import cos, log, exp
-from odelib import solve, OUTPUT_CHART, RUNGE_KUTTA_4
+from odelib import solve
 
 # Useful constants
 TWO_PI = 6.283185307179586476925286766559
-
-#: Solution and charting options dictionary
-EXAMPLE_OPTIONS = {
-    "method": RUNGE_KUTTA_4,
-    "limit": 12.0,
-    "tolerance": 0.005,
-    "step_size": 0.1,
-    "auto_step_size": True,
-    "initial_value": 0.0,
-    "precision": 4,
-    "output_type": OUTPUT_CHART,
-    "title": "Winter Presence"
-}
-
-# Model parameters : Redwing
-PARAMETERS = (
-    0.953,
-    0.617,
-    2.297,
-    0,
-    0.986,
-    0.262,
-    1.53,
-    11.67,
-    3.074,
-    4.105,
-    0.188,
-    6.55,
-    3.288
-)
-
-INITIAL_Y, \
-GROWTH_RATE, \
-DECAY_RATE, \
-BASELINE, \
-WINTER_WEIGHT, \
-AUTUMN_WEIGHT, \
-WINTER_PEAK, \
-AUTUMN_PEAK, \
-WINTER_WIDTH, \
-AUTUMN_WIDTH, \
-SUMMER_DIP, \
-SUMMER_LOW, \
-SUMMER_WIDTH = PARAMETERS
-
-
-def pre_hook(options):
-    """
-    Pre-simulation hook
-
-    :param options: Simulation options
-    """
-    # Set the initial value for Y
-    options["initial_value"] = INITIAL_Y
 
 
 def annual_bump(t, peak, width):
@@ -185,12 +131,23 @@ def f(t, y):
     return rate * (target - y)
 
 
-try:
-    # Suppress the application if we're building documentation
-    from os import environ
-    if "DOCBUILD" not in environ:
-        solve(f, pre_hook, None, EXAMPLE_OPTIONS)
+def run(solver_options, model_parameters):
+    """
+    Entry point for running the seasonal model
 
-except ImportError:
-    # Likely to be running on the calculator so run the application
-    solve(f, pre_hook, None, EXAMPLE_OPTIONS)
+    :param solver_options: Dictionary of ODE solver options
+    :param parameters: Species parameter set for the model
+    """
+    global GROWTH_RATE, DECAY_RATE, BASELINE, WINTER_WEIGHT, AUTUMN_WEIGHT, \
+        WINTER_PEAK, AUTUMN_PEAK, WINTER_WIDTH, AUTUMN_WIDTH, SUMMER_DIP, SUMMER_LOW, \
+        SUMMER_WIDTH
+
+    # Set the model parameters from the supplied parameter set
+    INITIAL_Y, GROWTH_RATE, DECAY_RATE, BASELINE, WINTER_WEIGHT, AUTUMN_WEIGHT, \
+        WINTER_PEAK, AUTUMN_PEAK, WINTER_WIDTH, AUTUMN_WIDTH, SUMMER_DIP, SUMMER_LOW, \
+        SUMMER_WIDTH = model_parameters
+
+    # Override the title specified in the options, set y(0) and run the solution
+    solver_options["title"] = "Winter Presence"
+    solver_options["initial_value"] = INITIAL_Y
+    solve(f, None, None, solver_options)

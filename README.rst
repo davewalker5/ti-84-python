@@ -43,6 +43,8 @@ Structure
 +--------------+----------------------------------------------------------------------------+
 | computing    | IPv4 network details and subnet calculators                                |
 +--------------+----------------------------------------------------------------------------+
+| ecology      | Wildlife seasonal presence/detectability modeling                          |
++--------------+----------------------------------------------------------------------------+
 | examples     | Programmatic examples based on the code in the other packages              |
 +--------------+----------------------------------------------------------------------------+
 | maths        | Logic for maths applications and library code                              |
@@ -109,7 +111,7 @@ Maths Libraries
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | fibonaci.py   | src/maths        | Fibonnaci series calculator                           | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
-| odelib.py     | src/maths        | Ordinary Differential Equation solver                 | ti_plotlib, strutils |
+| odelib.py     | src/maths        | Adaptive Ordinary Differential Equation solver        | ti_plotlib           |
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | quadrat.py    | src/maths        | Quadratic root calculator                             | complx               |
 +---------------+------------------+-------------------------------------------------------+----------------------+
@@ -122,9 +124,9 @@ Science Libraries
 +---------------+------------------+-------------------------------------------------------+----------------------+
 | barometr.py   | src/science      | Barometric pressure calculations and conversions      | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
-| tempconv.py   | src/science      | Temperature conversions                               | N/A                  |
-+---------------+------------------+-------------------------------------------------------+----------------------+
 | lunar.py      | src/science      | Lunar age and phase name calculator                   | dattime, julian      |
++---------------+------------------+-------------------------------------------------------+----------------------+
+| tempconv.py   | src/science      | Temperature conversions                               | N/A                  |
 +---------------+------------------+-------------------------------------------------------+----------------------+
 
 Turtle Libraries
@@ -145,11 +147,17 @@ Programmatic Examples
 +---------------+------------------+------------------------------------------------------------------------------------+------------------+
 | **File Name** | **Location**     | **Contents**                                                                       | **Dependencies** |
 +---------------+------------------+------------------------------------------------------------------------------------+------------------+
+| blackbrd.py   | src/examples     | Model the resident detectability of the blackbird                                  | resident, odelib |
++---------------+------------------+------------------------------------------------------------------------------------+------------------+
+| bluebell.py   | src/examples     | Model the seasonal presence of the bluebell                                        | seasonal, odelib |
++---------------+------------------+------------------------------------------------------------------------------------+------------------+
 | odeex1.py     | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = Ay                        | odelib           |
 +---------------+------------------+------------------------------------------------------------------------------------+------------------+
 | odeex2.py     | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = y - t^2 + 1               | odelib           |
 +---------------+------------------+------------------------------------------------------------------------------------+------------------+
 | odeex3.py     | src/examples     | Programmatic example for the ODE Library : Chart dy/dx = yt^2 - y                  | odelib           |
++---------------+------------------+------------------------------------------------------------------------------------+------------------+
+| redwing.py    | src/examples     | Model the winter presence of the redwing                                           | winter, odelib   |
 +---------------+------------------+------------------------------------------------------------------------------------+------------------+
 | turtplay.py   | src/examples     | Replay a pre-prepared string of instructions for TurtleDraw                        | turtdraw         |
 +---------------+------------------+------------------------------------------------------------------------------------+------------------+
@@ -227,14 +235,18 @@ CE application then run the application as normal.
 Minimising the Source Code
 --------------------------
 
-The docstrings and comments in the code are of little use when viewed on the calculator screen so a simple "minimiser" is
-provided that can be run to reduce the size of the code prior to transferring it to the calculator. This is optional as
-the code will still run without being reduced in size.
+The docstrings and comments in the code are of little use when viewed on the calculator screen and as memory is at a premium
+on the device a simple "minimiser" is provided that can be run to reduce the size of the code prior to transferring it to the
+calculator.
 
-While the process falls short of a true minification, it does the following:
+For some of the modules, this is optional as the code will still run without being reduced in size. For others, it's essential
+to avoid memory allocation errors when the code runs.
+
+The minification proces does the following:
 
 - Removes docstrings
 - Removes full-line comments
+- Minifies the source code using the *python_minifier* package
 
 To run the minimiser, enter the following commands:
 
