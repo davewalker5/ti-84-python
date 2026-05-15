@@ -6,5 +6,5 @@ seasonal.py
   :alt: Seasonal Presence Model
 
 
-.. automodule:: examples.seasonal
+.. automodule:: ecology.seasonal
    :members:
