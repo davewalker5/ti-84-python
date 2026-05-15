@@ -39,47 +39,66 @@ EXAMPLE_OPTIONS = {
 }
 
 # Model parameters : Redwing
-PARAMETERS = {
-  "SCORE": 0.109,
-  "INITIAL_Y": 0.953,
-  "GROWTH_RATE": 0.617,
-  "DECAY_RATE": 2.297,
-  "BASELINE": 0,
-  "WINTER_WEIGHT": 0.986,
-  "AUTUMN_WEIGHT": 0.262,
-  "WINTER_PEAK": 1.53,
-  "AUTUMN_PEAK": 11.67,
-  "WINTER_WIDTH": 3.074,
-  "AUTUMN_WIDTH": 4.105,
-  "SUMMER_DIP": 0.188,
-  "SUMMER_LOW": 6.55,
-  "SUMMER_WIDTH": 3.288
-}
+PARAMETERS = (
+    0.953,
+    0.617,
+    2.297,
+    0,
+    0.986,
+    0.262,
+    1.53,
+    11.67,
+    3.074,
+    4.105,
+    0.188,
+    6.55,
+    3.288
+)
+
+INITIAL_Y, \
+GROWTH_RATE, \
+DECAY_RATE, \
+BASELINE, \
+WINTER_WEIGHT, \
+AUTUMN_WEIGHT, \
+WINTER_PEAK, \
+AUTUMN_PEAK, \
+WINTER_WIDTH, \
+AUTUMN_WIDTH, \
+SUMMER_DIP, \
+SUMMER_LOW, \
+SUMMER_WIDTH = PARAMETERS
 
 
 def pre_hook(options):
-    # Get the initial value for Y
-    value = PARAMETERS.get("INITIAL_Y")
-    options["initial_value"] = value
-
-
-def month_from_t(t):
     """
-    Convert solver time into a repeating month number in the range 1..12.
+    Pre-simulation hook
+
+    :param options: Simulation options
     """
-    month = t + 1
-    return ((month - 1) % 12) + 1
+    # Set the initial value for Y
+    options["initial_value"] = INITIAL_Y
 
 
 def annual_bump(t, peak, width):
     """
-    Smooth annual bump centred on peak month.
+    Generate a smooth cyclic seasonal bump centred on a specified month.
 
-    Returns a value in the range 0..1.
+    This helper function produces a continuous annual profile with a single
+    peak and smooth decay either side, wrapping naturally across the year
+    boundary. The underlying shape is derived from a cosine wave scaled to
+    the range [0, 1], then sharpened or broadened using an exponentiation
+    step.
 
-    width controls concentration:
-      lower width = broader bump
-      higher width = narrower bump
+    The resulting curve is used as a seasonal forcing component within the
+    winter visitor model. Multiple bumps can be combined to represent
+    different ecological phases such as autumn arrival, winter residency,
+    or summer suppression.
+
+    :param t: Time in months from the start of the year
+    :param peak : Month at which the bump reaches its maximum value of 1.0
+    :param width : Controls the sharpness and concentration of the seasonal peak
+    :return: A value in the range [0.0, 1.0] representing the seasonal intensity at time `t`
     """
     angle = TWO_PI * (t - peak) / 12.0
     profile = (1.0 + cos(angle)) / 2.0
@@ -94,22 +113,43 @@ def annual_bump(t, peak, width):
 
 def winter_visitor_target(t):
     """
-    Seasonal target for a winter visitor.
+    Construct the seasonal target curve for a winter visitor species
 
-    High in winter, possibly rising again in late autumn / early winter,
-    and close to zero through late spring and summer.
+    This function combines several cyclic seasonal components to generate
+    the desired detectability/presence target at a given point in the year.
+    The target is later used by the ODE system as the value toward which
+    the simulated population/detectability state evolves.
+
+    The model assumes that winter visitor dynamics can be approximated as:
+
+        - a dominant winter residency peak
+        - an autumn arrival/build-up phase
+        - a summer suppression component
+        - a low baseline detectability level
+
+    Each seasonal component is represented using `annual_bump()`, allowing
+    smooth circular transitions across the year boundary.
+
+    :param t: Time in months from the start of the year
+    :return: Seasonal target value for the current time of year
     """
-    winter = annual_bump(t, PARAMETERS.get("WINTER_PEAK"), PARAMETERS.get("WINTER_WIDTH"))
-    autumn = annual_bump(t, PARAMETERS.get("AUTUMN_PEAK"), PARAMETERS.get("AUTUMN_WIDTH"))
-    summer = annual_bump(t, PARAMETERS.get("SUMMER_LOW"), PARAMETERS.get("SUMMER_WIDTH"))
 
-    target = (
-        PARAMETERS.get("BASELINE")
-        + PARAMETERS.get("WINTER_WEIGHT") * winter
-        + PARAMETERS.get("AUTUMN_WEIGHT") * autumn
-        - PARAMETERS.get("SUMMER_DIP") * summer
-    )
+    # Calculate the main winter residency component, peaking around the
+    # core core winter months and representing the primary period of abundance
+    # or detectability for the species
+    winter = annual_bump(t, WINTER_PEAK, WINTER_WIDTH)
 
+    # Calculate the secondary autumn arrival/build-up component, representing
+    # pre-winter arrival, migration build-up, or early seasonal movement before
+    # the main winter peak is reached.
+    autumn = annual_bump(t, AUTUMN_PEAK, AUTUMN_WIDTH)
+
+    # Calculate the ummer suppression component. This component is subtracted
+    # from the target to reduce simulated presence during the summer period when
+    # winter visitors are typically absent
+    summer = annual_bump(t, SUMMER_LOW, SUMMER_WIDTH)
+
+    target = BASELINE + WINTER_WEIGHT * winter + AUTUMN_WEIGHT * autumn - SUMMER_DIP * summer
     if target < 0.0:
         return 0.0
 
@@ -118,20 +158,30 @@ def winter_visitor_target(t):
 
 def f(t, y):
     """
-    Winter visitor ODE.
+    Winter visitor ODE
 
-    y relaxes towards a periodic winter target. This avoids the hard
-    year-boundary problem seen when a single-year seasonal presence model
-    starts from zero in January.
+    y relaxes towards a periodic winter target. This avoids the hard year-boundary problem
+    seen when a single-year seasonal presence model starts from zero in January
+
+    :param t: Independent variable - time, months into the year
+    :param y: Dependent vairable - presence
     """
-    t_mod = month_from_t(t)
+
+    # t will run from e.g. 0 to 12 months in small steps, so it's offset
+    # from the true month number by 1. Also, wrap it onto a 1..12 month
+    # cycle
+    month = t + 1
+    t_mod = ((month - 1) % 12) + 1
+
+    # Calculate the target value at time 't' and use it to determine the
+    # growth/decay rate
     target = winter_visitor_target(t_mod)
-
     if target > y:
-        rate = PARAMETERS.get("GROWTH_RATE")
+        rate = GROWTH_RATE
     else:
-        rate = PARAMETERS.get("DECAY_RATE")
+        rate = DECAY_RATE
 
+    # ODE
     return rate * (target - y)
 
 
