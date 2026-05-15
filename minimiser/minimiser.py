@@ -74,7 +74,12 @@ def minify_file(file_path, aggressive):
     # Minify it
     lines = remove_comments(lines)
     source = "".join(lines)
-    minified = minify(source, file_path, remove_pass=False, rename_locals=True, rename_globals=aggressive)
+    minified = minify(source,
+                      file_path,
+                      remove_pass=False,
+                      rename_locals=True,
+                      rename_globals=aggressive,
+                      preserve_globals=["run"])
 
     # Create the output folder
     output_folder = join(get_project_folder(), "minimiser", "minimised")

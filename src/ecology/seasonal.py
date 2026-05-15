@@ -20,46 +20,10 @@ https://github.com/davewalker5/OdeSolver
 """
 
 from math import cos, exp
-from odelib import solve, OUTPUT_CHART, RUNGE_KUTTA_4
+from odelib import solve
 
 # Useful constants
 TWO_PI = 6.283185307179586476925286766559
-
-#: Solution and charting options dictionary
-EXAMPLE_OPTIONS = {
-    "method": RUNGE_KUTTA_4,
-    "limit": 12.0,
-    "tolerance": 0.005,
-    "step_size": 0.1,
-    "auto_step_size": True,
-    "initial_value": 0.0,
-    "precision": 4,
-    "output_type": OUTPUT_CHART,
-    "title": "Seasonal Presence"
-}
-
-#: Model parameters : Bluebell
-PARAMETERS = (
-    3.345,
-    1.582,
-    4.536,
-    2.828,
-    5.42,
-    4.185,
-    5.595,
-    8.554,
-    4.88
-)
-
-GROWTH, \
-DECAY, \
-OOS_DECAY, \
-POST_PEAK_DECAY, \
-POST_PEAK_SHARPNESS, \
-SEASON_START, \
-SEASON_END, \
-SHARPNESS, \
-FORCING_PEAK = PARAMETERS
 
 
 def seasonal_window(t):
@@ -146,12 +110,20 @@ def f(t, y):
     return GROWTH * S * W - decay * y
 
 
-try:
-    # Suppress the application if we're building documentation
-    from os import environ
-    if "DOCBUILD" not in environ:
-        solve(f, None, None, EXAMPLE_OPTIONS)
+def run(solver_options, model_parameters):
+    """
+    Entry point for running the seasonal model
 
-except ImportError:
-    # Likely to be running on the calculator so run the application
-    solve(f, None, None, EXAMPLE_OPTIONS)
+    :param solver_options: Dictionary of ODE solver options
+    :param parameters: Species parameter set for the model
+    """
+    global GROWTH, DECAY, OOS_DECAY, POST_PEAK_DECAY, POST_PEAK_SHARPNESS, SEASON_START, \
+        SEASON_END, SHARPNESS, FORCING_PEAK
+
+    # Set the model parameters from the supplied parameter set
+    GROWTH, DECAY, OOS_DECAY, POST_PEAK_DECAY, POST_PEAK_SHARPNESS, SEASON_START, SEASON_END, \
+        SHARPNESS, FORCING_PEAK = model_parameters
+
+    # Override the title specified in the options and run the solution
+    solver_options["title"] = "Seasonal Presence"
+    solve(f, None, None, solver_options)
