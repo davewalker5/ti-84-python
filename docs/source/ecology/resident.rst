@@ -6,5 +6,5 @@ resident.py
   :alt: Resident Detectability Model
 
 
-.. automodule:: examples.resident
+.. automodule:: ecology.resident
    :members:

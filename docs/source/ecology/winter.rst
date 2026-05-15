@@ -6,5 +6,5 @@ winter.py
   :alt: Winter Seasonal Presence Model
 
 
-.. automodule:: examples.winter
+.. automodule:: ecology.winter
    :members:

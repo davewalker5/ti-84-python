@@ -39,29 +39,38 @@ EXAMPLE_OPTIONS = {
 }
 
 #: Model parameters : Bluebell
-PARAMETERS = {
-  "GROWTH": 3.345,
-  "DECAY": 1.582,
-  "OOS_DECAY": 4.536,
-  "POST_PEAK_DECAY": 2.828,
-  "POST_PEAK_SHARPNESS": 5.42,
-  "SEASON_START": 4.185,
-  "SEASON_END": 5.595,
-  "SHARPNESS": 8.554,
-  "FORCING_PEAK": 4.88
-}
+PARAMETERS = (
+    3.345,
+    1.582,
+    4.536,
+    2.828,
+    5.42,
+    4.185,
+    5.595,
+    8.554,
+    4.88
+)
+
+GROWTH, \
+DECAY, \
+OOS_DECAY, \
+POST_PEAK_DECAY, \
+POST_PEAK_SHARPNESS, \
+SEASON_START, \
+SEASON_END, \
+SHARPNESS, \
+FORCING_PEAK = PARAMETERS
 
 
 def seasonal_window(t):
-    rise = 1.0 / (1.0 + exp(-PARAMETERS.get("SHARPNESS") * (t - PARAMETERS.get("SEASON_START"))))
-    fall = 1.0 / (1.0 + exp(PARAMETERS.get("SHARPNESS") * (t - PARAMETERS.get("SEASON_END"))))
+    rise = 1.0 / (1.0 + exp(-SHARPNESS * (t - SEASON_START)))
+    fall = 1.0 / (1.0 + exp(SHARPNESS * (t - SEASON_END)))
     return rise * fall
 
 
 def calculate_decay(w, t):
-    post_peak_gate = 1.0 / (1.0 + exp(-PARAMETERS.get("POST_PEAK_SHARPNESS") * (t - PARAMETERS.get("FORCING_PEAK"))))
-    effective_decay = PARAMETERS.get("DECAY") + PARAMETERS.get("OOS_DECAY") * (1.0 - w) + \
-        PARAMETERS.get("POST_PEAK_DECAY") * post_peak_gate
+    post_peak_gate = 1.0 / (1.0 + exp(-POST_PEAK_SHARPNESS * (t - FORCING_PEAK)))
+    effective_decay = DECAY + OOS_DECAY * (1.0 - w) + POST_PEAK_DECAY * post_peak_gate
     return effective_decay
 
 
@@ -83,10 +92,10 @@ def f(t, y):
     # Seasonal forcing (pure Decimal raised cosine).
     # This gives a smooth 0..1 annual forcing curve with its maximum at
     # FORCING_PEAK, avoiding a hard zero in the first months of the year.
-    S = (1.0 + cos(TWO_PI * (t_mod - PARAMETERS.get("FORCING_PEAK")) / 12.0)) / 2.0
+    S = (1.0 + cos(TWO_PI * (t_mod - FORCING_PEAK) / 12.0)) / 2.0
 
     # ODE
-    return PARAMETERS.get("GROWTH") * S * W - decay * y
+    return GROWTH * S * W - decay * y
 
 
 try:
