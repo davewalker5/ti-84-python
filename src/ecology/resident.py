@@ -120,11 +120,14 @@ YEAR_END_FALL_WIDTH = PARAMETERS
 
 def signed_month_distance(t, peak):
     """
-    Signed shortest month distance from peak to t, in the range -6..+6.
+    Signed shortest month distance from peak to t, in the range -6..+6
 
     Negative values are before the peak in the annual cycle; positive values
     are after the peak. This lets each bump have a different pre-peak and
-    post-peak width while still wrapping cleanly around December/January.
+    post-peak width while still wrapping cleanly around December/January
+
+    :param t: Time in months from the start of the year
+    :param peak: Peak in months from the start of the year
     """
     delta = (t - peak + 6.0) % 12.0 - 6.0
     return delta
@@ -132,7 +135,7 @@ def signed_month_distance(t, peak):
 
 def asymmetric_annual_bump(t, peak, rise_width, fall_width):
     """
-    Smooth annual bump with independent pre-peak and post-peak concentration.
+    Smooth annual bump with independent pre-peak and post-peak concentration
 
     The underlying shape is still the same cosine-derived 0..1 profile used by
     annual_bump(), but the exponent is chosen according to which side of the
@@ -143,6 +146,11 @@ def asymmetric_annual_bump(t, peak, rise_width, fall_width):
 
     Higher width values create a narrower/steeper side. Lower values create a
     broader/slower side.
+
+    :param t: Time in months from the start of the year
+    :param peak: Peak month
+    :param rise_width: Months before the peak
+    :param fall_width: Months after the peak
     """
     angle = TWO_PI * (t - peak) / 12.0
     profile = (1.0 + cos(angle)) / 2.0
@@ -160,16 +168,38 @@ def asymmetric_annual_bump(t, peak, rise_width, fall_width):
 
 def logistic_onset_gate(t, onset, sharpness, inverse):
     """
-    Smooth annual onset gate in the range 0..1.
+    Generate a smooth circular onset gate for annual seasonal components
 
-    Values are close to 0 before onset and close to 1 after onset.
-    This version uses signed month distance, so it can be used on annual
-    components without creating a hard discontinuity at December/January.
+    This helper produces a logistic transition in the range 0.0 to 1.0,
+    centred on a specified onset month. It is used to switch a seasonal
+    process on gradually rather than abruptly, while respecting the circular
+    structure of the year.
+
+    Values are normally close to 0.0 before the onset month and close to
+    1.0 after it. Because the function uses signed circular month distance,
+    it can handle onsets near the December/January boundary without creating
+    an artificial discontinuity.
+
+    In the resident detectability model, this gate can be used to introduce
+    delayed seasonal effects, such as:
+
+        - delayed onset of summer suppression
+        - gradual activation of post-breeding decline
+        - seasonal carry-over effects
+        - smooth year-end or spring transition controls
+
+
+    The key purpose is to let seasonal processes begin progressively at an
+    ecologically meaningful point in the year without introducing hard
+    step-changes into the ODE system.
+
+    :param t: Time in months from the start of the year
+    :param onset: Month at which the gate transitions from low to high
+    :param sharpness : How abrupt the transition is around the onset month
+    :param inverse : True to return the inverted gate
+    :return float: Gate value in the range [0.0, 1.0]
     """
-    if onset is None or sharpness is None:
-        return 1.0
-
-    if sharpness <= 0.0:
+    if onset is None or sharpness is None or sharpness <= 0.0:
         return 1.0
 
     # Signed month distance after the onset, in the range -6..+6.
@@ -178,35 +208,58 @@ def logistic_onset_gate(t, onset, sharpness, inverse):
 
     if x > 40.0:
         return 1.0
+
     if x < -40.0:
         return 0.0
 
+
+    # Calculate the normal onset gate: before onset -> near 0.0, after
+    # onset  -> near 1.0
     onset_gate = 1.0 / (1.0 + exp(-x))
+
+    # Return either the normal gate or, if requested, the inverted gate:
+    # before onset -> near 1.0, after onset  -> near 0.0
     return 1.0 - onset_gate if inverse else onset_gate
 
 
 def autumn_onset_gate(t, onset, sharpness):
     """
-    Smooth gate for the autumn component.
+    Smooth one-way onset gate for the resident model's autumn component
 
-    Returns a value in the range 0..1. The gate is close to 0 before the
-    fitted onset month and approaches 1 after it. This is deliberately a soft
-    transition rather than a hard month constraint.
+    The autumn bump itself is a broad annual shape centred on AUTUMN_PEAK.
+    Without an additional gate, that bump can begin to lift the target too
+    early in the year simply because the cosine-derived profile has broad
+    shoulders. This helper lets the autumn contribution be suppressed before
+    a fitted onset month, then gradually released afterwards.
 
-    Higher sharpness values make the transition faster; lower values make the
-    transition more gradual.
+    The returned value is in the range 0.0..1.0:
+
+    - before onset: close to 0.0
+    - after onset: close to 1.0
+
+    Multiplying the autumn bump by this gate delays the late-year rise without
+    imposing a hard calendar cut-off. This keeps the target curve smooth for
+    the ODE solver while still allowing the fitter to prevent unrealistically
+    early autumn detectability.
+
+    Unlike logistic_onset_gate(), this helper uses the direct difference
+    t - onset rather than signed circular month distance. It is intended for
+    a simple late-year autumn release, not for general circular annual gates
+    that may need to wrap cleanly around December/January.
+
+    :param t: Time in months from the start of the year
+    :param onset: Month at which the autumn contribution begins to switch on
+    :param sharpness: How abrupt the transition is around the onset month
+    :return float: Gate value in the range [0.0, 1.0]
     """
-    if onset is None or sharpness is None:
-        return 1.0
-
-    if sharpness <= 0.0:
+    if onset is None or sharpness is None or sharpness <= 0.0:
         return 1.0
 
     x = sharpness * (t - onset)
 
-    # Avoid unnecessary Decimal.exp work at extremes.
     if x > 40.0:
         return 1.0
+
     if x < -40.0:
         return 0.0
 
@@ -215,77 +268,63 @@ def autumn_onset_gate(t, onset, sharpness):
 
 def resident_target_components(t):
     """
-    Resident seasonal detectability target and its named seasonal components.
+    Construct the resident model's seasonal detectability target and its
+    individual seasonal component curves.
 
-    This is not a presence/absence model. It assumes the species is present all
-    year, with detectability varying around a persistent BASELINE.
+    This model does not represent true presence/absence. Resident species are
+    assumed to remain present throughout the year, with observations varying
+    because detectability changes seasonally around a persistent baseline.
 
-    The seasonal bumps are asymmetric. Older single-width parameter files still
-    work because ``*_RISE_WIDTH`` and ``*_FALL_WIDTH`` fall back to the corresponding
-    ``*_WIDTH`` value.
+    The function builds a composite annual target curve from several named
+    seasonal components:
 
-    The autumn bump can also be multiplied by a smooth onset gate. This lets
-    the fitter delay the late-year rise without imposing a hard calendar-month
-    cut-off. Older parameter files remain compatible: if AUTUMN_ONSET or
-    AUTUMN_GATE_SHARPNESS is absent, the gate returns 1 and the model behaves
-    like the asymmetric v2 model.
+    - winter support
+    - autumn recovery
+    - summer suppression
+    - year-end reinforcement
+    - spring carry-over persistence
+
+    All major seasonal bumps are asymmetric, allowing the rise and fall sides
+    of each annual component to have independent widths. This makes it possible
+    to model:
+
+        - slow build-up with rapid collapse
+        - sharp arrival with gradual decline
+        - asymmetric seasonal persistence
+
+    :param t: Time in months from the start of the year
+    :return: Tuple containing the target and the individual seasonal components
     """
+    # Main winter detectability support Represents elevated detectability during
+    # the colder months, often associated with territorial behaviour, reduced
+    # foliage, flocking, vocalisation, or improved visibility
+    winter = asymmetric_annual_bump(t, WINTER_PEAK, WINTER_RISE_WIDTH, WINTER_FALL_WIDTH)
 
-    winter = asymmetric_annual_bump(
-        t,
-        WINTER_PEAK,
-        WINTER_RISE_WIDTH,
-        WINTER_FALL_WIDTH
-    )
-    autumn = asymmetric_annual_bump(
-        t,
-        AUTUMN_PEAK,
-        AUTUMN_RISE_WIDTH,
-        AUTUMN_FALL_WIDTH
-    )
-    autumn *= autumn_onset_gate(
-        t,
-        AUTUMN_ONSET,
-        AUTUMN_GATE_SHARPNESS
-    )
-    summer = asymmetric_annual_bump(
-        t,
-        SUMMER_LOW,
-        SUMMER_RISE_WIDTH,
-        SUMMER_FALL_WIDTH
-    )
-    summer *= logistic_onset_gate(
-        t,
-        SUMMER_ONSET,
-        SUMMER_GATE_SHARPNESS,
-        False
-    )
+    # Autumn recovery component allowing detectability to rise again after the
+    # summer trough. The broad annual bump is additionally controlled by the autumn
+    # onset get so the late-year rise can be delayed without introducing a hard
+    # calendar boundary
+    autumn = asymmetric_annual_bump(t, AUTUMN_PEAK, AUTUMN_RISE_WIDTH, AUTUMN_FALL_WIDTH)
+    autumn *= autumn_onset_gate(t, AUTUMN_ONSET, AUTUMN_GATE_SHARPNESS)
 
-    year_end = asymmetric_annual_bump(
-        t,
-        YEAR_END_PEAK,
-        YEAR_END_RISE_WIDTH,
-        YEAR_END_FALL_WIDTH
-    )
+    # Summer suppression component representing reduced detectability during summer
+    # periods such as moult, reduced vocal activity, dense foliage cover, or behavioural
+    # changes. The summer bump can can be delayed using a logistic onset gate so broad
+    # summer shoulders do not suppress spring and early-summer values too early
+    summer = asymmetric_annual_bump(t, SUMMER_LOW, SUMMER_RISE_WIDTH, SUMMER_FALL_WIDTH)
+    summer *= logistic_onset_gate(t, SUMMER_ONSET, SUMMER_GATE_SHARPNESS, False)
 
-    # Optional spring / early-summer carry-over support.
-    #
-    # This is deliberately a positive support term rather than another penalty
-    # or a further decay-rate hack.  Some residents, especially blackbird-like
-    # curves, remain highly detectable through late spring and early summer,
-    # then drop very rapidly into the moult / summer trough.  A winter bump plus
-    # relaxation lag can struggle to keep May-July high enough without spoiling
-    # the autumn/winter shape.
-    #
-    # The inverse gate is close to 1 before SPRING_CARRYOVER_END and falls
-    # towards 0 afterwards.  Species that do not need it, such as blue tit, can
-    # simply fit SPRING_CARRYOVER_WEIGHT close to zero.
-    spring_carryover = logistic_onset_gate(
-        t,
-        SPRING_CARRYOVER_END,
-        SPRING_CARRYOVER_SHARPNESS,
-        True
-    )
+    # Additional late-year reinforcement component allowing certain species to maintain
+    # or regain elevated detectability near the end of the annual cycle without forcing
+    # the main winter component to become unrealistically broad
+    year_end = asymmetric_annual_bump(t, YEAR_END_PEAK, YEAR_END_RISE_WIDTH, YEAR_END_FALL_WIDTH)
+
+    # Spring / early-summer carry-over support. Some resident species retain high
+    # detectability through spring and early summer before collapsing rapidly into the
+    # summer trough. This component acts as a positive support term that gradually fades
+    # and addresses the issue that a winter bump plus relaxation lag can struggle to keep
+    # May-July high enough without spoiling the autumn/winter shape
+    spring_carryover = logistic_onset_gate(t, SPRING_CARRYOVER_END, SPRING_CARRYOVER_SHARPNESS, True)
 
     target = (
         BASELINE
