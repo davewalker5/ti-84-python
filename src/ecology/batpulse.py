@@ -47,7 +47,8 @@ def analyse_pulse_timings(pulses):
             pri.append(None)
             ipi.append(None)
 
-        # DPRI is a 
+        # DPRI is the change in PRI from the previous pulse to the current one
+        # and can't be calculated for the first pulse
         if i > 0 and current_pri is not None:
             dpri.append(current_pri - pri[i - 1])
         else:
