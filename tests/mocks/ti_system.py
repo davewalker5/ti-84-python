@@ -16,3 +16,7 @@ def store_string(name, value):
 
 def recall_string(name):
     return STRINGS[name]
+
+
+def disp_clr():
+    pass

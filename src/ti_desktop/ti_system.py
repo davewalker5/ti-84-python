@@ -85,3 +85,10 @@ def recall_string(name):
     :return: Associated value or none
     """
     return _strings[name] if name in _strings.keys() else None
+
+
+def disp_clr():
+    """
+    Clear the text display
+    """
+    pass
