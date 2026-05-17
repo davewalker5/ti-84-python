@@ -1,5 +1,3 @@
-from iptutils import prompt_for_option
-from oututils import print_title
 from ti_system import disp_clr
 import ti_plotlib as plt
 
@@ -74,6 +72,7 @@ def draw_pulse_metric_chart(metric, title):
     # Set up the window
     plt.auto_window(x, y)
     plt.cls()
+    plt.color(0, 0, 0)
     plt.title(title)
 
     # # Draw the grid
@@ -94,6 +93,46 @@ def draw_pulse_metric_chart(metric, title):
     plt.show_plot()
 
 
+def print_title(title):
+    """
+    Display an application title
+
+    :param title: Application title
+    """
+    print()
+    print("=" * len(title))
+    print(title)
+    print("=" * len(title))
+    print()
+
+
+def prompt_for_option(options, prompt):
+    """
+    Prompt for an option from a list of options
+
+    :param options: List of options
+    :param values: Corresponding values
+    :param prompt: User prompt
+    :return: Corresponding value for the selected option
+    """
+
+    # Display the options
+    for i, option in enumerate(options):
+        print(str(i + 1) + ": " + option)
+    print()
+
+    while True:
+        # Prompt for an option and return NONE if the user just hits ENTER
+        s = input(prompt + " (ENTER=None): ")
+        if s == "":
+            return None
+
+        # Extract the option and make sure it's in range
+        i = int(s) - 1
+        if 0 <= i < len(options):
+            return i
+
+
 def chart_pulse_timings(pulses):
     """
     Chart the pulse timing metrics for a set of bat pulses
@@ -111,6 +150,6 @@ def chart_pulse_timings(pulses):
         if chart_metric is not None:
             # Extract the timing information and draw the chart
             timings = analyse_pulse_timings(pulses)
-            draw_pulse_metric_chart(timings[chart_metric - 1], OPTIONS[chart_metric - 1])
+            draw_pulse_metric_chart(timings[chart_metric], OPTIONS[chart_metric])
         else:
             break
