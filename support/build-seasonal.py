@@ -64,6 +64,7 @@ def build_modelling_script(template: str, model: str, parameters: tuple) -> str:
     Replace placeholders in the template script content with the values for
     the specified model and parameters
 
+    :param template: Template script contents
     :param model: Model name
     :param parameters: Ordered tuple of parameter values
     :return: Updated script content
