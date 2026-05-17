@@ -88,4 +88,7 @@ def recall_string(name):
 
 
 def disp_clr():
+    """
+    Clear the text display
+    """
     pass

@@ -1,3 +1,48 @@
+"""
+Bat pulse timing analysis and charting utilities for the TI-84 Plus CE Python.
+
+This module provides a lightweight interactive viewer for timing-based bat
+echolocation pulse metrics derived from pulse detections exported from the
+desktop Spectrogram Analyser application.
+
+The calculator version is intended as a compact field-analysis and educational
+tool rather than a full desktop analysis environment. It allows pulse timing
+patterns to be explored interactively using simple charts and a movable pulse
+cursor.
+
+Input pulse data is supplied as a flat tuple of:
+
+    (start, end, peak, start, end, peak, ...)
+
+where each pulse contains:
+
+    start - pulse start time
+    end   - pulse end time
+    peak  - pulse peak/amplitude time
+
+From these timings the following derived metrics are calculated:
+
+WIDTH
+    Pulse duration measured from pulse start to pulse end.
+
+PRI (Pulse Repetition Interval)
+    Time between the peak of one pulse and the peak of the next pulse.
+    PRI is commonly used to examine echolocation rhythm and attack structure.
+
+IPI (Inter-Pulse Interval)
+    Silent interval between the end of one pulse and the start of the next.
+    Unlike PRI, IPI excludes pulse duration itself.
+
+DPRI (Delta PRI)
+    Change in PRI between adjacent pulse pairs.
+
+    Negative DPRI values indicate shortening PRI values and therefore
+    accelerating pulse rhythm ("speeding up").
+
+    Positive DPRI values indicate increasing PRI values and therefore
+    decelerating pulse rhythm ("slowing down").
+"""
+
 from ti_system import disp_clr, wait_key
 import ti_plotlib as plt
 
