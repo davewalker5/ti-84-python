@@ -140,4 +140,5 @@ cython_debug/
 .DS_Store
 .vscode/
 .idea/
-minimiser/minimised
+data/minimised
+cov_html/

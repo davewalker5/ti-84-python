@@ -252,10 +252,10 @@ To run the minimiser, enter the following commands:
 
 ::
 
-    python minimiser/minimiser.py
+    python support/minimiser.py
 
 This will iterate over eligible Python source files in the "src" folder and will write reduced-size versions of each file
-to the minimiser/minimised folder. These can then be transferred to the calculator.
+to the data/minimised folder. These can then be transferred to the calculator.
 
 Running the Examples on a Desktop Machine
 =========================================

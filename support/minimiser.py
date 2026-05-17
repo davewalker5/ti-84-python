@@ -82,7 +82,7 @@ def minify_file(file_path, aggressive):
                       preserve_globals=["run"])
 
     # Create the output folder
-    output_folder = join(get_project_folder(), "minimiser", "minimised")
+    output_folder = join(get_project_folder(), "data", "minimised")
     if not exists(output_folder):
         makedirs(output_folder)
 
