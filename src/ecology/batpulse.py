@@ -97,6 +97,13 @@ def draw_pulse_metric_chart(y, title):
 
 
 def plot_pulse_highlight(y, index, highlight):
+    """
+    Plot the cursor for the current selected pulse on the chart
+
+    :param y: Values for the metric being charted
+    :param index: Pulse number 1..N
+    :param highlight: True to highlight, False to remove the highlight
+    """
     if index is not None:
         if 1 <= index <= len(y):
             highlight_y = y[index - 1]
