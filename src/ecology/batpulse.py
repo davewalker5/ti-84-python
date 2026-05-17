@@ -62,7 +62,7 @@ def analyse_pulse_timings(pulses):
     return widths, pri, ipi, dpri
 
 
-def draw_pulse_metric_chart(metric, title, highlight_pulse_index):
+def draw_pulse_metric_chart(y, title):
     """
     Draw a chart of one of the timing metrics
 
@@ -72,10 +72,7 @@ def draw_pulse_metric_chart(metric, title, highlight_pulse_index):
     :param show: Whether to call plt.show_plot()
     """
     # Build a set of X points consisting of the pulse index
-    x = list(range(1, len(metric) + 1))
-
-    # Replace None in the metric with 0.0
-    y = [v if v is not None else 0.0 for v in metric]
+    x = list(range(1, len(y) + 1))
 
     # Set up the window
     plt.auto_window(x, y)
@@ -98,22 +95,19 @@ def draw_pulse_metric_chart(metric, title, highlight_pulse_index):
     plt.color(255, 0, 0)
     plt.plot(x, y, "")
 
-    # Highlight the selected pulse, if requested. The pulse index is 1-based
-    # to match the X axis and the way pulses are naturally counted
-    if highlight_pulse_index is not None:
-        if 1 <= highlight_pulse_index <= len(y):
-            highlight_y = y[highlight_pulse_index - 1]
 
-            # Draw a vertical marker through the selected pulse
-            plt.pen("thin", "solid")
-            plt.color(0, 0, 255)
-            plt.line(highlight_pulse_index, plt.ymin, highlight_pulse_index, plt.ymax, "")
+def plot_pulse_highlight(y, index, highlight):
+    if index is not None:
+        if 1 <= index <= len(y):
+            highlight_y = y[index - 1]
 
-            # Draw a point marker on the selected value. ti_plotlib plot()
-            # expects lists of X and Y values, even for a single point.
             plt.pen("medium", "solid")
-            plt.color(0, 0, 255)
-            plt.plot(highlight_pulse_index, highlight_y, "o")
+            if highlight:
+                plt.color(0, 0, 255)
+            else:
+                plt.color(255, 0, 0)
+    
+            plt.plot(index, highlight_y, "o")
 
 
 def inspect_pulse_metric_chart(metric, title):
@@ -128,10 +122,16 @@ def inspect_pulse_metric_chart(metric, title):
     pulse_index = 1
     max_pulse = len(metric)
 
+    # Replace None in the metric with 0.0 and draw the chart
+    y = [v if v is not None else 0.0 for v in metric]
+    draw_pulse_metric_chart(y, title)
+
     while True:
-        # Draw the initial chart once and hand control to the graph screen
+        # If the selected pulse index has changed, unhighlight the previous
+        # pulse and highlight the new one
         if pulse_index != current_pulse_index:
-            draw_pulse_metric_chart(metric, title, pulse_index)
+            plot_pulse_highlight(y, current_pulse_index, False)
+            plot_pulse_highlight(y, pulse_index, True)
             current_pulse_index = pulse_index
 
         # Wait for a key press
