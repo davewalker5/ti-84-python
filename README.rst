@@ -252,36 +252,10 @@ To run the minimiser, enter the following commands:
 
 ::
 
-    python minimiser/minimiser.py
+    python support/minimiser.py
 
 This will iterate over eligible Python source files in the "src" folder and will write reduced-size versions of each file
-to the minimiser/minimised folder. These can then be transferred to the calculator.
-
-Running the Examples on a Desktop Machine
-=========================================
-
-Pre-requisites
---------------
-
-To run the applications on a desktop machine, a virtual environment should be created, the requirements should
-be installed using pip and the environment should be activated. **NOTE:** The sub-folders in the "src" folder should all be
-added to PYTHONPATH, with the exception of the "utils" sub-folder.
-
-Running the Applications
-------------------------
-
-With the pre-requisites in place, applications can then be run from the command line, at the root of the project folder, as follows:
-
-::
-
-    python <location>/<file>
-
-Where "location" and "file" are taken from the table of available applications, above. For example, the following will run the first ODE Solver
-example:
-
-::
-
-    python src/examples/odeex1.py
+to the data/minimised folder. These can then be transferred to the calculator.
 
 
 Unit Tests and Coverage
