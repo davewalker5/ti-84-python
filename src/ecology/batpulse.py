@@ -1,8 +1,13 @@
-from ti_system import disp_clr
+from ti_system import disp_clr, wait_key
 import ti_plotlib as plt
 
 GRID_SCALE = 10
 OPTIONS = ("Pulse Width", "PRI", "IPI", "DPRI")
+
+# These values match the TI arrow keys and Clear key
+KEY_LEFT = 2
+KEY_RIGHT = 1
+KEY_QUIT = 9
 
 
 def analyse_pulse_timings(pulses):
@@ -57,12 +62,14 @@ def analyse_pulse_timings(pulses):
     return widths, pri, ipi, dpri
 
 
-def draw_pulse_metric_chart(metric, title):
+def draw_pulse_metric_chart(metric, title, highlight_pulse_index):
     """
     Draw a chart of one of the timing metrics
 
     :param metric: List of timing metric values
     :param title: Chart title
+    :param highlight_pulse_index: Optional 1-based pulse index to highlight
+    :param show: Whether to call plt.show_plot()
     """
     # Build a set of X points consisting of the pulse index
     x = list(range(1, len(metric) + 1))
@@ -91,7 +98,56 @@ def draw_pulse_metric_chart(metric, title):
     plt.color(255, 0, 0)
     plt.plot(x, y, "")
 
-    plt.show_plot()
+    # Highlight the selected pulse, if requested. The pulse index is 1-based
+    # to match the X axis and the way pulses are naturally counted
+    if highlight_pulse_index is not None:
+        if 1 <= highlight_pulse_index <= len(y):
+            highlight_y = y[highlight_pulse_index - 1]
+
+            # Draw a vertical marker through the selected pulse
+            plt.pen("thin", "solid")
+            plt.color(0, 0, 255)
+            plt.line(highlight_pulse_index, plt.ymin, highlight_pulse_index, plt.ymax, "")
+
+            # Draw a point marker on the selected value. ti_plotlib plot()
+            # expects lists of X and Y values, even for a single point.
+            plt.pen("medium", "solid")
+            plt.color(0, 0, 255)
+            plt.plot(highlight_pulse_index, highlight_y, "o")
+
+
+def inspect_pulse_metric_chart(metric, title):
+    """
+    Draw a pulse metric chart and allow the user to move a highlighted
+    pulse marker left and right using the calculator arrow keys
+
+    :param metric: List of timing metric values
+    :param title: Chart title
+    """
+    current_pulse_index = None
+    pulse_index = 1
+    max_pulse = len(metric)
+
+    while True:
+        # Draw the initial chart once and hand control to the graph screen
+        if pulse_index != current_pulse_index:
+            draw_pulse_metric_chart(metric, title, pulse_index)
+            current_pulse_index = pulse_index
+
+        # Wait for a key press
+        key = wait_key()
+
+        # Process the keypress
+        if key == KEY_LEFT:
+            pulse_index = pulse_index - 1
+            if pulse_index < 1:
+                pulse_index = max_pulse
+        elif key == KEY_RIGHT:
+            pulse_index = pulse_index + 1
+            if pulse_index > max_pulse:
+                pulse_index = 1
+        elif key == KEY_QUIT:
+            break
 
 
 def print_title(title):
@@ -151,6 +207,6 @@ def chart_pulse_timings(pulses):
         if chart_metric is not None:
             # Extract the timing information and draw the chart
             timings = analyse_pulse_timings(pulses)
-            draw_pulse_metric_chart(timings[chart_metric], OPTIONS[chart_metric])
+            inspect_pulse_metric_chart(timings[chart_metric], OPTIONS[chart_metric])
         else:
             break
