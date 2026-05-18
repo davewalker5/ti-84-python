@@ -5,12 +5,13 @@ structure.
 The detector classifies each pulse into one of four broad behavioural
 phases:
 
-SEARCH   -  Relatively uncompressed baseline calling behaviour
-APPROACH -  Transitional phase preceding a feeding buzz, characterised
-            by PRI reduction and/or increasing pulse density
-BUZZ     -  Sustained region of compressed PRI values representing a
-            terminal feeding buzz or attack sequence
-EXIT     -  Pulses occurring after the detected buzz region
+SEARCH - Relatively uncompressed baseline calling behaviour
+
+APPROACH - Transitional phase preceding a feeding buzz, characterised by PRI reduction and/or increasing pulse density
+
+BUZZ - Sustained region of compressed PRI values representing a terminal feeding buzz or attack sequence
+
+EXIT - Pulses occurring after the detected buzz region
 
 The detector operates entirely from timing structure and does not use
 frequency information. Detection is based on:
@@ -109,11 +110,11 @@ def build_regions(phases):
 
     for i in range(1, len(phases)):
         if phases[i] != current:
-            regions.append((current, start, i - 1))
+            regions.append((current, start + 1, i, i - start))
             current = phases[i]
             start = i
 
-    regions.append((current, start, len(phases) - 1))
+    regions.append((current, start + 1, len(phases), len(phases) - start))
 
     return regions
 

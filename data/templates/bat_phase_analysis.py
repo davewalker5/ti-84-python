@@ -1,4 +1,5 @@
 from batphase import detect_feeding_buzz_phases
+from tabulate import build_table, print_table
 
 #: Pulse widths in ms
 WIDTHS = $WIDTHS
@@ -10,6 +11,10 @@ PRI = $PRI
 DPRI = $DPRI
 
 #: Detect the feeding buzz phases
-phases, regions = detect_feeding_buzz_phases(WIDTHS, PRI, DPRI)
-print(phases)
-print(regions)
+_, regions = detect_feeding_buzz_phases(WIDTHS, PRI, DPRI)
+
+#: Build the phase table
+table = build_table(regions, ("Phase", "Start", "End", "Length"))
+
+#: Print the phase table
+print_table(table)
