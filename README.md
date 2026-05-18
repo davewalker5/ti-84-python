@@ -37,20 +37,6 @@ The ti_desktop package contains minimal implementations of the TI libraries that
 
 # Applications
 
-## Programmatic Examples
-
-| **File Name** | **Location** | **Contents**                                                         | **Dependencies** |
-| ------------- | ------------ | -------------------------------------------------------------------- | ---------------- |
-| batchart.py   | src/examples | Bat pulse analysis and charting                                      | batpulse         |
-| blackbrd.py   | src/examples | Model the resident detectability of the blackbird                    | resident, odelib |
-| bluebell.py   | src/examples | Model the seasonal presence of the bluebell                          | seasonal, odelib |
-| odeex1.py     | src/examples | Programmatic example for the ODE Library : Chart dy/dx = Ay          | odelib           |
-| odeex2.py     | src/examples | Programmatic example for the ODE Library : Chart dy/dx = y - t^2 + 1 | odelib           |
-| odeex3.py     | src/examples | Programmatic example for the ODE Library : Chart dy/dx = yt^2 - y    | odelib           |
-| redwing.py    | src/examples | Model the winter presence of the redwing                             | winter, odelib   |
-| turtplay.py   | src/examples | Replay a pre-prepared string of instructions for TurtleDraw          | turtdraw         |
-
-
 ## Maths Applications
 
 | **File Name** | **Location** | **Contents**                                                        | **Dependencies**                      |

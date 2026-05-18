@@ -3,7 +3,7 @@ TI-84 CE-T Python Edition
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Library Modules:
 
    maths/index
    science/index
@@ -12,6 +12,12 @@ TI-84 CE-T Python Edition
    common/index
    ui/index
    turtle_apps/index
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Applications:
+
    examples/index
 
 
