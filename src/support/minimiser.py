@@ -1,3 +1,39 @@
+r"""
+Utility script to minimise Python files before transferring them to the calculator.
+
+The docstrings and comments in the code are of little use when viewed on the calculator screen
+and as memory is at a premium on the device a simple "minimiser" is provided that can be run
+to reduce the size of the code prior to transferring it to the calculator.
+
+For some of the modules, this is optional as the code will still run without being reduced in
+size. For others, it's essential to avoid memory allocation errors when the code runs.
+
+The minification proces does the following:
+
+- Removes docstrings
+- Removes full-line comments
+- Minifies the source code using the *python_minifier* package
+
+To run the minimiser, first make sure the virtual environment has been set up. From the root of the project:
+
+.. code-block::
+
+    python -m venv venv
+    source venv/bin/activate
+    pip install --upgrade pip
+    pip install -e .
+
+Then, enter the following command:
+
+.. code-block::
+
+    python src/support/minimiser.py
+
+This will iterate over eligible Python source files in the "src" folder and will write 
+reduced-size versions of each file to the "data/minimised" folder. These can then be transferred
+to the calculator.
+"""
+
 from os import makedirs, environ
 from pathlib import Path
 from datetime import datetime
@@ -6,7 +42,7 @@ from python_minifier import minify
 EXCLUDED_FILES = ["__init__.py", "turtle.py"]
 EXCLUDED_FOLDERS = ["support", "ti_desktop"]
 AGGRESSIVE_MINIMISATION = ["resident.py"]
-PROJECT_FOLDER = Path(__file__).parent.parent
+PROJECT_FOLDER = Path(__file__).parent.parent.parent
 
 
 def prepare_output_folder():
@@ -116,7 +152,7 @@ def minimise_all_source_files():
     # Identify Python files that are *not* in excluded folders
     python_files = (
         p for p in Path(source_folder).rglob("*.py")
-        if EXCLUDED_FOLDERS.isdisjoint(p.parts)
+        if set(EXCLUDED_FOLDERS).isdisjoint(p.parts)
     )
 
     # Sort the files and iterate over them, minifying them if they're not

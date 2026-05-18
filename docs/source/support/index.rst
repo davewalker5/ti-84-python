@@ -7,3 +7,4 @@ The support Package
 
    build_seasonal
    extract_pulses
+   minimiser

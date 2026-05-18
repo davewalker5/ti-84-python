@@ -55,7 +55,7 @@ PARAMETER_ORDER = {
     WINTER: ["INITIAL_Y", "GROWTH_RATE", "DECAY_RATE", "BASELINE", "WINTER_WEIGHT", "AUTUMN_WEIGHT", "WINTER_PEAK", "AUTUMN_PEAK", "WINTER_WIDTH", "AUTUMN_WIDTH", "SUMMER_DIP", "SUMMER_LOW", "SUMMER_WIDTH"]
 }
 
-DEFAULT_TEMPLATE = Path(__file__).parent.parent / "data" / "templates" / "seasonal_modelling.py"
+DEFAULT_TEMPLATE = Path(__file__).parent.parent.parent / "data" / "templates" / "seasonal_modelling.py"
 
 
 def load_consensus_json(input_file_path: str | Path) -> dict:

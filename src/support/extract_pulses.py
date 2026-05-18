@@ -49,7 +49,7 @@ import os
 import argparse
 from pathlib import Path
 
-DEFAULT_TEMPLATE = Path(__file__).parent.parent / "data" / "templates" / "bat_pulse_chart.py"
+DEFAULT_TEMPLATE = Path(__file__).parent.parent.parent / "data" / "templates" / "bat_pulse_chart.py"
 
 
 def load_pulse_json(input_file_path: str | Path) -> dict:

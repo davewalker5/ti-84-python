@@ -14,7 +14,11 @@
 
 # TI-84 Python Applications
 
+> [!NOTE]
+> Much of the information from this README file is being transferred to the formal documentation for the project. If you encounter gaps, please build the virtual environment and the documentation, held in the _docs_ folder and consult the documentation. Once the migration is complete, this README will be rewritten.
+
 Python applications and coding exercises for the TI-84 CE-T Python Edition Graphing Calculator.
+
 
 # Structure
 
@@ -144,38 +148,6 @@ The ti_desktop package contains minimal implementations of the TI libraries that
 ## Running the Applications on the Calculator
 
 Transfer the application and its dependencies (**including the dependecies of the library code it uses**) to the Calculator using the TI Connect CE application then run the application as normal.
-
-## Creating the Virtual Environment
-
-
-## Minimising the Source Code
-
-The docstrings and comments in the code are of little use when viewed on the calculator screen and as memory is at a premium on the device a simple "minimiser" is provided that can be run to reduce the size of the code prior to transferring it to the calculator.
-
-For some of the modules, this is optional as the code will still run without being reduced in size. For others, it's essential to avoid memory allocation errors when the code runs.
-
-The minification proces does the following:
-
-- Removes docstrings
-- Removes full-line comments
-- Minifies the source code using the *python_minifier* package
-
-To run the minimiser, first make sure the virtual environment has been set up:
-
-```bash
-python -m venv venv
-source venv/bin/activate
-pip install --upgrade pip
-pip install -e .
-```
-
-Then, enter the following command:
-
-```bash
-python support/minimiser.py
-```
-
-This will iterate over eligible Python source files in the "src" folder and will write reduced-size versions of each file to the _data/minimised_ folder. These can then be transferred to the calculator.
 
 # Unit Tests and Coverage
 
