@@ -47,7 +47,7 @@ The programs are intentionally self-contained and avoid external dependencies be
 
 The primary documentation for the repository, including details of the available applications, calculator deployment, and usage instructions, is provided through the Sphinx documentation. Building the documentation is the best place to start.
 
-To generate the documentation, a virtual environment should be created, the requirements should be installed using pip and the environment should be activated:
+To generate the documentation, a virtual environment should be created and the requirements should be installed:
 
 ```bash
 scripts/make-venv.sh
