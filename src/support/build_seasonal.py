@@ -1,3 +1,47 @@
+r"""
+Utility script to build a launcher script for the Wildlife Seasonal Modelling models.
+
+The input is a consensus parameter file containing parameters for the species of interest.
+The following is an example:
+
+.. code-block:: json
+
+    {
+        "GROWTH": "3.345",
+        "DECAY": "1.582",
+        "OOS_DECAY": "4.536",
+        "POST_PEAK_DECAY": "2.828",
+        "POST_PEAK_SHARPNESS": "5.42",
+        "SEASON_START": "4.185",
+        "SEASON_END": "5.595",
+        "SHARPNESS": "8.554",
+        "FORCING_PEAK": "4.88",
+        "SCORE": "0.047",
+        "SPECIES": "Bluebell"
+    }
+
+This script reads the JSON file, discards keys of no interest to the TI-84 version of the
+models, converts the JSON to a Tuple of values in model-specific order and writes the
+launcher script necessary to run the simulation of species presence/detectability.
+
+Example usage from the root folder of the project::
+
+    python src/support/build_seasonal.py -i data/seasonal/bluebell_consensus.json -m seasonal -o src/examples
+
+A utility script is provided in the "scripts" folder to run the minimiser::
+
+    scripts/make-seasonal.sh -i data/seasonal/bluebell_consensus.json -m seasonal -o src/examples
+
+The resulting script can then be minified and transferred to the calculator along with
+the ODE solver library and then run to graph the species presence/detectability.
+
+For more information on the Wildlife Seasonal Modelling see:
+
+- The ODE Solver repository - https://github.com/davewalker5/OdeSolver
+- The Field Notes Journal web site - https://fieldnotesjournal.uk
+"""
+
+import os
 import json
 import argparse
 from pathlib import Path
@@ -15,7 +59,7 @@ PARAMETER_ORDER = {
     WINTER: ["INITIAL_Y", "GROWTH_RATE", "DECAY_RATE", "BASELINE", "WINTER_WEIGHT", "AUTUMN_WEIGHT", "WINTER_PEAK", "AUTUMN_PEAK", "WINTER_WIDTH", "AUTUMN_WIDTH", "SUMMER_DIP", "SUMMER_LOW", "SUMMER_WIDTH"]
 }
 
-DEFAULT_TEMPLATE = Path(__file__).parent.parent / "data" / "templates" / "seasonal_modelling.py"
+DEFAULT_TEMPLATE = Path(__file__).parent.parent.parent / "data" / "templates" / "seasonal_modelling.py"
 
 
 def load_consensus_json(input_file_path: str | Path) -> dict:
@@ -111,5 +155,5 @@ def main():
     write_modelling_script(args.output_dir, species, script)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and "DOCBUILD" not in os.environ:
     main()
