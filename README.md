@@ -145,6 +145,9 @@ The ti_desktop package contains minimal implementations of the TI libraries that
 
 Transfer the application and its dependencies (**including the dependecies of the library code it uses**) to the Calculator using the TI Connect CE application then run the application as normal.
 
+## Creating the Virtual Environment
+
+
 ## Minimising the Source Code
 
 The docstrings and comments in the code are of little use when viewed on the calculator screen and as memory is at a premium on the device a simple "minimiser" is provided that can be run to reduce the size of the code prior to transferring it to the calculator.
@@ -157,11 +160,22 @@ The minification proces does the following:
 - Removes full-line comments
 - Minifies the source code using the *python_minifier* package
 
-To run the minimiser, enter the following commands:
+To run the minimiser, first make sure the virtual environment has been set up:
 
-    python support/minimiser.py
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -e .
+```
 
-This will iterate over eligible Python source files in the "src" folder and will write reduced-size versions of each file to the data/minimised folder. These can then be transferred to the calculator.
+Then, enter the following command:
+
+```bash
+python support/minimiser.py
+```
+
+This will iterate over eligible Python source files in the "src" folder and will write reduced-size versions of each file to the _data/minimised_ folder. These can then be transferred to the calculator.
 
 # Unit Tests and Coverage
 

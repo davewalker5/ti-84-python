@@ -15,6 +15,13 @@ TI-84 CE-T Python Edition
    examples/index
 
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Supporting Tools:
+
+   support/index
+
+
 Indices and tables
 ==================
 

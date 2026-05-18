@@ -3,4 +3,4 @@
 export PROJECT_ROOT=$( cd "$(dirname "$0")/.." ; pwd -P )
 source "$PROJECT_ROOT/venv/bin/activate"
 
-python "$PROJECT_ROOT/support/build-seasonal.py" "$@"
+python "$PROJECT_ROOT/src/support/build_seasonal.py" "$@"

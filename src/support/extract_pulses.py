@@ -1,4 +1,5 @@
 import json
+import os
 import argparse
 from pathlib import Path
 
@@ -91,5 +92,5 @@ def main():
     write_analysis_script(args.output, script)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and "DOCBUILD" not in os.environ:
     main()

@@ -1,9 +1,10 @@
-from os import makedirs
+from os import makedirs, environ
 from pathlib import Path
 from datetime import datetime
 from python_minifier import minify
 
-EXCLUDED_FILES = ["__init__.py", "ti_plotlib.py", "ti_system.py", "turtle.py"]
+EXCLUDED_FILES = ["__init__.py", "turtle.py"]
+EXCLUDED_FOLDERS = ["support", "ti_desktop"]
 AGGRESSIVE_MINIMISATION = ["resident.py"]
 PROJECT_FOLDER = Path(__file__).parent.parent
 
@@ -111,10 +112,20 @@ def minimise_all_source_files():
     """
     output_folder = prepare_output_folder()
     source_folder = PROJECT_FOLDER / "src"
-    for file in sorted(Path(source_folder).rglob("*.py"), key=lambda p: p.name.lower()):
+
+    # Identify Python files that are *not* in excluded folders
+    python_files = (
+        p for p in Path(source_folder).rglob("*.py")
+        if EXCLUDED_FOLDERS.isdisjoint(p.parts)
+    )
+
+    # Sort the files and iterate over them, minifying them if they're not
+    # explicitly excluded
+    for file in sorted(python_files, key=lambda p: p.name.lower()):
         if file.name not in EXCLUDED_FILES:
             aggressive = file.name in AGGRESSIVE_MINIMISATION
             minify_file(file.absolute(), aggressive, output_folder)
 
 
-minimise_all_source_files()
+if __name__ == "__main__" and "DOCBUILD" not in environ:
+    minimise_all_source_files()
