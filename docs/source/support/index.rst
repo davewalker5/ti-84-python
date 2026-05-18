@@ -6,3 +6,4 @@ The support Package
    :caption: Contents:
 
    build_seasonal
+   extract_pulses

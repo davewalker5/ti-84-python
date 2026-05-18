@@ -26,7 +26,7 @@ launcher script necessary to run the simulation of species presence/detectabilit
 
 Example usage from the root folder of the project::
 
-    python support/build_seasonal.py -i data/seasonal/bluebell_consensus.json -m seasonal -o src/examples
+    python src/support/build_seasonal.py -i data/seasonal/bluebell_consensus.json -m seasonal -o src/examples
 
 The resulting script can then be minified and transferred to the calculator along with
 the ODE solver library and then run to graph the species presence/detectability.
