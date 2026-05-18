@@ -70,7 +70,12 @@ def upper_median(values):
     - Partial attack sequences
 
     In these cases, lots of tiny PRI values may drag the baseline down so the
-    analysis method doesn't detect later compression and misses feeding buzzes
+    analysis method doesn't detect later compression and misses feeding buzzes.
+
+    Conceptually, this considers that:
+
+    Lower half = dense / compressed / buzz-like
+    Upper half = relaxed / search-like
 
     :param values: Values to calculate the median for
     :return: Median of the upper-half, or None
