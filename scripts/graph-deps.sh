@@ -5,4 +5,4 @@ source "$PROJECT_ROOT/venv/bin/activate"
 source "$PROJECT_ROOT/scripts/set-pythonpath.sh"
 
 pip install pydeps
-pydeps "$dir" --noshow --reverse --rankdir BT -T png -o dependencies.png
+pydeps "$dir" --noshow --reverse --rankdir BT -T png -o "$PROJECT_ROOT/docs/source/dependencies.png"
