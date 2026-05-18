@@ -34,6 +34,10 @@ Example usage from the root folder of the project::
 
     python src/support/extract_pulses.py -i data/spectrogram/BD-A-99-001-analysis.json -o src/examples/batchart.py
 
+A utility script is provided in the "scripts" folder to run the minimiser::
+
+    scripts/extract-pulses.sh -i data/spectrogram/BD-A-99-001-analysis.json -o src/examples/batchart.py
+
 The resulting script can then be minified and transferred to the calculator along with
 the Bat Pulse analysis library module and then run to graph the pulse characteristics.
 

@@ -23,11 +23,18 @@ To run the minimiser, first make sure the virtual environment has been set up. F
     pip install --upgrade pip
     pip install -e .
 
-Then, enter the following command:
+A utility script is provided in the "scripts" folder to create the environment::
 
-.. code-block::
+    scripts/make-venv.sh
 
+Then, enter the following commands::
+
+    source venv/bin/activate
     python src/support/minimiser.py
+
+A utility script is provided in the "scripts" folder to activate the environment and run the minimiser::
+
+    scripts/minimise.sh
 
 This will iterate over eligible Python source files in the "src" folder and will write 
 reduced-size versions of each file to the "data/minimised" folder. These can then be transferred

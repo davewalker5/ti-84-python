@@ -28,6 +28,10 @@ Example usage from the root folder of the project::
 
     python src/support/build_seasonal.py -i data/seasonal/bluebell_consensus.json -m seasonal -o src/examples
 
+A utility script is provided in the "scripts" folder to run the minimiser::
+
+    scripts/make-seasonal.sh -i data/seasonal/bluebell_consensus.json -m seasonal -o src/examples
+
 The resulting script can then be minified and transferred to the calculator along with
 the ODE solver library and then run to graph the species presence/detectability.
 
