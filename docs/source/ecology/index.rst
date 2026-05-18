@@ -13,7 +13,9 @@ call pulse analysis:
 +-------------+------------------------------------------------+
 | File Name   | Contents                                       |
 +-------------+------------------------------------------------+
-| batpulse.py | Bat pulse analysis and charting                |
+| batlib.py   | Bat call analysis library                      |
++-------------+------------------------------------------------+
+| batpulse.py | Bat pulse timing and charting                  |
 +-------------+------------------------------------------------+
 | resident.py | Wildlife resident species detectability model  |
 +-------------+------------------------------------------------+
@@ -35,6 +37,7 @@ For more information, please see:
    :maxdepth: 2
    :caption: Contents:
 
+   batlib
    batpulse
    resident
    seasonal
