@@ -10,7 +10,6 @@ TI-84 CE-T Python Edition
    ecology/index
    computing/index
    common/index
-   ui/index
    turtle_apps/index
 
 
@@ -19,6 +18,7 @@ TI-84 CE-T Python Edition
    :caption: Applications:
 
    examples/index
+   apps/index
 
 
 .. toctree::

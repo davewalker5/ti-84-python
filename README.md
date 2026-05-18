@@ -35,39 +35,6 @@ Python applications and coding exercises for the TI-84 CE-T Python Edition Graph
 
 The ti_desktop package contains minimal implementations of the TI libraries that allow the applications to be developed, tested and run on a desktop machine. It is not a full implementation of the TI libraries and contains just sufficient implementation to support the applications in this repository.
 
-# Applications
-
-## Maths Applications
-
-| **File Name** | **Location** | **Contents**                                                        | **Dependencies**                      |
-| ------------- | ------------ | ------------------------------------------------------------------- | ------------------------------------- |
-| fibonaui.py   | src/ui       | Calculate and display the Fibonacci series                          | iptutils, oututils, fibonaci          |
-| odesolvr.py   | src/ui       | Prompt for an equation and solution options then solve the equation | odelib, iptutils                      |
-| quadui.py     | src/ui       | Calculate the roots of a quadratic equation                         | iptutils, oututils, strutils, quadrat |
-
-## Science Applications
-
-| **File Name** | **Location** | **Contents**                                            | **Dependencies**                             |
-| ------------- | ------------ | ------------------------------------------------------- | -------------------------------------------- |
-| baromui.py    | src/ui       | Biometric pressure converter and calculator             | iptutils, oututils, strutils, barometr       |
-| temperui.py   | src/ui       | Centigrade, Fahrenheit and Kelvin temperature converter | iptutils, oututils, strutils, tempconv       |
-| julianui.py   | src/ui       | Julian date conversions                                 | iptutils, oututils, dateutil, dattim, julian |
-| lunarui.py    | src/ui       | Lunar phase calculator                                  | oututils, strutils, dateutil, dattim, lunar  |
-
-## Turtle Applications
-
-| **File Name** | **Location** | **Contents**                      | **Dependencies** |
-| ------------- | ------------ | --------------------------------- | ---------------- |
-| turtleui.py   | src/ui       | Interactive control of TurtleDraw | turtdraw         |
-
-## Computing Applications
-
-| **File Name** | **Location** | **Contents**                                                         | **Dependencies**                                          |
-| ------------- | ------------ | -------------------------------------------------------------------- | --------------------------------------------------------- |
-| ipv4nwui.py   | src/ui       | IPv4 Network Details calculator                                      | oututils                                                  |
-| ipv4same.py   | src/ui       | Determine if two IPv4 IP addresses are on the same subnet calculator | ipv4snt, oututils                                         |
-| ipv4snui.py   | src/ui       | IPv4 Subnet calculator                                               | ti_system, ipv4nwk, ipv4snt, ipv4nths, iptutils, oututils |
-
 ## Running the Applications on the Calculator
 
 Transfer the application and its dependencies (**including the dependecies of the library code it uses**) to the Calculator using the TI Connect CE application then run the application as normal.
