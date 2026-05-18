@@ -1,15 +1,9 @@
 [![Build Status](https://github.com/davewalker5/ti-84-python/workflows/Python%20CI%20Build/badge.svg)](https://github.com/davewalker5/ti-84-python/actions)
-
 [![Coverage](https://codecov.io/gh/davewalker5/ti-84-python/branch/main/graph/badge.svg?token=U86UFDVD5S)](https://codecov.io/gh/davewalker5/ti-84-python)
-
 [![GitHub issues](https://img.shields.io/github/issues/davewalker5/ti-84-python)](https://github.com/davewalker5/Odti-84-pythoneSolver/issues)
-
 [![Releases](https://img.shields.io/github/v/release/davewalker5/ti-84-python.svg?include_prereleases)](https://github.com/davewalker5/ti-84-python/releases)
-
 [![License](https://img.shields.io/badge/License-mit-blue.svg)](https://github.com/davewalker5/ti-84-python/blob/main/LICENSE)
-
 [![Language](https://img.shields.io/badge/language-python-blue.svg)](https://www.python.org)
-
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/davewalker5/ti-84-python)](https://github.com/davewalker5/ti-84-python/)
 
 
