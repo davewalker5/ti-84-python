@@ -19,7 +19,6 @@
 
 Python applications and coding exercises for the TI-84 CE-T Python Edition Graphing Calculator.
 
-
 # Structure
 
 | **Package** | **Contents**                                                               |
@@ -36,60 +35,6 @@ Python applications and coding exercises for the TI-84 CE-T Python Edition Graph
 
 The ti_desktop package contains minimal implementations of the TI libraries that allow the applications to be developed, tested and run on a desktop machine. It is not a full implementation of the TI libraries and contains just sufficient implementation to support the applications in this repository.
 
-## Common Code
-
-| **File Name** | **Location** | **Contents**                                         | **Dependencies** |
-| ------------- | ------------ | ---------------------------------------------------- | ---------------- |
-| dateutil.py   | src/common   | Date handling utilities, including Epoch conversions | N/A              |
-| dattime.py    | src/common   | Simplified date and time wrapper class               | dateutil         |
-| iptutils.py   | src/common   | Utility methods to prompt for an validate user input | N/A              |
-| julian.py     | src/common   | Julian date conversion utilities                     | N/A              |
-| oututils.py   | src/common   | Utility methods for text-based output                | strutils         |
-| storage.py    | src/common   | Utility methods for data storage and retrieval       | ti_system        |
-| strutils.py   | src/common   | Utility methods for string manipulation              | N/A              |
-
-## Computing Libraries
-
-| **File Name** | **Location**  | **Contents**                                | **Dependencies**  |
-| ------------- | ------------- | ------------------------------------------- | ----------------- |
-| ipv4bits.py   | src/computing | IPv4 subnetting network/host bit calculator | N/A               |
-| ipv4lib.py    | src/computing | IPv4 addressing utilities                   | strutils          |
-| ipv4nths.py   | src/computing | IPv4 "n'th" subnet calculator               | ipv4lib, strutils |
-| ipv4nwk.py    | src/computing | IPv4 network details calculator             | ipv4lib           |
-| ipv4snt.py    | src/computing | IPv4 subnet parameter calculator            | ipv4lib           |
-
-## Ecology Libraries
-
-| **File Name** | **Location** | **Contents**                                   | **Dependencies**      |
-| ------------- | ------------ | ---------------------------------------------- | --------------------- |
-| batpulse.py   | src/ecology  | Bat pulse analysis and charting                | ti_plotlib, ti_system |
-| resident.py   | src/ecology  | Wildlife resident species detectability model  | odelib                |
-| seasonal.py   | src/ecology  | Wildlife seasonal species presence model       | odelib                |
-| winter.py     | src/ecology  | Wildlife winter visitor species presence model | odelib                |
-
-## Maths Libraries
-
-| **File Name** | **Location** | **Contents**                                   | **Dependencies** |
-| ------------- | ------------ | ---------------------------------------------- | ---------------- |
-| complx.py     | src/maths    | Simple representation of a complex number      | strutils         |
-| fibonaci.py   | src/maths    | Fibonnaci series calculator                    | N/A              |
-| odelib.py     | src/maths    | Adaptive Ordinary Differential Equation solver | ti_plotlib       |
-| quadrat.py    | src/maths    | Quadratic root calculator                      | complx           |
-
-## Science Libraries
-
-| **File Name** | **Location** | **Contents**                                     | **Dependencies** |
-| ------------- | ------------ | ------------------------------------------------ | ---------------- |
-| barometr.py   | src/science  | Barometric pressure calculations and conversions | N/A              |
-| lunar.py      | src/science  | Lunar age and phase name calculator              | dattime, julian  |
-| tempconv.py   | src/science  | Temperature conversions                          | N/A              |
-
-## Turtle Libraries
-
-| **File Name** | **Location**    | **Contents**                                 | **Dependencies**  |
-| ------------- | --------------- | -------------------------------------------- | ----------------- |
-| turtdraw.py   | src/turtle_apps | Interactive wrapper over the TI Turtle class | ti_system, turtle |
-
 # Applications
 
 ## Programmatic Examples
@@ -105,14 +50,6 @@ The ti_desktop package contains minimal implementations of the TI libraries that
 | redwing.py    | src/examples | Model the winter presence of the redwing                             | winter, odelib   |
 | turtplay.py   | src/examples | Replay a pre-prepared string of instructions for TurtleDraw          | turtdraw         |
 
-## Ecology Modelling
-
-| **File Name** | **Location** | **Contents**                                   | **Dependencies** |
-| ------------- | ------------ | ---------------------------------------------- | ---------------- |
-| batpulse.py   | src/ecology  | Wildlife resident species detectability model  | odelib           |
-| resident.py   | src/ecology  | Wildlife resident species detectability model  | odelib           |
-| seasonal.py   | src/ecology  | Wildlife seasonal species presence model       | odelib           |
-| winter.py     | src/ecology  | Wildlife winter visitor species presence model | odelib           |
 
 ## Maths Applications
 
