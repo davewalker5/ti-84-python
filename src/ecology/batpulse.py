@@ -158,7 +158,7 @@ def plot_pulse_highlight(y, index, highlight):
                 plt.color(0, 0, 255)
             else:
                 plt.color(255, 0, 0)
-    
+
             plt.plot(index, highlight_y, "o")
 
 

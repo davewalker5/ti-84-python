@@ -36,7 +36,7 @@ A utility script is provided in the "scripts" folder to activate the environment
 
     scripts/minimise.sh
 
-This will iterate over eligible Python source files in the "src" folder and will write 
+This will iterate over eligible Python source files in the "src" folder and will write
 reduced-size versions of each file to the "data/minimised" folder. These can then be transferred
 to the calculator.
 """

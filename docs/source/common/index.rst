@@ -26,6 +26,8 @@ It contains library modules providing supporting methods for the other modules:
 +-------------+------------------------------------------------------+
 | strutils.py | Utility methods for string manipulation              |
 +-------------+------------------------------------------------------+
+| tabulate.py | Text-based data tabulation                           |
++-------------+------------------------------------------------------+
 
 These modules are not intended to be run standalone and don't provide user interfaces.
 
@@ -41,3 +43,4 @@ These modules are not intended to be run standalone and don't provide user inter
    dattime
    julian
    storage
+   tabulate

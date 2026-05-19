@@ -13,6 +13,8 @@ by the other libraries:
 +-------------+----------------------------------------------------------------------+
 | File Name   | Contents                                                             |
 +-------------+----------------------------------------------------------------------+
+| batbuzz.py  | Bat pulse phase analysis and tabulation                              |
++-------------+----------------------------------------------------------------------+
 | batchart.py | Bat pulse analysis and charting                                      |
 +-------------+----------------------------------------------------------------------+
 | blackbrd.py | Model the resident detectability of the blackbird                    |
@@ -48,6 +50,7 @@ analysis, please see:
    :maxdepth: 2
    :caption: Contents:
 
+   batbuzz
    batchart
    blackbrd
    bluebell

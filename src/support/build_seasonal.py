@@ -47,14 +47,14 @@ import argparse
 from pathlib import Path
 
 SPECIES_KEY = "SPECIES"
-EXCLUDE_KEYS = ( "SCORE", SPECIES_KEY )
+EXCLUDE_KEYS = ("SCORE", SPECIES_KEY)
 
 RESIDENT = "resident"
 SEASONAL = "seasonal"
 WINTER = "winter"
 
 PARAMETER_ORDER = {
-    RESIDENT: ["INITIAL_Y", "GROWTH_RATE", "DECAY_RATE", "SUMMER_DECAY_BOOST", "PRE_SUMMER_DECAY_REDUCTION","PRE_SUMMER_DECAY_END", "PRE_SUMMER_DECAY_SHARPNESS", "SPRING_CARRYOVER_WEIGHT","SPRING_CARRYOVER_END", "SPRING_CARRYOVER_SHARPNESS", "BASELINE", "WINTER_WEIGHT","AUTUMN_WEIGHT", "WINTER_PEAK", "AUTUMN_PEAK", "AUTUMN_ONSET", "AUTUMN_GATE_SHARPNESS","WINTER_WIDTH", "WINTER_RISE_WIDTH", "WINTER_FALL_WIDTH", "AUTUMN_WIDTH","AUTUMN_RISE_WIDTH", "AUTUMN_FALL_WIDTH", "SUMMER_DIP", "SUMMER_LOW", "SUMMER_ONSET","SUMMER_GATE_SHARPNESS", "SUMMER_DECAY_ONSET", "SUMMER_DECAY_GATE_SHARPNESS","SUMMER_WIDTH", "SUMMER_RISE_WIDTH", "SUMMER_FALL_WIDTH", "SCALE", "YEAR_END_WEIGHT","YEAR_END_PEAK", "YEAR_END_WIDTH", "YEAR_END_RISE_WIDTH", "YEAR_END_FALL_WIDTH"],
+    RESIDENT: ["INITIAL_Y", "GROWTH_RATE", "DECAY_RATE", "SUMMER_DECAY_BOOST", "PRE_SUMMER_DECAY_REDUCTION", "PRE_SUMMER_DECAY_END", "PRE_SUMMER_DECAY_SHARPNESS", "SPRING_CARRYOVER_WEIGHT", "SPRING_CARRYOVER_END", "SPRING_CARRYOVER_SHARPNESS", "BASELINE", "WINTER_WEIGHT", "AUTUMN_WEIGHT", "WINTER_PEAK", "AUTUMN_PEAK", "AUTUMN_ONSET", "AUTUMN_GATE_SHARPNESS", "WINTER_WIDTH", "WINTER_RISE_WIDTH", "WINTER_FALL_WIDTH", "AUTUMN_WIDTH", "AUTUMN_RISE_WIDTH", "AUTUMN_FALL_WIDTH", "SUMMER_DIP", "SUMMER_LOW", "SUMMER_ONSET", "SUMMER_GATE_SHARPNESS", "SUMMER_DECAY_ONSET", "SUMMER_DECAY_GATE_SHARPNESS", "SUMMER_WIDTH", "SUMMER_RISE_WIDTH", "SUMMER_FALL_WIDTH", "SCALE", "YEAR_END_WEIGHT", "YEAR_END_PEAK", "YEAR_END_WIDTH", "YEAR_END_RISE_WIDTH", "YEAR_END_FALL_WIDTH"],
     SEASONAL: ["GROWTH", "DECAY", "OOS_DECAY", "POST_PEAK_DECAY", "POST_PEAK_SHARPNESS", "SEASON_START", "SEASON_END", "SHARPNESS", "FORCING_PEAK"],
     WINTER: ["INITIAL_Y", "GROWTH_RATE", "DECAY_RATE", "BASELINE", "WINTER_WEIGHT", "AUTUMN_WEIGHT", "WINTER_PEAK", "AUTUMN_PEAK", "WINTER_WIDTH", "AUTUMN_WIDTH", "SUMMER_DIP", "SUMMER_LOW", "SUMMER_WIDTH"]
 }
@@ -84,7 +84,7 @@ def create_ordered_parameter_tuple(parameters: dict, model: str) -> tuple:
     """
     Convert a dictionary of parameters into a tuple of their values ordered according
     to the required parameter order for the specified model
-    
+
     :param parameters: Parameter dictionary
     :param model: Model name
     :return: Tuple of parameter values
@@ -95,7 +95,7 @@ def create_ordered_parameter_tuple(parameters: dict, model: str) -> tuple:
 def read_template(template_file_path: str | Path) -> str:
     """
     Read the contents of the template script
-    
+
     :param template_file_path: Path to the template
     :return: Contents of the template
     """
@@ -119,7 +119,7 @@ def build_modelling_script(template: str, model: str, parameters: tuple) -> str:
 def write_modelling_script(output_folder_path: str | Path, species: str, script: str):
     """
     Write the modelling script for a species
-    
+
     :param output_folder_path: Path to the folder where the script is to be written
     :param species: Species name (used to create the file name)
     :param script: File contents
@@ -140,7 +140,7 @@ def main():
                         help="The model the consensus JSON is associated with")
     parser.add_argument("-t", "--template", default=DEFAULT_TEMPLATE,
                         help="Template used to build the species modelling script")
-    parser.add_argument("-o", "--output-dir",required=True, help="Path to the output folder")
+    parser.add_argument("-o", "--output-dir", required=True, help="Path to the output folder")
     args = parser.parse_args()
 
     # Load the data and convert it to an ordered tuple
