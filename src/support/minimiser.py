@@ -41,14 +41,12 @@ reduced-size versions of each file to the "data/minimised" folder. These can the
 to the calculator.
 """
 
+import json
 from os import makedirs, environ
 from pathlib import Path
 from datetime import datetime
 from python_minifier import minify
 
-EXCLUDED_FILES = ["__init__.py", "turtle.py"]
-EXCLUDED_FOLDERS = ["support", "ti_desktop"]
-AGGRESSIVE_MINIMISATION = ["resident.py"]
 PROJECT_FOLDER = Path(__file__).parent.parent.parent
 
 
@@ -112,12 +110,13 @@ def print_message(message):
     print(f"{timestamp} : {message}")
 
 
-def minify_file(file_path, aggressive, output_folder):
+def minify_file(file_path, aggressive, preserve_globals, output_folder):
     """
     Minify a Python source file
 
     :param file_path: Path to the file to minimise
     :param aggressive: Use aggressive minimisation options
+    :param preserve_globals: List of globals to preserve during aggressive minification
     :param output_folder: Output folder path
     """
 
@@ -136,7 +135,7 @@ def minify_file(file_path, aggressive, output_folder):
                       remove_pass=False,
                       rename_locals=True,
                       rename_globals=aggressive,
-                      preserve_globals=["run"])
+                      preserve_globals=preserve_globals)
 
     # Write the "minimised" file
     output_file_path = output_folder / Path(file_path).name
@@ -153,21 +152,27 @@ def minimise_all_source_files():
     """
     Find all Python files and "minimise" them prior to transfer to the calculator
     """
+    # Load the minimiser configuration
+    config_file = Path(__file__).parent / "minimiser.conf"
+    with open(config_file, "r", encoding="utf-8") as f:
+        config = json.load(f)
+
+    # Set up folder paths
     output_folder = prepare_output_folder()
     source_folder = PROJECT_FOLDER / "src"
 
     # Identify Python files that are *not* in excluded folders
     python_files = (
         p for p in Path(source_folder).rglob("*.py")
-        if set(EXCLUDED_FOLDERS).isdisjoint(p.parts)
+        if set(config["exclude"]["folders"]).isdisjoint(p.parts)
     )
 
     # Sort the files and iterate over them, minifying them if they're not
     # explicitly excluded
     for file in sorted(python_files, key=lambda p: p.name.lower()):
-        if file.name not in EXCLUDED_FILES:
-            aggressive = file.name in AGGRESSIVE_MINIMISATION
-            minify_file(file.absolute(), aggressive, output_folder)
+        if file.name not in config["exclude"]["files"]:
+            aggressive = file.name in config["aggressive"]
+            minify_file(file.absolute(), aggressive, config["preserve"], output_folder)
 
 
 if __name__ == "__main__" and "DOCBUILD" not in environ:
