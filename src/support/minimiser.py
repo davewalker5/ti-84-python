@@ -171,7 +171,8 @@ def minimise_all_source_files():
     # explicitly excluded
     for file in sorted(python_files, key=lambda p: p.name.lower()):
         if file.name not in config["exclude"]["files"]:
-            aggressive = file.name in config["aggressive"]
+            aggressive = file.parent in config["aggressive"]["folders"] or \
+                file.name in config["aggressive"]["files"]
             minify_file(file.absolute(), aggressive, config["preserve"], output_folder)
 
 
