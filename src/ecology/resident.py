@@ -2,8 +2,9 @@
 Resident Detectability Model
 ============================
 
-This is a seasonal wildlife detecmodel represents species that are **always present but variably detectable**, describing a continuous
-presence in which detectability rises and falls through the year without ever reaching zero.
+This is a seasonal wildlife presence model representing species that are **always present but
+variably detectable**, describing a continuous presence in which detectability rises and falls through
+the year without ever reaching zero.
 
 It provides a minimal explanation for patterns seen in the seasonal analysis of observations, showing that
 variation in observation does not necessarily imply absence, but can arise from:
