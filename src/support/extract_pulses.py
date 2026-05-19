@@ -28,7 +28,7 @@ This script reads the JSON file and cconverts the list of pulses into a to a Tup
     (start, end, peak, start, end, peak, ...)
 
 The pulse information is then written to the launcher script necessary to run the bat call
-analysed.
+pulse timing analyser.
 
 Example usage from the root folder of the project::
 
@@ -39,7 +39,7 @@ A utility script is provided in the "scripts" folder to run the minimiser::
     scripts/extract-pulses.sh -i data/spectrogram/BD-A-99-001-analysis.json -o src/examples/batchart.py
 
 The resulting script can then be minified and transferred to the calculator along with
-the Bat Pulse analysis library module and then run to graph the pulse characteristics.
+the bat pulse analysis library module and then run to graph the pulse characteristics.
 
 For more information on the Bat Call Analyser and Spectrogram Viewer see:
 

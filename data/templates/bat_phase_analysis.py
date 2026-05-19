@@ -11,10 +11,13 @@ PRI = $PRI
 DPRI = $DPRI
 
 #: Detect the feeding buzz phases
-_, regions = detect_feeding_buzz_phases(WIDTHS, PRI, DPRI)
+_, regions, classification = detect_feeding_buzz_phases(WIDTHS, PRI, DPRI)
 
 #: Build the phase table
 table = build_table(regions, ("Phase", "Start", "End", "Length"))
 
 #: Print the phase table
 print_table(table)
+print()
+print(classification)
+print()

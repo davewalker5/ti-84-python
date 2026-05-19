@@ -36,6 +36,11 @@ species identity and is intended as a lightweight ecological timing
 analysis suitable for constrained computational environments.
 """
 
+SEARCH = "SEARCH"
+APPROACH = "APPROACH"
+BUZZ = "BUZZ"
+EXIT = "EXIT"
+
 
 def median(values):
     """
@@ -132,10 +137,10 @@ def detect_feeding_buzz_phases(widths, pri, dpri):
     :param widths: Pulse widths
     :param pri: Pulse repetition intervals
     :param dpri: Delta PRI values
-    :return: Tuple of a list of behavioural phase labels and the phase regions
+    :return: Tuple of a list of phase labels, phase regions and the classification
     """
     n = len(widths)
-    phases = ["SEARCH"] * n
+    phases = [SEARCH] * n
 
     if n < 6:
         return phases, build_regions(phases)
@@ -218,7 +223,7 @@ def detect_feeding_buzz_phases(widths, pri, dpri):
     buzz_end = min(buzz_pri_end + 1, n - 1)
 
     for i in range(buzz_start, buzz_end + 1):
-        phases[i] = "BUZZ"
+        phases[i] = BUZZ
 
     # Walk backwards to find approach
     approach_start = buzz_start
@@ -238,9 +243,17 @@ def detect_feeding_buzz_phases(widths, pri, dpri):
             break
 
     for i in range(approach_start, buzz_start):
-        phases[i] = "APPROACH"
+        phases[i] = APPROACH
 
     for i in range(buzz_end + 1, n):
-        phases[i] = "EXIT"
+        phases[i] = EXIT
 
-    return phases, build_regions(phases)
+    # Classify the sequence
+    if BUZZ in phases:
+        classification = "FEEDING BUZZ"
+    elif APPROACH in phases:
+        classification = "APPROACH ONLY"
+    else:
+        classification = "SEARCH ONLY"
+
+    return phases, build_regions(phases), classification
