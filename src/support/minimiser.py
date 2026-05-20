@@ -137,10 +137,14 @@ def minify_file(
     source = "".join(lines)
     minified = minify(source,
                       file_path,
-                      remove_pass=False,
+                      remove_pass=True,
+                      remove_literal_statements=True,
                       rename_locals=True,
                       rename_globals=aggressive,
-                      preserve_globals=preserve)
+                      preserve_globals=preserve,
+                      remove_asserts=True,
+                      remove_debug=True,
+                      prefer_single_line=True)
 
     # Write the "minimised" file
     output_file_path = output_folder / Path(file_path).name
