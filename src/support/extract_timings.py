@@ -78,6 +78,21 @@ def read_template(template_file_path: str | Path) -> str:
         return f.read()
 
 
+def round_to_significant(value: float, places: int = 3) -> float:
+    """
+    Round a float to the specified number of significant figures
+
+    :param float: Value to round
+    :param places: Number of places
+    :return: Rounded float
+    """
+    return None if value is None else float(f"{value:.{places}g}")
+
+
+def round_all_to_significant(values: tuple, places: int = 3) -> tuple:
+    return tuple(round_to_significant(v, places) for v in values)
+
+
 def build_analysis_script(
         template: str,
         widths: tuple | list,
@@ -125,6 +140,11 @@ def main():
     # Load the pulse data from the JSON file and generate the pulse timing information
     _, _, pulses = load_pulse_json(args.input, args.start_index, args.end_index)
     widths, pri, _, dpri = analyse_pulse_timings(pulses)
+
+    # Round the values to a limited number of significant places
+    widths = round_all_to_significant(widths, 3)
+    pri = round_all_to_significant(pri, 3)
+    dpri = round_all_to_significant(dpri, 3)
 
     # Load the template and generate the script content
     template = read_template(args.template)
