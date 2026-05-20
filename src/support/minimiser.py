@@ -50,7 +50,7 @@ from python_minifier import minify
 PROJECT_FOLDER = Path(__file__).parent.parent.parent
 
 
-def prepare_output_folder():
+def prepare_output_folder() -> str:
     """
     Make sure the output folder exists and is empty
 
@@ -69,7 +69,7 @@ def prepare_output_folder():
     return output_folder
 
 
-def remove_comments(lines):
+def remove_comments(lines: list[str]) -> list[str]:
     """
     Give the content of a source file as a list of individual lines, remove docstrings and comments
 
@@ -100,7 +100,7 @@ def remove_comments(lines):
     return lines
 
 
-def print_message(message):
+def print_message(message: str) -> None:
     """
     Show a timestamped message
 
@@ -110,7 +110,12 @@ def print_message(message):
     print(f"{timestamp} : {message}")
 
 
-def minify_file(file_path, aggressive, preserve_globals, output_folder):
+def minify_file(
+    file_path: Path,
+    aggressive: bool,
+    preserve: list[str],
+    output_folder: str
+) -> None:
     """
     Minify a Python source file
 
@@ -135,20 +140,51 @@ def minify_file(file_path, aggressive, preserve_globals, output_folder):
                       remove_pass=False,
                       rename_locals=True,
                       rename_globals=aggressive,
-                      preserve_globals=preserve_globals)
+                      preserve_globals=preserve)
 
     # Write the "minimised" file
     output_file_path = output_folder / Path(file_path).name
     with open(output_file_path, mode="wt", encoding="UTF-8") as out_handle:
         out_handle.writelines(minified)
 
+    # Calculate the minification results
     minified_file = Path(output_file_path)
     minified_size = minified_file.stat().st_size
     reduction = 100.0 - 100.0 * minified_size / original_size
-    print_message(f"Minified {minified_file.name} : {original_size} bytes -> {minified_size} bytes, {round(reduction)}% reduction")
+
+    # Output the minification result message
+    minified_file_name = minified_file.name.ljust(11, " ")
+    aggressive_text = (("non-" if not aggressive else "") + "aggressive").capitalize()
+    print_message(f"Minified {minified_file_name} : {aggressive_text}, " 
+                  f"{original_size} bytes -> {minified_size} bytes, {round(reduction)}% reduction")
 
 
-def minimise_all_source_files():
+def get_file_config(config: dict, file: Path) -> tuple | None:
+    """
+    Return the minification configuration for the specified file
+    
+    :param config: Dictionary of configuration values
+    :param file: Path for the file
+    :return: Tuple of the exclusion flag and the file minification settings
+    """
+    # Check folder exclusions
+    parent_folder = file.parent.name
+    if parent_folder in config["exclude"]["folders"]:
+        return True, None
+
+    # Check file exclusions
+    if file.name in config["exclude"]["files"]:
+        return True, None
+
+    # Check for folder-level settings
+    if parent_folder in config["folders"].keys():
+        return False, config["folders"][parent_folder]
+
+    # Get the config for this file or, if not present, return a "safe" default
+    return False, config["files"].get(file.name, config["default"])
+
+
+def minimise_all_source_files() -> None:
     """
     Find all Python files and "minimise" them prior to transfer to the calculator
     """
@@ -157,11 +193,11 @@ def minimise_all_source_files():
     with open(config_file, "r", encoding="utf-8") as f:
         config = json.load(f)
 
-    # Set up folder paths
+    # # Set up folder paths
     output_folder = prepare_output_folder()
     source_folder = PROJECT_FOLDER / "src"
 
-    # Identify Python files that are *not* in excluded folders
+    # # Identify Python files that are *not* in excluded folders
     python_files = (
         p for p in Path(source_folder).rglob("*.py")
         if set(config["exclude"]["folders"]).isdisjoint(p.parts)
@@ -170,10 +206,9 @@ def minimise_all_source_files():
     # Sort the files and iterate over them, minifying them if they're not
     # explicitly excluded
     for file in sorted(python_files, key=lambda p: p.name.lower()):
-        if file.name not in config["exclude"]["files"]:
-            aggressive = file.parent in config["aggressive"]["folders"] or \
-                file.name in config["aggressive"]["files"]
-            minify_file(file.absolute(), aggressive, config["preserve"], output_folder)
+        excluded, file_config = get_file_config(config, file)
+        if not excluded:
+            minify_file(file.absolute(), file_config["aggressive"], file_config["preserve"], output_folder)
 
 
 if __name__ == "__main__" and "DOCBUILD" not in environ:
