@@ -248,12 +248,52 @@ def detect_feeding_buzz_phases(widths, pri, dpri):
     for i in range(buzz_end + 1, n):
         phases[i] = EXIT
 
-    # Classify the sequence
-    if BUZZ in phases:
-        classification = "FEEDING BUZZ"
-    elif APPROACH in phases:
-        classification = "APPROACH ONLY"
-    else:
-        classification = "SEARCH ONLY"
+    return phases, build_regions(phases)
 
-    return phases, build_regions(phases), classification
+
+def classify(regions):
+    """
+    Classify a sequence based on its regions and their length
+    
+    :param regions: List of tuples of regions
+    :return: Classification
+    """
+    total = 0
+    lengths = {}
+
+    # Collate the number of pulses by phase assignment
+    for phase, _, _, length in regions:
+        total += length
+        lengths[phase] = lengths.get(phase, 0) + length
+
+    # Extract the lengths of each phase assignment
+    search_pulses = lengths.get("SEARCH", 0)
+    approach_pulses = lengths.get("APPROACH", 0)
+    buzz_pulses = lengths.get("BUZZ", 0)
+    exit_pulses = lengths.get("EXIT", 0)
+
+    # Calculate the fraction of the total that are search pulses
+    search_frac = search_pulses / total if total else 0
+
+    # Determine which regions are present
+    has_buzz = buzz_pulses > 0
+    has_approach = approach_pulses > 0
+    has_exit = exit_pulses > 0
+
+    # Classify the sequence
+    if has_buzz and has_exit and buzz_pulses >= 6 and exit_pulses >= 5:
+        classification = "FEEDING PASS WITH RECOVERY EXIT"
+    elif has_buzz and buzz_pulses >= 6:
+        classification = "FEEDING BUZZ"
+    elif has_buzz:
+        classification = "SHORT OR WEAK BUZZ"
+    elif has_approach and approach_pulses >= 5:
+        classification = "APPROACH WITHOUT BUZZ"
+    elif has_approach:
+        classification = "BRIEF APPROACH ONLY"
+    elif search_frac >= 0.85:
+        classification = "SEARCH ONLY"
+    else:
+        classification = "MIXED OR UNCERTAIN PASS"
+
+    return classification
