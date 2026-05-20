@@ -67,6 +67,17 @@ def print_message(message: str) -> None:
     print(f"{timestamp} : {message}")
 
 
+def round_to_significant(value: float, places: int = 3) -> float:
+    """
+    Round a float to the specified number of significant figures
+
+    :param float: Value to round
+    :param places: Number of places
+    :return: Rounded float
+    """
+    return None if value is None else float(f"{value:.{places}g}")
+
+
 def load_pulse_json(
         input_file_path: str | Path,
         start_index: int = 1,
@@ -111,9 +122,9 @@ def load_pulse_json(
     # but for time expansion the "non-real" versions reflect the expanded timings
     timings = []
     for pulse in pulses:
-        timings.append(pulse["real_start_time_s"])
-        timings.append(pulse["real_end_time_s"])
-        timings.append(pulse["real_peak_time_s"])
+        timings.append(round_to_significant(pulse["real_start_time_s"], 3))
+        timings.append(round_to_significant(pulse["real_end_time_s"], 3))
+        timings.append(round_to_significant(pulse["real_peak_time_s"], 3))
 
     print_message(f"Extracted {len(timings) // 3} sets of timing values")
     return source, mode, tuple(timings)
