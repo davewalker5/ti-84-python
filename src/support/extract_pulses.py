@@ -52,11 +52,26 @@ import json
 import os
 import argparse
 from pathlib import Path
+from datetime import datetime
 
 DEFAULT_TEMPLATE = Path(__file__).parent.parent.parent / "data" / "templates" / "bat_pulse_chart.py"
 
 
-def load_pulse_json(input_file_path: str | Path) -> dict:
+def print_message(message: str) -> None:
+    """
+    Show a timestamped message
+
+    :param message: Message text
+    """
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"{timestamp} : {message}")
+
+
+def load_pulse_json(
+        input_file_path: str | Path,
+        start_index: int = 1,
+        end_index: int = None
+) -> dict:
     """
     Load the consensus parameter set from the seasonal modelling consensus JSON
     file for the species
@@ -64,25 +79,43 @@ def load_pulse_json(input_file_path: str | Path) -> dict:
     :param input_file_path: JSON file path
     :return: Tuple of the species namd and the filtered list of parameters
     """
+    print_message(f"Loading {input_file_path}")
     with open(input_file_path, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     # Extract the original input file and extract it's name as the source
     source_file = data.get("input", data.get("input_file", None))
     source = Path(source_file).name
+    print_message(f"Source file name {source}")
 
     # Extract the analysis mode
     mode = data["analysis_mode"]
+    print_message(f"Detected mode {mode}")
+
+    # Extract only the required range of pulses
+    pulses = data["pulses"]
+    max_pulse_index = len(pulses)
+    print_message(f"Detected {max_pulse_index} pulses")
+
+    if start_index is None or start_index <= 0:
+        start_index = 1
+
+    if end_index is None or end_index > max_pulse_index:
+        end_index = max_pulse_index
+
+    pulses = pulses[start_index - 1:end_index]
+    print_message(f"{len(pulses)} pulses remain after extracting the slice from {start_index} to {end_index}")
 
     # Extract the pulses. Use the "real" start time, end time and peak timing fiels.
     # For heterodyne recordings, these will be the same as the "non-real" versions
     # but for time expansion the "non-real" versions reflect the expanded timings
     timings = []
-    for pulse in data["pulses"]:
+    for pulse in pulses:
         timings.append(pulse["real_start_time_s"])
         timings.append(pulse["real_end_time_s"])
         timings.append(pulse["real_peak_time_s"])
 
+    print_message(f"Extracted {len(timings) // 3} sets of timing values")
     return source, mode, tuple(timings)
 
 
@@ -93,6 +126,7 @@ def read_template(template_file_path: str | Path) -> str:
     :param template_file_path: Path to the template
     :return: Contents of the template
     """
+    print_message(f"Loading template {template_file_path}")
     with open(template_file_path, "r", encoding="utf-8") as f:
         return f.read()
 
@@ -116,6 +150,7 @@ def write_analysis_script(output_path: str | Path, script: str):
     :param output_path: Path to the folder where the script is to be written
     :param script: File contents
     """
+    print_message(f"Writing launcher {output_path}")
     with open(output_path, "w", encoding="utf-8") as f:
         return f.write(script)
 
@@ -128,11 +163,13 @@ def main():
     parser.add_argument("-i", "--input", required=True, help="Path to the input JSON file")
     parser.add_argument("-t", "--template", default=DEFAULT_TEMPLATE,
                         help="Template used to build the bat call analysis script")
+    parser.add_argument("-si", "--start-index", type=int, default=1, help="Index of first pulse to include")
+    parser.add_argument("-ei", "--end-index", type=int, default=None, help="Index of last pulse to include")
     parser.add_argument("-o", "--output", required=True, help="Path to the output script")
     args = parser.parse_args()
 
     # Load the data and extract the pulse information into a tuple
-    _, _, pulses = load_pulse_json(args.input)
+    _, _, pulses = load_pulse_json(args.input, args.start_index, args.end_index)
 
     # Load the template and generate the script content
     template = read_template(args.template)

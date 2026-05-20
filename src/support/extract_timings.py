@@ -45,6 +45,9 @@ A utility script is provided in the "scripts" folder to run the minimiser::
 
     scripts/extract-timings.sh -i data/spectrogram/BD-A-99-001-analysis.json -o src/examples/batbuzz.py
 
+If only part of the sequence is to be included, the --start-index and --end-index arguments can
+be used to specify the 1-based indices for the first and last pulse to include
+
 The resulting script can then be minified and transferred to the calculator along with
 the bat phase analysis library module and then run to generate the pulse characteristics.
 
@@ -114,11 +117,13 @@ def main():
     parser.add_argument("-i", "--input", required=True, help="Path to the input JSON file")
     parser.add_argument("-t", "--template", default=DEFAULT_TEMPLATE,
                         help="Template used to build the bat phase analysis script")
+    parser.add_argument("-si", "--start-index", type=int, default=1, help="Index of first pulse to include")
+    parser.add_argument("-ei", "--end-index", type=int, default=None, help="Index of last pulse to include")
     parser.add_argument("-o", "--output", required=True, help="Path to the output script")
     args = parser.parse_args()
 
     # Load the pulse data from the JSON file and generate the pulse timing information
-    _, _, pulses = load_pulse_json(args.input)
+    _, _, pulses = load_pulse_json(args.input, args.start_index, args.end_index)
     widths, pri, _, dpri = analyse_pulse_timings(pulses)
 
     # Load the template and generate the script content
